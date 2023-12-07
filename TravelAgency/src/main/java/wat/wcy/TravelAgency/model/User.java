@@ -37,7 +37,7 @@ public class User {
     @OneToMany(mappedBy = "user")
     @ToString.Exclude
     private Set<Reservation> reservations;
-    
+
 
     @Override
     public boolean equals(Object o) {
