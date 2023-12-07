@@ -8,6 +8,11 @@ spring:
     hibernate:
       ddl-auto: update
       dialect: org.hibernate.dialect.SQLServer2016Dialect
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://127.0.0.1:8081/realms/Travel-Agency
 
 server:
   port: 8080
