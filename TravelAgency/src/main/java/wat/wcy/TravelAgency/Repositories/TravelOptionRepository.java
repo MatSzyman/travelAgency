@@ -5,7 +5,6 @@ import org.springframework.stereotype.Repository;
 import wat.wcy.TravelAgency.model.TravelOption;
 
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 public interface TravelOptionRepository extends JpaRepository<TravelOption,Integer> {
@@ -22,7 +21,7 @@ public interface TravelOptionRepository extends JpaRepository<TravelOption,Integ
     @Override
     void delete(TravelOption entity);
 
-    TravelOption findByName(String name);
+    //TravelOption findByName(String name);
 
-    Optional<TravelOption> findAllByInTravel(boolean isInTravel);
+    //Optional<TravelOption> findAllByInTravel(boolean isInTravel);
 }

@@ -16,9 +16,9 @@ public interface HotelRepository extends JpaRepository<Hotel,Integer> {
     @Override
     Optional<Hotel> findById(Integer integer);
 
-    List<Hotel> findAllByInCity(boolean isInCity);
+    //List<Hotel> findAllByInCity(boolean isInCity);
 
-    Hotel findByName(String name);
+    //Hotel findByName(String name);
 
     @Override
     boolean existsById(Integer integer);

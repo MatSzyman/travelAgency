@@ -1,12 +1,11 @@
 package wat.wcy.TravelAgency.DTO;
 
-import lombok.Value;
 import wat.wcy.TravelAgency.model.Country;
 
 import java.util.Set;
 import java.util.stream.Collectors;
 
-@Value
+//@Value
 public class CountryDTO {
 
     String name;

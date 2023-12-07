@@ -15,7 +15,7 @@ public interface CountryRepository extends JpaRepository<Country,Integer> {
     @Override
     Optional<Country> findById(Integer integer);
 
-    Country findByName(String name);
+   // Country findByName(String name);
 
     @Override
     boolean existsById(Integer integer);
