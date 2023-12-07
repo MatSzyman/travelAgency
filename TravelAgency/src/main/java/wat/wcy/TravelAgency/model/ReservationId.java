@@ -2,11 +2,14 @@ package wat.wcy.TravelAgency.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
+import lombok.Data;
 import org.hibernate.Hibernate;
 
 import java.io.Serializable;
 import java.util.Objects;
 
+
+@Data
 @Embeddable
 public class ReservationId implements Serializable {
     private static final long serialVersionUID = 9161241122655127448L;
@@ -17,29 +20,6 @@ public class ReservationId implements Serializable {
     @Column(name = "travel_option_id", nullable = false)
     private Integer travelOptionId;
 
-    public Integer getTravelOptionId() {
-        return travelOptionId;
-    }
-
-    public void setTravelOptionId(Integer travelOptionId) {
-        this.travelOptionId = travelOptionId;
-    }
-
-    public Integer getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     @Override
     public int hashCode() {

@@ -1,12 +1,16 @@
 package wat.wcy.TravelAgency.model;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
+import org.hibernate.Hibernate;
 
-import java.util.LinkedHashSet;
+import java.util.Objects;
 import java.util.Set;
 
-@Data
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
 @Entity
 @Table(name = "city")
 public class City {
@@ -15,31 +19,30 @@ public class City {
     private Integer id;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "country_id")
+    @ToString.Exclude
     private Country country;
 
     @Column(name = "name", nullable = false, length = 100)
     private String name;
 
     @OneToMany(mappedBy = "city")
-    private Set<Travel> travels = new LinkedHashSet<>();
+    @ToString.Exclude
+    private Set<Travel> travels;
 
     @OneToMany(mappedBy = "city")
-    private Set<Hotel> hotels = new LinkedHashSet<>();
+    @ToString.Exclude
+    private Set<Hotel> hotels;
 
-    public Set<Hotel> getHotels() {
-        return hotels;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        City city = (City) o;
+        return id != null && Objects.equals(id, city.id);
     }
 
-    public void setHotels(Set<Hotel> hotels) {
-        this.hotels = hotels;
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
     }
-
-    public Set<Travel> getTravels() {
-        return travels;
-    }
-
-    public void setTravels(Set<Travel> travels) {
-        this.travels = travels;
-    }
-
 }

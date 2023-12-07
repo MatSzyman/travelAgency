@@ -1,11 +1,21 @@
 package wat.wcy.TravelAgency.model;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+import org.hibernate.Hibernate;
 
 import java.time.Instant;
-import java.util.LinkedHashSet;
+import java.util.Objects;
 import java.util.Set;
 
+
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
 @Entity
 @Table(name = "travel")
 public class Travel {
@@ -30,84 +40,29 @@ public class Travel {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "hotel_id", nullable = false)
+    @ToString.Exclude
     private Hotel hotel;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "city_id", nullable = false)
+    @ToString.Exclude
     private City city;
 
     @OneToMany(mappedBy = "travel")
-    private Set<TravelOption> travelOptions = new LinkedHashSet<>();
+    @ToString.Exclude
+    private Set<TravelOption> travelOptions;
 
-    public Set<TravelOption> getTravelOptions() {
-        return travelOptions;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Travel travel = (Travel) o;
+        return id != null && Objects.equals(id, travel.id);
     }
 
-    public void setTravelOptions(Set<TravelOption> travelOptions) {
-        this.travelOptions = travelOptions;
-    }
-
-    public City getCity() {
-        return city;
-    }
-
-    public void setCity(City city) {
-        this.city = city;
-    }
-
-    public Hotel getHotel() {
-        return hotel;
-    }
-
-    public void setHotel(Hotel hotel) {
-        this.hotel = hotel;
-    }
-
-    public Instant getEndSeason() {
-        return endSeason;
-    }
-
-    public void setEndSeason(Instant endSeason) {
-        this.endSeason = endSeason;
-    }
-
-    public Instant getStartSeason() {
-        return startSeason;
-    }
-
-    public void setStartSeason(Instant startSeason) {
-        this.startSeason = startSeason;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Double getBasePrice() {
-        return basePrice;
-    }
-
-    public void setBasePrice(Double basePrice) {
-        this.basePrice = basePrice;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
     }
 }

@@ -1,10 +1,19 @@
 package wat.wcy.TravelAgency.model;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+import org.hibernate.Hibernate;
 
-import java.util.LinkedHashSet;
+import java.util.Objects;
 import java.util.Set;
 
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
 @Entity
 @Table(name = "country")
 public class Country {
@@ -16,29 +25,20 @@ public class Country {
     private String name;
 
     @OneToMany(mappedBy = "country")
-    private Set<City> cities = new LinkedHashSet<>();
+    @ToString.Exclude
+    private Set<City> cities;
 
-    public Set<City> getCities() {
-        return cities;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Country country = (Country) o;
+        return id != null && Objects.equals(id, country.id);
     }
 
-    public void setCities(Set<City> cities) {
-        this.cities = cities;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
     }
 }

@@ -1,10 +1,20 @@
 package wat.wcy.TravelAgency.model;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+import org.hibernate.Hibernate;
 
-import java.util.LinkedHashSet;
+import java.util.Objects;
 import java.util.Set;
 
+
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
 @Entity
 @Table(name = "insurance")
 public class Insurance {
@@ -22,45 +32,20 @@ public class Insurance {
     private String description;
 
     @OneToMany(mappedBy = "insurance")
-    private Set<Reservation> reservations = new LinkedHashSet<>();
+    @ToString.Exclude
+    private Set<Reservation> reservations;
 
-    public Set<Reservation> getReservations() {
-        return reservations;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Insurance insurance = (Insurance) o;
+        return id != null && Objects.equals(id, insurance.id);
     }
 
-    public void setReservations(Set<Reservation> reservations) {
-        this.reservations = reservations;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Double getPrice() {
-        return price;
-    }
-
-    public void setPrice(Double price) {
-        this.price = price;
-    }
-
-    public String getOption() {
-        return option;
-    }
-
-    public void setOption(String option) {
-        this.option = option;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
     }
 }

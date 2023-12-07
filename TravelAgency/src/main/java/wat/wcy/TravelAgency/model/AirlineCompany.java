@@ -1,10 +1,19 @@
 package wat.wcy.TravelAgency.model;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+import org.hibernate.Hibernate;
 
-import java.util.LinkedHashSet;
+import java.util.Objects;
 import java.util.Set;
 
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
 @Entity
 @Table(name = "airline_company")
 public class AirlineCompany {
@@ -22,45 +31,20 @@ public class AirlineCompany {
     private String type;
 
     @OneToMany(mappedBy = "airlineCompany")
-    private Set<Hotel> hotels = new LinkedHashSet<>();
+    @ToString.Exclude
+    private Set<Hotel> hotels;
 
-    public Set<Hotel> getHotels() {
-        return hotels;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        AirlineCompany that = (AirlineCompany) o;
+        return id != null && Objects.equals(id, that.id);
     }
 
-    public void setHotels(Set<Hotel> hotels) {
-        this.hotels = hotels;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public Integer getPrice() {
-        return price;
-    }
-
-    public void setPrice(Integer price) {
-        this.price = price;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
     }
 }

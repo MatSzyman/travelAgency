@@ -1,11 +1,20 @@
 package wat.wcy.TravelAgency.model;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+import org.hibernate.Hibernate;
 
 import java.time.Instant;
-import java.util.LinkedHashSet;
+import java.util.Objects;
 import java.util.Set;
 
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
 @Entity
 @Table(name = "travel_option")
 public class TravelOption {
@@ -14,6 +23,7 @@ public class TravelOption {
     private Integer id;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "travel_id")
+    @ToString.Exclude
     private Travel travel;
 
     @Column(name = "departure_time", nullable = false)
@@ -23,46 +33,20 @@ public class TravelOption {
     private Instant arrivalTime;
 
     @OneToMany(mappedBy = "travelOption")
-    private Set<Reservation> reservations = new LinkedHashSet<>();
+    @ToString.Exclude
+    private Set<Reservation> reservations;
 
-    public Set<Reservation> getReservations() {
-        return reservations;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        TravelOption that = (TravelOption) o;
+        return id != null && Objects.equals(id, that.id);
     }
 
-    public void setReservations(Set<Reservation> reservations) {
-        this.reservations = reservations;
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
     }
-
-    public Instant getArrivalTime() {
-        return arrivalTime;
-    }
-
-    public void setArrivalTime(Instant arrivalTime) {
-        this.arrivalTime = arrivalTime;
-    }
-
-    public Instant getDepartureTime() {
-        return departureTime;
-    }
-
-    public void setDepartureTime(Instant departureTime) {
-        this.departureTime = departureTime;
-    }
-
-    public Travel getTravel() {
-        return travel;
-    }
-
-    public void setTravel(Travel travel) {
-        this.travel = travel;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
 }
