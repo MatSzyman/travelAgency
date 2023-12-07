@@ -1,8 +1,9 @@
 package wat.wcy.TravelAgency.DTO;
 
+import lombok.Value;
 import wat.wcy.TravelAgency.model.City;
 
-//@Value
+@Value
 public class CityDTO {
 
     String name;

@@ -13,9 +13,9 @@ public interface CityRepository extends JpaRepository<City,Integer> {
     @Override
     List<City> findAll(Sort sort);
 
-    //List<City> findAllByInCountry(boolean isInCountry);
+    List<City> findAllByCountry_Name(String name);
 
-    //City findByName(String name);
+    City findByName(String name);
 
     @Override
     boolean existsById(Integer integer);
