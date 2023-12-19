@@ -20,7 +20,7 @@ import java.util.Set;
 public class Client {
     @Id
     @Column(name = "id", nullable = false)
-    private Integer id;
+    private String id;
 
     @Column(name = "name", nullable = false, length = 100)
     private String name;
@@ -34,6 +34,13 @@ public class Client {
     @OneToMany(mappedBy = "client")
     @ToString.Exclude
     private Set<Reservation> reservations;
+
+    public Client(String userId, String userName, String userLastName, String userEmail) {
+        this.id = userId;
+        this.name=userName;
+        this.lastName=userLastName;
+        this.email=userEmail;
+    }
 
     @Override
     public boolean equals(Object o) {

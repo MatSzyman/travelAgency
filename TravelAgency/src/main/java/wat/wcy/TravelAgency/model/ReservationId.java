@@ -16,7 +16,7 @@ public class ReservationId implements Serializable {
     @Column(name = "id", nullable = false)
     private Integer id;
     @Column(name = "client_id", nullable = false)
-    private Integer clientId;
+    private String clientId;
     @Column(name = "travel_option_id", nullable = false)
     private Integer travelOptionId;
 
