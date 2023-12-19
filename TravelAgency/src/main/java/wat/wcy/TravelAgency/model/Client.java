@@ -16,8 +16,8 @@ import java.util.Set;
 @ToString
 @RequiredArgsConstructor
 @Entity
-@Table(name = "\"user\"")
-public class User {
+@Table(name = "Client")
+public class Client {
     @Id
     @Column(name = "id", nullable = false)
     private Integer id;
@@ -31,19 +31,15 @@ public class User {
     @Column(name = "email", nullable = false, length = 100)
     private String email;
 
-    @Column(name = "phone_number")
-    private Integer phoneNumber;
-
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "client")
     @ToString.Exclude
     private Set<Reservation> reservations;
-
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        User user = (User) o;
+        Client user = (Client) o;
         return id != null && Objects.equals(id, user.id);
     }
 

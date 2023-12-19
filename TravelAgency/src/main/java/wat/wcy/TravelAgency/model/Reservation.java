@@ -21,11 +21,11 @@ public class Reservation {
     @ToString.Exclude
     private Insurance insurance;
 
-    @MapsId("userId")
+    @MapsId("clientId")
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "client_id")
     @ToString.Exclude
-    private User user;
+    private Client client;
 
     @MapsId("travelOptionId")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
