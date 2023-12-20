@@ -28,9 +28,9 @@ public class SecurityConfig {
         http.csrf(t -> t.disable());
         http.authorizeHttpRequests(authorize -> {
             authorize
-                    .requestMatchers(HttpMethod.GET, "/restaurant/public/list").permitAll()
-                    .requestMatchers(HttpMethod.GET, "/restaurant/public/menu/*").permitAll()
-                    //.requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
+                    //.requestMatchers(HttpMethod.GET, "/country").permitAll() //nasze
+                    .requestMatchers(HttpMethod.GET, "/restaurant/public/menu/*").permitAll() //jeszcze chlopa
+                    .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
                     .anyRequest().authenticated();
         });
         http.oauth2ResourceServer(t-> {

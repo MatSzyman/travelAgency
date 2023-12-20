@@ -13,6 +13,11 @@ spring:
       resourceserver:
         jwt:
           issuer-uri: http://127.0.0.1:8081/realms/Travel-Agency
+springdoc:
+  swagger-ui:
+    oauth:
+      client-id: swagger-demo
+      client-secret: KHOniqycsZ2UYPDtxU3pXIMlfFwT5QtM
 
 server:
   port: 8080
