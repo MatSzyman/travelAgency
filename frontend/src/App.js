@@ -11,14 +11,14 @@ function App() {
   useEffect(() => {
     if(isRun.current) return;
     const keycloakInstance = new Keycloak({
-      url: 'http://127.0.0.1:8081',
+      url: 'http://127.0.0.1:8081/',
       realm: 'Travel-Agency',
       clientId: 'React-FE-client'
     });
 
     isRun.current = true;
 
-    keycloakInstance.init({ onLoad: 'login-required'}).then(auth => {
+    keycloakInstance.init({ onLoad: 'check-sso'}).then(auth => {
       setKeycloak(keycloakInstance);
       setAuthenticated(auth);
     });
