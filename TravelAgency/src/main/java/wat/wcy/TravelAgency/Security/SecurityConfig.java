@@ -15,6 +15,12 @@ import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.Arrays;
+import java.util.List;
 
 @Configuration
 @EnableWebSecurity
@@ -29,17 +35,16 @@ public class SecurityConfig {
         http.authorizeHttpRequests(authorize -> {
             authorize
                     //.requestMatchers(HttpMethod.GET, "/country").permitAll() //nasze
-                    .requestMatchers(HttpMethod.GET, "/restaurant/public/menu/*").permitAll() //jeszcze chlopa
-                    .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
+                    //.requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
                     .anyRequest().authenticated();
         });
         http.oauth2ResourceServer(t-> {
             t.jwt(Customizer.withDefaults());
-            //t.opaqueToken(Customizer.withDefaults());
         });
         http.sessionManagement(
                 t -> t.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
         );
+        http.cors(Customizer.withDefaults());
         return http.build();
     }
 
@@ -59,6 +64,18 @@ public class SecurityConfig {
         cv.setAuthoritiesClaimName("roles"); // Default "scope" or "scp"
         c.setJwtGrantedAuthoritiesConverter(cv);
         return c;
+    }
+
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(List.of("http://localhost:3000")); //allow to send req react
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        configuration.setAllowedHeaders(Arrays.asList("Authorization", "Cache-Control", "Content-Type"));
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration); // assign CORS to all endpoints
+        return source;
     }
 
 }

@@ -4,6 +4,7 @@ import Keycloak from 'keycloak-js';
 import LogoutButton from './logoutButton';
 import LoginButton from './loginButton';
 import ClientButton from './clientButton';
+import TravelList from './TravelLIst';
 
 function App() {
   const [keycloak, setKeycloak] = useState(null);
@@ -38,7 +39,8 @@ function App() {
             </p>
               <LogoutButton keycloak={keycloak} />
               <ClientButton keycloak={keycloak} authenticated={authenticated}/>
-            
+              <hr></hr>
+              <TravelList keycloak={keycloak}></TravelList>
           </header>
         </div>
       );

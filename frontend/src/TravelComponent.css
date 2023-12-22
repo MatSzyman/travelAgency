@@ -1,0 +1,41 @@
+.travel-card {
+    border: 1px solid #ccc;
+    padding: 20px;
+    margin: 20px;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    min-width: 300px; /* Set a max width for each card */
+    text-align: center; /* Center the text */
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  }
+  
+  .travel-card:hover {
+    transform: translateY(-5px); /* Slight lift effect on hover */
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  }
+  
+  .travel-card h3 {
+    color: #333;
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+  }
+  
+  .travel-card p {
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 10px;
+  }
+  
+  .travel-card p:last-child {
+    color: #444;
+    font-weight: bold;
+    margin-top: 15px;
+  }
+  
+  .travel-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around; /* Distribute space around cards */
+    padding: 20px;
+  }
