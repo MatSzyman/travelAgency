@@ -32,6 +32,9 @@ public class TravelOption {
     @Column(name = "arrival_time", nullable = false)
     private Instant arrivalTime;
 
+    @Column(name = "travel_price", nullable = true)
+    private Double travelPrice;
+
     @OneToMany(mappedBy = "travelOption")
     @ToString.Exclude
     private Set<Reservation> reservations;

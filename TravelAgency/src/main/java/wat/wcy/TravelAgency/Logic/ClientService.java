@@ -24,9 +24,7 @@ public class ClientService {
 
         if (authentication != null && authentication.getPrincipal() instanceof Jwt) {
             Jwt jwt = (Jwt) authentication.getPrincipal();
-
-            // Extract the 'id' claim from the token
-            String userId = jwt.getClaimAsString("user_id");
+            String userId = jwt.getClaimAsString("sub");
             String userName = jwt.getClaimAsString("given_name");
             String userLastName = jwt.getClaimAsString("family_name");
             String userEmail = jwt.getClaimAsString("email");
@@ -40,7 +38,11 @@ public class ClientService {
 
 
     public Client saveAsClientFromJWT(){
-        return clientRepo.save(getUserDataFromToken());
+        Client client = getUserDataFromToken();
+        if (client.getId() == null || client.getId().isEmpty()) {
+            throw new IllegalStateException("Client ID is missing or invalid.");
+        }
+        return clientRepo.save(client);
     }
 
     public List<Client> getClients(){
