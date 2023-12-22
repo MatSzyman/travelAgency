@@ -3,6 +3,7 @@ import React, {useEffect, useState, useRef} from 'react';
 import Keycloak from 'keycloak-js';
 import LogoutButton from './logoutButton';
 import LoginButton from './loginButton';
+import ClientButton from './clientButton';
 
 function App() {
   const [keycloak, setKeycloak] = useState(null);
@@ -35,17 +36,16 @@ function App() {
             <p>
               This is a React application secured by Keycloak.
             </p>
-            {/* Render the rest of your app's components here */
               <LogoutButton keycloak={keycloak} />
-            }
+              <ClientButton keycloak={keycloak} authenticated={authenticated}/>
+            
           </header>
         </div>
       );
     } else return (
       <div>Unable to authenticate!
-      {/* Render the rest of your app's components here */
       <LoginButton keycloak={keycloak} />
-      }
+      <ClientButton keycloak={keycloak} authenticated={authenticated}/>
       </div>
     );
   }
