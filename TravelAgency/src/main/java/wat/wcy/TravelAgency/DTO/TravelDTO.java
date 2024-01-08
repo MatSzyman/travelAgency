@@ -1,7 +1,5 @@
 package wat.wcy.TravelAgency.DTO;
 
-import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
 import lombok.Value;
 import wat.wcy.TravelAgency.model.Travel;
 

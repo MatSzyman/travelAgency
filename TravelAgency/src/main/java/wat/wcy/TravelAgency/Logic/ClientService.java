@@ -11,7 +11,7 @@ import java.util.List;
 @Service
 public class ClientService {
 
-    private ClientRepository clientRepo;
+    private final ClientRepository clientRepo;
 
 
     public ClientService(ClientRepository clientRepo) {

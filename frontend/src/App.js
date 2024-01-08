@@ -5,6 +5,7 @@ import LogoutButton from './logoutButton';
 import LoginButton from './loginButton';
 import ClientButton from './clientButton';
 import TravelList from './TravelLIst';
+import CreateTravelCard from './CreateTravelCard';
 
 function App() {
   const [keycloak, setKeycloak] = useState(null);
@@ -38,9 +39,11 @@ function App() {
               This is a React application secured by Keycloak.
             </p>
               <LogoutButton keycloak={keycloak} />
+              <CreateTravelCard keycloak={keycloak} authenticated={authenticated}/>
               <ClientButton keycloak={keycloak} authenticated={authenticated}/>
               <hr></hr>
               <TravelList keycloak={keycloak}></TravelList>
+              
           </header>
         </div>
       );

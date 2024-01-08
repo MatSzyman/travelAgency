@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 @Service
 public class CountryService {
 
-    private CountryRepository repository;
+    private final CountryRepository repository;
 
     public CountryService(CountryRepository repository){
         this.repository = repository;

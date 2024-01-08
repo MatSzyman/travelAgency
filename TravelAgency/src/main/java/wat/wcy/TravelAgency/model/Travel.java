@@ -21,6 +21,7 @@ import java.util.Set;
 public class Travel {
     @Id
     @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(name = "name", nullable = false, length = 100)
@@ -51,6 +52,17 @@ public class Travel {
     @OneToMany(mappedBy = "travel")
     @ToString.Exclude
     private Set<TravelOption> travelOptions;
+
+
+    public Travel(String name, Double basePrice, String description, Instant startSeason, Instant endSeason, Hotel hotel, City city) {
+        this.name = name;
+        this.basePrice = basePrice;
+        this.description = description;
+        this.startSeason = startSeason;
+        this.endSeason = endSeason;
+        this.hotel = hotel;
+        this.city = city;
+    }
 
 
     @Override

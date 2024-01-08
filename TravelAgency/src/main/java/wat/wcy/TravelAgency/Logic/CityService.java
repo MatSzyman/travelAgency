@@ -9,7 +9,8 @@ import java.util.stream.Collectors;
 
 @Service
 public class CityService {
-    private CityRepository repository;
+
+    private final CityRepository repository;
 
     public CityService(CityRepository repository){
         this.repository = repository;
@@ -18,6 +19,10 @@ public class CityService {
 
     public List<CityDTO> getCities(String name){
         return repository.findAllByCountry_Name(name).stream().map(CityDTO::new).collect(Collectors.toList());
+    }
+
+    public List<CityDTO> getCities(){
+        return repository.findAll().stream().map(CityDTO::new).collect(Collectors.toList());
     }
 
 
