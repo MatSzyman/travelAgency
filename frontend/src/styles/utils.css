@@ -1,0 +1,114 @@
+/* xs */
+/* @media (min-width: 475px) {
+    
+} */
+
+/* sm */
+/* @media (min-width: 640px) {
+    
+} */
+
+/* md */
+/* @media (min-width: 768px) {
+    
+} */
+
+/* lg */
+/* @media (min-width: 1024px) {
+    
+} */
+
+/* xl */
+/* @media (min-width: 1280px) {
+    
+} */
+
+/* 2xl */
+/* @media (min-width: 1536px) {
+    
+} */
+
+.btn {
+    /* zachowuje sie jak inline ale mozemy
+     kontrolowac wymiary, pading itd. */
+    display: inline-block;
+    font-weight: 600;
+    text-decoration: none;
+    letter-spacing: -0.05em;
+    background-color: var(--clr-rose600);
+    color: var(--clr-light);
+    padding: 0.5em 1em;
+    border-radius: 6px;
+    box-shadow: 0px 10px 20px rgba(225, 29, 72, 0.5),
+        0px 6px 6px rgba(225, 29, 72, 0.5),
+        0px 0px 100px -10px var(--clr-rose600);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0px 14px 28px rgba(225, 29, 72, 0.25),
+        0px 10px 10px rgba(225, 29, 72, 0.22),
+        0px 0px 120px -10px var(--clr-rose600);
+}
+
+/* container do architektury mobile first 
+    lepiej robic na telefon najpierw  */
+.container {
+    /* ogolnie nie powinno sie uzywac %, ale
+    na ekrany mniejsze niz 475px nie ma wyboru */
+    width: 100%;
+    /* ustawiamy manualnie zeby miec wieksza kontrole
+    nad marginesami */
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    /* border: 1px solid red; */
+}
+
+.section {
+    margin-top: 5rem;
+}
+
+/* xs */
+@media (min-width: 475px) {
+    .container {
+        max-width: 475px;
+    }
+}
+
+/* sm */
+@media (min-width: 640px) {
+    .container {
+        max-width: 640px;
+    }
+}
+
+/* md */
+@media (min-width: 768px) {
+    .container {
+        max-width: 768px;
+    }
+}
+
+/* lg */
+@media (min-width: 1024px) {
+    .container {
+        max-width: 1024px;
+    }
+}
+
+/* xl */
+@media (min-width: 1280px) {
+    .container {
+        max-width: 1280px;
+    }
+}
+
+/* 2xl */
+@media (min-width: 1536px) {
+    .container {
+        max-width: 1536px;
+    }
+}
