@@ -1,5 +1,5 @@
 import React from 'react';
-import './styles/TravelComponent.css';
+import '../styles/TravelComponent.css';
 
 function TravelCard({ travel }) {
     // Format the dates using a library like date-fns or moment.js, or write your own formatter.

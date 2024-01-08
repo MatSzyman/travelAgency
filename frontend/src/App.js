@@ -4,10 +4,11 @@ import './styles/style.css'
 import './styles/utils.css'
 import React, {useEffect, useState, useRef} from 'react';
 import Keycloak from 'keycloak-js';
-import LogoutButton from './logoutButton';
-import LoginButton from './loginButton';
-import ClientButton from './clientButton';
-import TravelList from './TravelLIst';
+import LogoutButton from './components/logoutButton';
+import LoginButton from './components/loginButton';
+import ClientButton from './components/clientButton';
+import TravelList from './components/TravelLIst';
+import { Navbar } from './components/Navbar';
 
 function App() {
   const [keycloak, setKeycloak] = useState(null);
@@ -48,10 +49,11 @@ function App() {
         </div>
       );
     } else return (
-      <div>Unable to authenticate!
-      <LoginButton keycloak={keycloak} />
-      <ClientButton keycloak={keycloak} authenticated={authenticated}/>
-      </div>
+      // <div>Unable to authenticate!
+      // <LoginButton keycloak={keycloak} />
+      // <ClientButton keycloak={keycloak} authenticated={authenticated}/>
+      // </div>
+      <Navbar />
     );
   }
   return (
