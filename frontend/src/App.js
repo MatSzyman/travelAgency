@@ -1,4 +1,7 @@
-import './App.css';
+import './styles/App.css';
+import './styles/modern-normalize.css';
+import './styles/style.css'
+import './styles/utils.css'
 import React, {useEffect, useState, useRef} from 'react';
 import Keycloak from 'keycloak-js';
 import LogoutButton from './logoutButton';

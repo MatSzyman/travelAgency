@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import TravelCard from './TravelCard';
-import './TravelComponent.css';
+import './styles/TravelComponent.css';
 
 function TravelList({keycloak}){
   const [travels, setTravels] = useState([]);

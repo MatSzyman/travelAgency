@@ -1,7 +1,5 @@
 package wat.wcy.TravelAgency.DTO;
 
-import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
 import lombok.Value;
 import wat.wcy.TravelAgency.model.Travel;
 
@@ -14,6 +12,7 @@ public class TravelDTO {
     String description;
     Instant startSeason;
     Instant endSeason;
+    String image_path;
 
     public TravelDTO(Travel travel){
         this.name = travel.getName();
@@ -21,6 +20,7 @@ public class TravelDTO {
         this.description = travel.getDescription();
         this.startSeason = travel.getStartSeason();
         this.endSeason = travel.getEndSeason();
+        this.image_path = travel.getImage_path();
     }
 
 }
