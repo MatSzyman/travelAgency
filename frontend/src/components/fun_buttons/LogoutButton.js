@@ -1,6 +1,6 @@
 import React from 'react';
 
-const LogoutButton = ({ keycloak }) => {
+export const LogoutButton = ({ keycloak }) => {
   const handleLogout = () => {
     keycloak.logout();
   };
@@ -9,5 +9,3 @@ const LogoutButton = ({ keycloak }) => {
     <button onClick={handleLogout}>Logout</button>
   );
 };
-
-export default LogoutButton;

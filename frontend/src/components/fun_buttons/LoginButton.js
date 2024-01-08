@@ -1,6 +1,6 @@
 import React from 'react';
 
-const LoginButton = ({ keycloak }) => {
+export const LoginButton = ({ keycloak }) => {
   const handleLogin = () => {
     keycloak.login();
   };
@@ -9,5 +9,3 @@ const LoginButton = ({ keycloak }) => {
     <button onClick={handleLogin}>Login</button>
   );
 };
-
-export default LoginButton;

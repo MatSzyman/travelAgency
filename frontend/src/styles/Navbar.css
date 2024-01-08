@@ -1,3 +1,8 @@
-*{
-    color: aliceblue;
+nav{
+    display: flex;
+    justify-content: space-between;
+}
+
+ul{
+    display: flex;
 }

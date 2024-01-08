@@ -1,12 +1,6 @@
-import './styles/App.css';
-import './styles/modern-normalize.css';
-import './styles/style.css'
-import './styles/utils.css'
 import React, {useEffect, useState, useRef} from 'react';
 import Keycloak from 'keycloak-js';
-import LogoutButton from './components/logoutButton';
-import LoginButton from './components/loginButton';
-import ClientButton from './components/clientButton';
+import ClientButton from './components/fun_buttons/ClientButton';
 import TravelList from './components/TravelLIst';
 import { Navbar } from './components/Navbar';
 
@@ -33,32 +27,11 @@ function App() {
 
   }, []);
 
-  if(keycloak) {
-    if(authenticated) {
-      return (
-        <div className="App">
-          <header className="App-header">
-            <p>
-              This is a React application secured by Keycloak.
-            </p>
-              <LogoutButton keycloak={keycloak} />
-              <ClientButton keycloak={keycloak} authenticated={authenticated}/>
-              <hr></hr>
-              <TravelList keycloak={keycloak}></TravelList>
-          </header>
-        </div>
-      );
-    } else return (
-      // <div>Unable to authenticate!
-      // <LoginButton keycloak={keycloak} />
-      // <ClientButton keycloak={keycloak} authenticated={authenticated}/>
-      // </div>
-      <Navbar />
-    );
-  }
+  
   return (
-    <div>Loading...</div>
-  );
+      <Navbar keycloak={keycloak} authenticated={authenticated}/>
+
+  )
 }
 
 export default App;
