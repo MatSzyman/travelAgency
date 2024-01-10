@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import ImageUploadComponent from './ImageUpload';
 
 function CreateTravelCard({keycloak, authenticated}) {
   const [travelData, setTravelData] = useState({
@@ -14,6 +15,10 @@ function CreateTravelCard({keycloak, authenticated}) {
 
   const [hotels, setHotels] = useState([]);
   const [cities, setCities] = useState([]);
+  const [travelId, setTravelId] = useState(null);
+  const [showImageUpload, setShowImageUpload] = useState(false); 
+
+
 
   useEffect(() => {
     const fetchHotels = async () => {
@@ -53,17 +58,33 @@ function CreateTravelCard({keycloak, authenticated}) {
 
 
   const handleChange = (e) => {
-    setTravelData({ ...travelData, [e.target.name]: e.target.value });
+
+    if (e.target.name === "basePrice") {
+        // Ensure base price is not negative
+        const value = Math.max(0, Number(e.target.value));
+        setTravelData({...travelData, [e.target.name]: value});
+      } else {
+        // For other fields, just set the value directly
+        setTravelData({ ...travelData, [e.target.name]: e.target.value });
+      }
   };
 
   const handleSubmit = async (e) => {
+
+    e.preventDefault();
 
     if (!keycloak || !authenticated) {
         console.log('Not authenticated');
         return;
       }
 
-    e.preventDefault();
+    const startDate = new Date(travelData.startSeason);
+    const endDate = new Date(travelData.endSeason);
+    if (startDate >= endDate) {
+        console.error("End date must be after the start date");
+        return; // Prevent form submission
+    }
+
   
     const travelSubmission = {
       ...travelData,
@@ -73,6 +94,7 @@ function CreateTravelCard({keycloak, authenticated}) {
   
     console.log('Sending travel submission to backend:', travelSubmission);
 
+
     try {
       const response = await axios.post('http://localhost:8080/travel', travelSubmission, {
         headers: {
@@ -80,15 +102,38 @@ function CreateTravelCard({keycloak, authenticated}) {
         }
       });
   
-      console.log('Submission successful:', response.data);
-      // Handle success, e.g., show a success message, clear the form, or redirect the user
+  
+        setTravelId(response.data.id);
+        console.log('Submission successful:', response.data.id);
+       
+        setShowImageUpload(true); 
     } catch (error) {
       console.error('Submission failed:', error);
       // Handle errors, e.g., show an error message
     }
   };
 
+  const handleImageUpload = async (imageId) => {
+    if (travelId) {
+    try {
+        await axios.post(`http://localhost:8080/image/fileSystem/${travelId}`,  imageId , {
+            headers: { 'Authorization': `Bearer ${keycloak.token}`,
+            'Content-Type': 'application/json' },
+        });
+
+        console.log(`Image ${imageId} associated with travel ${travelId}`);
+    } catch (error) {
+        console.error('Error in associating image with travel:', error);
+    }
+    }else{
+        console.log('No travel ID available for image association.');
+ 
+    }
+};
+
+
   return (
+    <div>
     <form onSubmit={handleSubmit}>
       <input
         type="text"
@@ -136,9 +181,21 @@ function CreateTravelCard({keycloak, authenticated}) {
     </select>
       <button type="submit">Add Travel</button>
     </form>
+
+     
+    {showImageUpload && (
+        <ImageUploadComponent
+          keycloak={keycloak}
+          authenticated={authenticated}
+          onImageUpload={handleImageUpload}  
+        />
+      )}
+
+      
+
+    
+    </div>
   );
 }
 
 export default CreateTravelCard;
-
-

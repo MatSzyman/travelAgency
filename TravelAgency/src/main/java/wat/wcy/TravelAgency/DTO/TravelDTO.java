@@ -7,20 +7,27 @@ import java.time.Instant;
 
 @Value
 public class TravelDTO {
+    Integer id;
     String name;
     Double basePrice;
     String description;
     Instant startSeason;
     Instant endSeason;
-    String image_path;
+    Integer fileDataId;
+
+
+
+
 
     public TravelDTO(Travel travel){
+        this.id = travel.getId();
         this.name = travel.getName();
         this.basePrice = travel.getBasePrice();
         this.description = travel.getDescription();
         this.startSeason = travel.getStartSeason();
         this.endSeason = travel.getEndSeason();
-        this.image_path = travel.getImage_path();
+        this.fileDataId = travel.getFileDataId();
+
     }
 
 }
