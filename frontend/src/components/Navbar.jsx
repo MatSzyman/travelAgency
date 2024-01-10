@@ -7,11 +7,16 @@ import '../styles/Navbar.css'
 
 export const Navbar = ({keycloak, authenticated}) => {
     if(!authenticated){
-        return <nav>
-            <Link to = '/'>Strona główna</Link>
+        return <nav className="container">
+            <div className="title">
+                <span>Preku Travel</span>
+            </div>
             <ul>
                 <li>
-                    <a>Wycieczki</a>
+                    <Link to = '/' className="link">Strona główna</Link>
+                </li>
+                <li>
+                    <a className="link">Wycieczki</a>
                 </li>
                 <li>
                     <LoginButton keycloak={keycloak}/>
@@ -22,11 +27,16 @@ export const Navbar = ({keycloak, authenticated}) => {
             </ul>
         </nav>;
     }else {
-        return <nav>
-            <Link to = '/'>Strona główna</Link>
+        return <nav className="container">
+            <div className="title">
+                <span>Preku Travel</span>
+            </div>
             <ul>
                 <li>
-                    <a>Wycieczki</a>
+                    <Link to = '/' className="link">Strona główna</Link>
+                </li>
+                <li>
+                    <a className="link">Wycieczki</a>
                 </li>
                 <li>
                     <LogoutButton keycloak={keycloak}/>

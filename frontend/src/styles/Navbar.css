@@ -1,8 +1,88 @@
-nav{
+nav {
     display: flex;
     justify-content: space-between;
+    padding: 1rem 3rem;
+    border-bottom: 2px solid var(--clr-indigo600);
+    color: var(--clr-light);
+}
+nav div {
+    display: flex;
+    font-weight: 400;
+    font-size: var(--size-2xl);
+    font-family: 'Dela Gothic One', sans-serif;
 }
 
-ul{
+nav img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    max-height: 50px;
+    border-radius: 50%;
+}
+
+ul {
+    color: var(--clr-light);
     display: flex;
+    gap: 2em;
+}
+
+ul li {
+    color: var(--clr-light);
+    list-style: none;
+}
+
+#singup {
+    /* zachowuje sie jak inline ale mozemy
+     kontrolowac wymiary, pading itd. */
+    display: inline-block;
+    font-weight: 600;
+    text-decoration: none;
+    letter-spacing: -0.05em;
+    background-color: var(--clr-indigo600);
+    color: var(--clr-light);
+    padding: 0.5em 1em;
+    border-radius: 6px;
+    box-shadow: 0px 10px 20px rgba(79, 12, 236, 0.5),
+        0px 6px 6px rgba(27, 58, 238, 0.5),
+        0px 0px 100px -10px var(--clr-rose600);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+#singup:hover {
+    transform: translateY(-3px);
+    box-shadow: 0px 14px 28px rgba(225, 29, 72, 0.25),
+        0px 10px 10px rgba(225, 29, 72, 0.22),
+        0px 0px 120px -10px var(--clr-rose600);
+}
+
+.link {
+    position: relative;
+    top: 5px;
+    font-size: var(--size-base);
+    text-decoration: none;
+    font-weight: 600;
+    color: var(--clr-slate400);
+    letter-spacing: -0.05em;
+    transition: color 0.4s, transform 0.4s;
+    padding: 0px 10px;
+    cursor: pointer;
+}
+
+.link::after {
+    content: "";
+    position: absolute;
+    background-color: var(--clr-rose600);
+    height: 3px;
+    width: 0;
+    left: 0;
+    bottom: -10px;
+    transition: 0.4s;
+}
+
+.link:hover::after {
+    width: 100%;
+}
+
+.link:hover {
+    color: var(--clr-light);
 }

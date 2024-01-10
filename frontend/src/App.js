@@ -1,7 +1,5 @@
 import React, {useEffect, useState, useRef} from 'react';
 import Keycloak from 'keycloak-js';
-import ClientButton from './components/fun_buttons/ClientButton';
-import TravelList from './components/TravelLIst';
 import { Navbar } from './components/Navbar';
 
 function App() {

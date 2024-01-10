@@ -6,6 +6,6 @@ export const RegisterButton = ({keycloak}) => {
       };
     
       return (
-        <button onClick={handleRegister}>Sing up</button>
+        <button id="singup" onClick={handleRegister}>Sing up</button>
       );
 };

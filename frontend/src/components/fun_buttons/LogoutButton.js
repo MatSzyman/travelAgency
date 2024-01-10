@@ -6,6 +6,6 @@ export const LogoutButton = ({ keycloak }) => {
   };
 
   return (
-    <button onClick={handleLogout}>Logout</button>
+    <button className = 'btn' onClick={handleLogout}>Logout</button>
   );
 };
