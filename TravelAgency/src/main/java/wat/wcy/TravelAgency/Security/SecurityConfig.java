@@ -35,6 +35,7 @@ public class SecurityConfig {
         http.authorizeHttpRequests(authorize -> {
             authorize
                     //.requestMatchers(HttpMethod.GET, "/country").permitAll() //nasze
+                    .requestMatchers(HttpMethod.GET, "/travel/all").permitAll()
                     //.requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
                     .anyRequest().authenticated();
         });

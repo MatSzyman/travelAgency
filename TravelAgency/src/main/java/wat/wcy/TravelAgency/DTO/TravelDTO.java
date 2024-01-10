@@ -13,6 +13,9 @@ public class TravelDTO {
     Instant startSeason;
     Instant endSeason;
     String image_path;
+    Integer stars_count;
+    String hotel_name;
+    String city_name;
 
     public TravelDTO(Travel travel){
         this.name = travel.getName();
@@ -21,6 +24,9 @@ public class TravelDTO {
         this.startSeason = travel.getStartSeason();
         this.endSeason = travel.getEndSeason();
         this.image_path = travel.getImage_path();
+        this.stars_count = travel.getHotel().getStarsCount();
+        this.hotel_name = travel.getHotel().getName();
+        this.city_name = travel.getCity().getName();
     }
 
 }

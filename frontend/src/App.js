@@ -1,6 +1,7 @@
 import React, {useEffect, useState, useRef} from 'react';
 import Keycloak from 'keycloak-js';
 import { Navbar } from './components/Navbar';
+import TravelList from './components/TravelLIst';
 
 function App() {
   const [keycloak, setKeycloak] = useState(null);
@@ -27,8 +28,10 @@ function App() {
 
   
   return (
+    <div>
       <Navbar keycloak={keycloak} authenticated={authenticated}/>
-
+      <TravelList keycloak={keycloak}/>
+    </div>
   )
 }
 
