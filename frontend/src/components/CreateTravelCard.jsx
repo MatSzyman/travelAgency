@@ -54,7 +54,7 @@ function CreateTravelCard({keycloak, authenticated}) {
 
    
     fetchCities();
-  }, []);
+  }, [keycloak]);
 
 
   const handleChange = (e) => {

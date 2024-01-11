@@ -37,6 +37,7 @@ function TravelList({keycloak}){
   // Function to fetch images based on their IDs
   
   const fetchImageById = async (fileDataId) => {
+    console.log(keycloak?.tokenParsed.roles[3])
     try {
       const response = await axios.get(`http://localhost:8080/image/fileSystem/${fileDataId}`, {
         responseType: 'blob',

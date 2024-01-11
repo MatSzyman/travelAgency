@@ -14,6 +14,10 @@ spring:
         jwt:
           issuer-uri: http://127.0.0.1:8081/realms/Travel-Agency
 
+  servlet:
+    multipart:
+      max-file-size: 4MB
+      max-request-size: 4MB
 springdoc:
   swagger-ui:
     oauth:

@@ -1,7 +1,9 @@
 import React, {useEffect, useState, useRef} from 'react';
 import Keycloak from 'keycloak-js';
 import { Navbar } from './components/Navbar';
-import TravelList from './components/TravelLIst';
+import { Home } from './components/pages/Home';
+import { Route, Routes } from 'react-router-dom';
+import CreateTravelCard from './components/CreateTravelCard'
 
 function App() {
   const [keycloak, setKeycloak] = useState(null);
@@ -30,7 +32,10 @@ function App() {
   return (
     <div>
       <Navbar keycloak={keycloak} authenticated={authenticated}/>
-      <TravelList keycloak={keycloak}/>
+      <Routes>
+        <Route path='/' element={<Home keycloak={keycloak} authenticated={authenticated}/>}/>
+        <Route path='/panel' element={<CreateTravelCard keycloak={keycloak} authenticated={authenticated}/>}/>
+      </Routes>
     </div>
   )
 }

@@ -2,12 +2,12 @@ import React from 'react';
 import LazyLoad from 'react-lazyload';
 import '../styles/TravelComponent.css';
 
-function TravelCard({ travel }) {
+function TravelCard({ travel, travelImages}) {
     // Format the dates using a library like date-fns or moment.js, or write your own formatter.
     const formattedStartSeason = new Date(travel.startSeason).toLocaleDateString();
     const formattedEndSeason = new Date(travel.endSeason).toLocaleDateString();
     const imageSrc = travelImages[travel.fileDataId]; // Use fileDataId to reference the image
-
+    
     const renderStars = (count) => {
       let stars = [];
       for (let i = 0; i < count; i++) {
