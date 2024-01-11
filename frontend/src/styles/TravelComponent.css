@@ -38,6 +38,7 @@
     position: relative;
     display: inline-block;
     font-weight: 600;
+    font-size: var(--size-xl);
     text-decoration: none;
     letter-spacing: -0.05em;
     background-color: var(--clr-slate800);
@@ -103,7 +104,7 @@
   }
 
   .travel-card .img img{
-    max-height: 250px;
+    max-height: 180px;
     border-radius: 0.25em;
     border: 2px solid var(--clr-light);
   }

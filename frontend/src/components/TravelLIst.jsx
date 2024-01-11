@@ -18,6 +18,7 @@ function TravelList({keycloak}){
             //     'Authorization': `Bearer ${keycloak.token}` // Include the JWT token in the request header
             //   }
         });
+            console.log(response.data)
             setTravels(response.data);
         }catch (err) {
             setError('Error fetching travels');

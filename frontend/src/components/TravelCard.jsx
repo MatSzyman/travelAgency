@@ -1,4 +1,5 @@
 import React from 'react';
+import LazyLoad from 'react-lazyload';
 import '../styles/TravelComponent.css';
 
 function TravelCard({ travel }) {
@@ -19,7 +20,9 @@ function TravelCard({ travel }) {
     return (
       <div className="travel-card">
         <div className="img">
-          <img src={travel.image_path} alt={travel.name} />
+          <LazyLoad>
+            <img src={travel.image_path} alt={travel.name} />
+          </LazyLoad>
         </div>
         <div className='wrapper'>
           <h3>{travel.name}, {renderStars(travel.stars_count)}</h3>
