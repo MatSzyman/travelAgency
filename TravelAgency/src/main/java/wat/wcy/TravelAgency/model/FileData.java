@@ -19,7 +19,9 @@ public class FileData {
 
     private String name;
     private String type;
-    private String filePath;
+
+    @Lob
+    private byte[] data;
 
     @OneToOne
     @JoinColumn(name = "travel_id", referencedColumnName = "id")

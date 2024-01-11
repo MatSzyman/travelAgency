@@ -10,8 +10,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import wat.wcy.TravelAgency.Logic.StorageService;
 import wat.wcy.TravelAgency.Repositories.TravelRepository;
+import wat.wcy.TravelAgency.model.FileData;
 import wat.wcy.TravelAgency.model.Travel;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Optional;
 
@@ -50,11 +52,17 @@ public class ImageUploadController {
     }
 
     @GetMapping("/fileSystem/{id}")
-    public ResponseEntity<?> downloadImageFromFileSystem(@PathVariable Integer id) throws IOException {
-        byte[] imageData=storageService.downloadImageFromFileSystem(id);
-        return ResponseEntity.status(HttpStatus.OK)
-                .contentType(MediaType.valueOf("image/png"))
-                .body(imageData);
+    public ResponseEntity<byte[]> downloadImageFromFileSystem(@PathVariable Integer id) throws IOException {
+        try {
+            FileData fileData = storageService.downloadImageFromFileSystem(id); // Your service method to get the FileData
+            return ResponseEntity.ok()
+                    .contentType(MediaType.parseMediaType(fileData.getType()))
+                    .body(fileData.getData());
+        } catch (FileNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
 
     }
 

@@ -7,6 +7,7 @@ import java.time.Instant;
 
 @Value
 public class TravelDTO {
+
     Integer id;
     String name;
     Double basePrice;
@@ -14,10 +15,6 @@ public class TravelDTO {
     Instant startSeason;
     Instant endSeason;
     Integer fileDataId;
-
-
-
-
 
     public TravelDTO(Travel travel){
         this.id = travel.getId();
