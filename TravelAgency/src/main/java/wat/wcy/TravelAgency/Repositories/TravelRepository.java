@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 import wat.wcy.TravelAgency.model.Travel;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface TravelRepository extends JpaRepository<Travel, Integer> {
@@ -16,13 +17,15 @@ public interface TravelRepository extends JpaRepository<Travel, Integer> {
     boolean existsById(Integer integer);
 
     @Override
+    Optional<Travel> findById(Integer integer);
+
+    @Override
     Travel save(Travel entity);
 
     @Override
     void delete(Travel entity);
 
-
-    //Travel findByName(String name);
+    Travel findByName(String name);
 
     //Optional<Travel> findAllByInCity(boolean isInCity);
 }

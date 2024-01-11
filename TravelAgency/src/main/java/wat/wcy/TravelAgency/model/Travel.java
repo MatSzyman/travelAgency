@@ -56,6 +56,8 @@ public class Travel {
     @ToString.Exclude
     private Set<TravelOption> travelOptions;
 
+    @Column(name = "file_data_id", nullable = true)
+    private Integer fileDataId; // ID reference to FileData
 
     public Travel(String name, Double basePrice, String description, Instant startSeason, Instant endSeason, Hotel hotel, City city) {
         this.name = name;

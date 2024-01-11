@@ -6,6 +6,7 @@ function TravelCard({ travel }) {
     // Format the dates using a library like date-fns or moment.js, or write your own formatter.
     const formattedStartSeason = new Date(travel.startSeason).toLocaleDateString();
     const formattedEndSeason = new Date(travel.endSeason).toLocaleDateString();
+    const imageSrc = travelImages[travel.fileDataId]; // Use fileDataId to reference the image
 
     const renderStars = (count) => {
       let stars = [];
@@ -21,7 +22,11 @@ function TravelCard({ travel }) {
       <div className="travel-card">
         <div className="img">
           <LazyLoad>
-            <img src={travel.image_path} alt={travel.name} />
+            {imageSrc ? ( // Use imageSrc for the conditional rendering
+            <img src={imageSrc} alt={travel.name} />
+            ) : (
+            <p>No image available</p>
+            )}
           </LazyLoad>
         </div>
         <div className='wrapper'>

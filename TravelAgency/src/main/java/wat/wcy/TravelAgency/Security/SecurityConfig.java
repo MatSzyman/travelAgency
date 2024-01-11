@@ -1,6 +1,5 @@
 package wat.wcy.TravelAgency.Security;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -10,8 +9,6 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
 import org.springframework.security.web.SecurityFilterChain;
@@ -36,6 +33,8 @@ public class SecurityConfig {
             authorize
                     //.requestMatchers(HttpMethod.GET, "/country").permitAll() //nasze
                     .requestMatchers(HttpMethod.GET, "/travel/all").permitAll()
+                    .requestMatchers(HttpMethod.GET, "/image/fileSystem/{fileName}").permitAll() //nasze
+                    .requestMatchers(HttpMethod.GET, "/travel/{name}").permitAll() //nasze
                     //.requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
                     .anyRequest().authenticated();
         });
