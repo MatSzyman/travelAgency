@@ -14,6 +14,7 @@ public class CreateTravelDTO {
     Instant endSeason;
     Integer hotel;
     Integer city;
+    Integer fileDataId;
 
 /*    public Travel toTravel(){
         return new Travel(name,basePrice,description,startSeason,endSeason,hotelId);

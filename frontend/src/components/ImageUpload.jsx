@@ -5,6 +5,7 @@ function ImageUploadComponent({keycloak, authenticated,onImageUpload}) {
     const [selectedFile, setSelectedFile] = useState(null);
     const [preview, setPreview] = useState('');
 
+
     // Handle file selection
     const handleFileChange = (event) => {
         const file = event.target.files[0];
@@ -41,11 +42,11 @@ function ImageUploadComponent({keycloak, authenticated,onImageUpload}) {
              },
         });
 
-        const imageId = response.data; 
-        console.log('Succesion:', imageId);
+        const uploadedImageId  = response.data; 
+        console.log('Succesion:', uploadedImageId);
 
         //new
-        onImageUpload(imageId);
+        onImageUpload(uploadedImageId);
 
     }
     catch(error){

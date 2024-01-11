@@ -45,8 +45,6 @@ public class StorageService {
         return fileDataRepository.findById(id)
                 .orElseThrow(()->new FileNotFoundException("Image not found with id: " + id));
 
-
-
     }
 }
 

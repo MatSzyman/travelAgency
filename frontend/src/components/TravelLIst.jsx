@@ -3,7 +3,7 @@ import axios from 'axios';
 import TravelCard from './TravelCard';
 import '../styles/TravelComponent.css';
 
-function TravelList({keycloak}){
+function TravelList({}){
   const [travels, setTravels] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -12,14 +12,11 @@ function TravelList({keycloak}){
   //dostepne dla wszytskich 
   useEffect(() => { //nie tutaj {keycloak}
     const fetchTravels = async () => {
-        console.log("Keycloak token:", keycloak?.token);
+
         try{
           const response = await axios.get('http://localhost:8080/travel/all',{
-            // headers: {
-            //     'Authorization': `Bearer ${keycloak.token}` // Include the JWT token in the request header
-            //   }
+
         });
-            console.log(response.data)
             setTravels(response.data);
         }catch (err) {
             setError('Error fetching travels');
@@ -29,19 +26,20 @@ function TravelList({keycloak}){
       }
     };
 
-    //if (keycloak && keycloak.token) {
         fetchTravels();
-    //}
-  }, [keycloak]); //tutaj wstawia sie zaleznosci w useEffect
+    
+  }, []); //tutaj wstawia sie zaleznosci w useEffect
 
-  // Function to fetch images based on their IDs
+
   
   const fetchImageById = async (fileDataId) => {
-    console.log(keycloak?.tokenParsed.roles[3])
+    if (travelImages[fileDataId]) {
+      return;
+    }
+
     try {
       const response = await axios.get(`http://localhost:8080/image/fileSystem/${fileDataId}`, {
-        responseType: 'blob',
-        headers: { 'Authorization': `Bearer ${keycloak.token}` },
+        responseType: 'blob'
       });
       
       const imageBlobUrl = URL.createObjectURL(response.data);
@@ -50,8 +48,9 @@ function TravelList({keycloak}){
         [fileDataId]: imageBlobUrl,
 
       }));
-      console.log("ImageBLOB" + imageBlobUrl);
+     
     } catch (error) {
+      
       console.error('Error fetching image:', error);
     }
   };
@@ -61,13 +60,10 @@ function TravelList({keycloak}){
 useEffect(() => {
   travels.forEach((travel) => {
     if (travel.fileDataId) {
-      console.log(travel.fileDataId);
       fetchImageById(travel.fileDataId);
     }
     else{
-      console.log("Err")
-      
-      
+      console.log("Error during fetching images")
     }
   });
 }, [travels]);
@@ -78,7 +74,6 @@ useEffect(() => {
   return (
     <div className="travel-list">
       {travels.map(travel => (
-        // name, bo nie ma ID, poznie sie cos wymysli
         <TravelCard key={travel.id} travel={travel} travelImages={travelImages} />
       ))}
     </div>

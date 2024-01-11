@@ -1,6 +1,5 @@
 package wat.wcy.TravelAgency.Controller;
 
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -19,7 +18,6 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/image")
-@SecurityRequirement(name = "Keycloak")
 public class ImageUploadController {
 
     private final StorageService storageService;

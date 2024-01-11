@@ -56,7 +56,7 @@ public class Travel {
     @Column(name = "file_data_id", nullable = true)
     private Integer fileDataId; // ID reference to FileData
 
-    public Travel(String name, Double basePrice, String description, Instant startSeason, Instant endSeason, Hotel hotel, City city) {
+    public Travel(String name, Double basePrice, String description, Instant startSeason, Instant endSeason, Hotel hotel, City city, Integer fileDataId) {
         this.name = name;
         this.basePrice = basePrice;
         this.description = description;
@@ -64,6 +64,7 @@ public class Travel {
         this.endSeason = endSeason;
         this.hotel = hotel;
         this.city = city;
+        this.fileDataId = fileDataId;
     }
 
 
