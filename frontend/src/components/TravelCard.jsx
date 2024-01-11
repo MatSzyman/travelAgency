@@ -1,5 +1,5 @@
 import React from 'react';
-import './styles/TravelComponent.css';
+import '../styles/TravelComponent.css';
 
 
 function TravelCard({ travel, travelImages }) {
