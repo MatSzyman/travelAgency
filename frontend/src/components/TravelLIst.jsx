@@ -62,7 +62,7 @@ useEffect(() => {
       fetchImageById(travel.fileDataId);
     }
     else{
-      console.log("Wypsierolka")
+      console.log("Err")
       
       
     }

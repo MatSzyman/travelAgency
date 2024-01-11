@@ -4,11 +4,11 @@ import './styles/style.css'
 import './styles/utils.css'
 import React, {useEffect, useState, useRef} from 'react';
 import Keycloak from 'keycloak-js';
-import LogoutButton from './logoutButton';
-import LoginButton from './loginButton';
-import ClientButton from './clientButton';
-import TravelList from './TravelLIst';
-import CreateTravelCard from './CreateTravelCard';
+import LogoutButton from './components/fun_buttons/logoutButton';
+import LoginButton from './components/fun_buttons/loginButton';
+import ClientButton from './components/fun_buttons/clientButton';
+import TravelList from './components/TravelLIst';
+import CreateTravelCard from './components/CreateTravelCard';
 
 function App() {
   const [keycloak, setKeycloak] = useState(null);

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import ImageUploadComponent from './ImageUpload';
+import ImageUploadComponent from './fun_buttons/ImageUpload';
 
 function CreateTravelCard({keycloak, authenticated}) {
   const [travelData, setTravelData] = useState({
