@@ -5,6 +5,8 @@ import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import wat.wcy.TravelAgency.DTO.CreateTravelDTO;
@@ -32,6 +34,14 @@ public class TravelController {
     ResponseEntity<List<TravelDTO>> getAllTravels(){
         List<TravelDTO> travels = travelService.getTravels();
         return ResponseEntity.ok(travels);
+    }
+
+    @GetMapping(value = "/pageable/all")
+    public Page<TravelDTO> getAllTravelsPageable(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size
+    ){
+        return travelService.getPageableTravels(PageRequest.of(page, size));
     }
 
     @PostMapping

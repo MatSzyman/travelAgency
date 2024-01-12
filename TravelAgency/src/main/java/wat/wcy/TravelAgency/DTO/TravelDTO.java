@@ -1,11 +1,14 @@
 package wat.wcy.TravelAgency.DTO;
 
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.Value;
 import wat.wcy.TravelAgency.model.Travel;
 
 import java.time.Instant;
 
 @Value
+@RequiredArgsConstructor
 public class TravelDTO {
 
     Integer id;

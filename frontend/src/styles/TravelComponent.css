@@ -136,3 +136,55 @@
     align-items: center; /* Distribute space around cards */
     padding: 20px;
   }
+
+  .travel-list .pagination-controls{
+    display: flex;
+    align-self: flex-end;
+    align-items: center;
+  }
+
+  .pagination-controls__page{
+    padding: 0 1.5em;
+    font-size: var(--size-base);
+    font-weight: 600;
+  }
+
+  #slider{
+    border-radius: 1.5rem;
+    padding: 0;
+    box-shadow: none;
+    transform: none;
+    
+  }
+
+  #slider:hover svg{
+    filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(93deg) brightness(103%) contrast(103%);
+    transition: 0.5s;
+  }
+
+  .paggination-settings{
+    align-self: flex-end;
+  }
+
+  .pageSizeOptions{
+    align-self: flex-end;
+  }
+
+  .pageSizeOptions span{
+    padding-right: 1em;
+  }
+
+  .change{
+    text-decoration: underline;
+    padding: 0.5em 0.5em;
+    border-radius: 0.5em;
+  }
+
+  .activePageSize {
+    color: #ffffff; /* white color for active state */
+    background-color: #007bff; /* some distinct background color */
+    padding: 0.5em 0.5em;
+    border-radius: 1em;
+    min-width: 18px;
+    /* Other styling as needed */
+  }

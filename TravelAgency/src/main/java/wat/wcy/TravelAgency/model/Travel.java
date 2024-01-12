@@ -39,8 +39,8 @@ public class Travel {
     @Column(name = "end_season", nullable = false)
     private Instant endSeason;
 
-    @Column(name = "image_path", nullable = false)
-    private String image_path;
+//    @Column(name = "image_path", nullable = false)
+//    private String image_path;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "hotel_id", nullable = false)

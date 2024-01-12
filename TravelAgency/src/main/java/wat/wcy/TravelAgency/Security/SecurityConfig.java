@@ -31,12 +31,10 @@ public class SecurityConfig {
         http.csrf(t -> t.disable());
         http.authorizeHttpRequests(authorize -> {
             authorize
-                    //.requestMatchers(HttpMethod.GET, "/country").permitAll() //nasze
-                    .requestMatchers(HttpMethod.GET, "/travel/all").permitAll()
+                    .requestMatchers(HttpMethod.GET, "/travel/pageable/all").permitAll()
                     .requestMatchers(HttpMethod.POST, "/image/fileSystem").permitAll()
                     .requestMatchers(HttpMethod.GET, "/image/fileSystem/{id}").permitAll() //nasze
                     .requestMatchers(HttpMethod.GET, "/travel/{name}").permitAll() //nasze
-                    //.requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
                     .anyRequest().authenticated();
         });
         http.oauth2ResourceServer(t-> {
@@ -45,7 +43,7 @@ public class SecurityConfig {
         http.sessionManagement(
                 t -> t.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
         );
-        http.cors(Customizer.withDefaults());
+        http.cors(cors -> cors.configurationSource(corsConfigurationSource()));
         return http.build();
     }
 

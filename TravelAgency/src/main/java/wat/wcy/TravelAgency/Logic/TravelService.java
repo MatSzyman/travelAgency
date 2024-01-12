@@ -2,6 +2,10 @@ package wat.wcy.TravelAgency.Logic;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.data.domain.Page; //poprawny import
+import org.springframework.data.domain.Pageable;
+
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -28,6 +32,22 @@ public class TravelService {
 
     public List<TravelDTO> getTravels(){
         return travelRepository.findAll().stream().map(TravelDTO::new).collect(Collectors.toList());
+    }
+
+    public Page<TravelDTO> getPageableTravels(Pageable pageable){
+        Page<Travel> travelsEntities = travelRepository.findAll(pageable);
+        return travelsEntities.map(travel -> new TravelDTO(
+                travel.getId(),
+                travel.getName(),
+                travel.getBasePrice(),
+                travel.getDescription(),
+                travel.getStartSeason(),
+                travel.getEndSeason(),
+                travel.getHotel().getStarsCount(),
+                travel.getHotel().getName(),
+                travel.getCity().getName(),
+                travel.getFileDataId()
+        ));
     }
 
     public TravelDTO saveTravel(CreateTravelDTO source){

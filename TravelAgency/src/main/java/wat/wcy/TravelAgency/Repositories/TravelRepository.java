@@ -1,5 +1,8 @@
 package wat.wcy.TravelAgency.Repositories;
 
+import jakarta.annotation.Nonnull;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import wat.wcy.TravelAgency.model.Travel;
@@ -12,6 +15,10 @@ public interface TravelRepository extends JpaRepository<Travel, Integer> {
 
     @Override
     List<Travel> findAll();
+
+    @Nonnull //w returnie nie moze byc nulla
+    @Override
+    Page<Travel> findAll(@Nonnull Pageable pageable); //argument nie moze byc nullem
 
     @Override
     boolean existsById(Integer integer);
