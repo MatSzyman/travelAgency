@@ -7,7 +7,7 @@ export const Home = ({keycloak, authenticated}) => {
     return (
         <div className="container">
             <Greet keycloak={keycloak} authenticated={authenticated}/>
-            <TravelList keycloak={keycloak}/>
+            <TravelList/>
         </div>
         
     )

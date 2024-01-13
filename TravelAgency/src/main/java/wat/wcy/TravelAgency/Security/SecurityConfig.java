@@ -33,8 +33,8 @@ public class SecurityConfig {
             authorize
                     //.requestMatchers(HttpMethod.GET, "/country").permitAll() //nasze
                     .requestMatchers(HttpMethod.GET, "/travel/all").permitAll()
-                    .requestMatchers(HttpMethod.POST, "/image/fileSystem").permitAll()
-                    .requestMatchers(HttpMethod.GET, "/image/fileSystem/{id}").permitAll() //nasze
+                    .requestMatchers(HttpMethod.POST, "/image/upload").permitAll()
+                    .requestMatchers(HttpMethod.GET, "/image/download/{id}").permitAll() //nasze
                     .requestMatchers(HttpMethod.GET, "/travel/{name}").permitAll() //nasze
                     //.requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
                     .anyRequest().authenticated();

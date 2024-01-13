@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 
 function ImageUploadComponent({keycloak, authenticated,onImageUpload}) {
@@ -6,11 +6,12 @@ function ImageUploadComponent({keycloak, authenticated,onImageUpload}) {
     const [preview, setPreview] = useState('');
 
 
-    // Handle file selection
+
     const handleFileChange = (event) => {
         const file = event.target.files[0];
         if (file && file.type.substr(0, 5) === "image") {
             setSelectedFile(file);
+            
             setPreview(URL.createObjectURL(file));
         } else {
             setSelectedFile(null);
@@ -18,7 +19,6 @@ function ImageUploadComponent({keycloak, authenticated,onImageUpload}) {
         }
     };
 
-    // Optionally, you can upload the image to the server here
     const uploadImage = async () => {
 
         if (!keycloak || !authenticated) {
@@ -36,22 +36,20 @@ function ImageUploadComponent({keycloak, authenticated,onImageUpload}) {
         formData.append('image', selectedFile);
         
     try{
-        const response = await axios.post('http://localhost:8080/image/fileSystem', formData,{
+        const response = await axios.post('http://localhost:8080/image/upload', formData,{
             headers: {
              'Authorization': `Bearer ${keycloak.token}` // Include the JWT token in the request header
              },
         });
 
         const uploadedImageId  = response.data; 
-        console.log('Succesion:', uploadedImageId);
-
         //new
         onImageUpload(uploadedImageId);
+         
 
     }
     catch(error){
-        console.error('Upload failed tu:', error);
-
+        console.error('Upload failed', error); 
     }
 };
 

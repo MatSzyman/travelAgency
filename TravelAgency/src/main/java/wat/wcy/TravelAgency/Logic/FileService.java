@@ -12,7 +12,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 @Service
-public class StorageService {
+public class FileService {
 
 
     private final FileDataRepository fileDataRepository;
@@ -20,9 +20,9 @@ public class StorageService {
 
 
 
-    private static final Logger logger = LoggerFactory.getLogger(StorageService.class);
+    private static final Logger logger = LoggerFactory.getLogger(FileService.class);
 
-    public StorageService(FileDataRepository fileDataRepository, TravelRepository travelRepository) {
+    public FileService(FileDataRepository fileDataRepository, TravelRepository travelRepository) {
         this.fileDataRepository = fileDataRepository;
         this.travelRepository = travelRepository;
     }
