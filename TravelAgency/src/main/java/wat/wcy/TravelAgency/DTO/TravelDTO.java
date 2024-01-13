@@ -8,7 +8,7 @@ import java.time.Instant;
 @Value
 public class TravelDTO {
 
-    Integer id;
+
     String name;
     Double basePrice;
     String description;
@@ -20,7 +20,6 @@ public class TravelDTO {
     Integer fileDataId;
 
     public TravelDTO(Travel travel){
-        this.id = travel.getId();
         this.name = travel.getName();
         this.basePrice = travel.getBasePrice();
         this.description = travel.getDescription();
