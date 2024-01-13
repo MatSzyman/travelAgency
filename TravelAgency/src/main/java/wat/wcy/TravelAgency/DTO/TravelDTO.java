@@ -8,7 +8,6 @@ import java.time.Instant;
 @Value
 public class TravelDTO {
 
-
     String name;
     Double basePrice;
     String description;
