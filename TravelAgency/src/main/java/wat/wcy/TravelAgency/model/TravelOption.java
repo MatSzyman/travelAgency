@@ -39,6 +39,15 @@ public class TravelOption {
     @ToString.Exclude
     private Set<Reservation> reservations;
 
+    public TravelOption(Travel travel,Instant departureTime,Instant arrivalTime, Double travelPrice){
+        this.travel = travel;
+        this.departureTime = departureTime;
+        this.arrivalTime = arrivalTime;
+        this.travelPrice = travelPrice;
+    }
+
+
+
 
     @Override
     public boolean equals(Object o) {
