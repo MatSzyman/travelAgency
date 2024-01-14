@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
 
-function CreateTravelOption({keycloak,authenticated,passedTravel}){
+
+function CreateTravelOption({keycloak,authenticated, travelId}){
 
 
     const[reservationData, setReservationData] = useState({
-        travel:passedTravel,
+        travel:travelId,
         arrivalTime: '',
         departureTime: '',
         travelPrice: '',
@@ -14,9 +14,15 @@ function CreateTravelOption({keycloak,authenticated,passedTravel}){
 
 
     useEffect(()=>{
-        
+        console.log(reservationData.travel)
 
     })
+
+    // function getTravelFromLocalStorage(travelId) {
+    //     const travelString = localStorage.getItem(`travel-${travelId}`);
+    //     return travelString ? JSON.parse(travelString) : null;
+    // }
+
 
     const handleChange =  (e) => {
         setReservationData({...reservationData, [e.target.name]:e.target.value})
@@ -40,15 +46,15 @@ function CreateTravelOption({keycloak,authenticated,passedTravel}){
             return; // Prevent form submission
         }
         
-        // const travelSubmission = {
-        //     ...travelData,
-        //     startSeason: travelData.startSeason ? new Date(travelData.startSeason).toISOString() : null,
-        //     endSeason: travelData.endSeason ? new Date(travelData.endSeason).toISOString() : null,
+        const travelSubmission = {
+            ...reservationData,
+            arrivalTime: reservationData.arrivalTime ? new Date(reservationData.arrivalTime).toISOString() : null,
+            departureTime: reservationData.departureTime ? new Date(reservationData.departureTime).toISOString() : null,
         
-        // };
+        };
 
         try{
-            const response = await axios.post('http://localhost:8080/travelOption/add',  {
+            const response = await axios.post('http://localhost:8080/travelOption/add', travelSubmission,  {
                 headers: {
                     'Authorization': `Bearer ${keycloak.token}` // Include the JWT token in the request header
                   }

@@ -2,11 +2,13 @@ import React from 'react';
 import LazyLoad from 'react-lazyload';
 import '../styles/TravelComponent.css';
 
+import { useNavigate } from 'react-router-dom'; 
+
 function TravelCard({travel, travelImages}) {
     // Format the dates using a library like date-fns or moment.js, or write your own formatter.
     const formattedStartSeason = new Date(travel.startSeason).toLocaleDateString();
     const formattedEndSeason = new Date(travel.endSeason).toLocaleDateString();
-
+    const navigate = useNavigate();
     const imageSrc = travelImages[travel.fileDataId]; // Use fileDataId to reference the image
 
     //console.log(imageSrc);
@@ -19,6 +21,11 @@ function TravelCard({travel, travelImages}) {
       }
       return <div className='stars-container'>{stars}</div>;
     }
+
+      // Function to handle button click
+      const handleReservationClick = () => {
+        navigate('/reservation', { state: { travelId: travel.id } });
+      };
 
     return (
       <div className="travel-card">
@@ -43,7 +50,7 @@ function TravelCard({travel, travelImages}) {
         <div className='price-button'>
           <div className='price-wrapper'>
             <p id='price'><span id='cena'>Cena:</span> <span className="price-value">${travel.basePrice}/za osobę</span></p>
-            <button id='btn-res'>Zarezerwuj</button>
+            <button id='btn-res' onClick={handleReservationClick}>Zarezerwuj</button>
           </div>
         </div>
         

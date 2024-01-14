@@ -59,16 +59,10 @@ useEffect(() => {
 
 
 
-function saveToLocalStorage(travel) {
-  // Konwersja obiektu travel na string JSON
-  const travelString = JSON.stringify(travel);
-
-  // Zapisanie w localStorage pod kluczem odpowiadającym ID podróży
-  localStorage.setItem(`travel-${travel.id}`, travelString);
-  //console.log(travel.id)
-  
-}
-
+// function saveToLocalStorage(travel) {
+//   const travelString = JSON.stringify(travel);
+//   localStorage.setItem(`travel-${travel.id}`, travelString);
+// }
 
 
   if (loading) return <div>Loading...</div>;
@@ -77,8 +71,7 @@ function saveToLocalStorage(travel) {
   return (
     <div className="travel-list">
       {travels.map(travel => {
-        saveToLocalStorage(travel);
-        console.log(travel)
+        //saveToLocalStorage(travel);
         return <TravelCard key={travel.id} travel={travel} travelImages={travelImages} />;
   })}
     </div>
