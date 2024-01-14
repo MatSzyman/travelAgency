@@ -13,6 +13,10 @@ import wat.wcy.TravelAgency.model.FileData;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Base64;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/image")
@@ -48,6 +52,20 @@ public class FileController {
         }
 
     }
+
+    @GetMapping("/batchDownload")
+    public ResponseEntity<List<String>> batchDownloadImages(@RequestParam ArrayList<Integer> ids) {
+        try {
+            List<FileData> files = fileService.downloadImagesFromFileSystem(ids);
+            List<String> base64Images = files.stream()
+                    .map(file -> Base64.getEncoder().encodeToString(file.getData()))
+                    .collect(Collectors.toList());
+            return ResponseEntity.ok(base64Images);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
 
 
 

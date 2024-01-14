@@ -10,6 +10,7 @@ import wat.wcy.TravelAgency.model.FileData;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.List;
 
 @Service
 public class FileService {
@@ -46,6 +47,11 @@ public class FileService {
                 .orElseThrow(()->new FileNotFoundException("Image not found with id: " + id));
 
     }
+
+    public List<FileData> downloadImagesFromFileSystem(List<Integer> ids) {
+        return fileDataRepository.findAllById(ids);
+    }
+
 }
 
 

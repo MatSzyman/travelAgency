@@ -4,6 +4,7 @@ import { Navbar } from './components/Navbar';
 import { Home } from './components/pages/Home';
 import { Route, Routes } from 'react-router-dom';
 import CreateTravelCard from './components/CreateTravelCard'
+import { Reservation } from './components/pages/Reservation';
 
 function App() {
   const [keycloak, setKeycloak] = useState(null);
@@ -35,6 +36,7 @@ function App() {
       <Routes>
         <Route path='/' element={<Home keycloak={keycloak} authenticated={authenticated}/>}/>
         <Route path='/panel' element={<CreateTravelCard keycloak={keycloak} authenticated={authenticated}/>}/>
+        <Route path='/reservation' element={<Reservation keycloak={keycloak} authenticated ={authenticated}/>}/>
       </Routes>
     </div>
   )

@@ -95,10 +95,11 @@ function CreateTravelCard({keycloak, authenticated}) {
 
 
  // This function will be passed to ImageUploadComponent and called after successful upload
- const handleImageUpload = (uploadedImageId) => {
+  const handleImageUpload = (uploadedImageId) => {
   setTravelData({ ...travelData, fileDataId: uploadedImageId });
   setIsUploaded(true);    
-};
+  
+  };
 
   const isFormComplete = () => {
     return (
@@ -112,7 +113,7 @@ function CreateTravelCard({keycloak, authenticated}) {
   };
 
   const handleSubmit = async (e) => {
-
+ 
     e.preventDefault();
 
     if (!keycloak || !authenticated) {

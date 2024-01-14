@@ -24,43 +24,50 @@ function TravelList(){
         } finally {
         setLoading(false);
       }
+      
     };
 
-        fetchTravels();
+    fetchTravels();
     
   }, []); //tutaj wstawia sie zaleznosci w useEffect
 
 
 // Use an effect to fetch images for each travel item when the component mounts
 useEffect(() => {
-  // Define fetchImageById inside useEffect
-  const fetchImageById = async (fileDataId) => {
-
+  const fetchImages = async (fileDataIds) => {
+    console.log(fileDataIds)
     try {
-      const response = await axios.get(`http://localhost:8080/image/download/${fileDataId}`, {
-        responseType: 'blob',
+      const response = await axios.get(`http://localhost:8080/image/batchDownload`, {
+        params: { ids: fileDataIds.join(',') }
       });
-
-      const imageBlobUrl = URL.createObjectURL(response.data);
-      setTravelImages((prevImages) => ({
-        ...prevImages,
-        [fileDataId]: imageBlobUrl,
-      }));
+      const images = response.data;
+      const newImages = {};
+      images.forEach((base64, index) => {
+        newImages[fileDataIds[index]] = `data:image/jpeg;base64,${base64}`;
+      });
+      setTravelImages(newImages);
     } catch (error) {
-      console.error('Error fetching image:', error);
+      console.error('Error fetching images:', error);
     }
   };
 
-  travels.forEach((travel) => {
-    if (travel.fileDataId) {
-      fetchImageById(travel.fileDataId);
-    } else {
-      console.log("Error during fetching images");
-    }
-  });
-}, [travels]); // travels is a dependency of useEffect
+  const fileDataIds = travels.map(travel => travel.fileDataId).filter(id => id != null);
+  if (fileDataIds.length > 0) {
+    fetchImages(fileDataIds);
+  }
+}, [travels]);
 
 
+
+function saveToLocalStorage(travel) {
+  // Konwersja obiektu travel na string JSON
+  const travelString = JSON.stringify(travel);
+
+  // Zapisanie w localStorage pod kluczem odpowiadającym ID podróży
+  localStorage.setItem(`travel-${travel.id}`, travelString);
+  //console.log(travel.id)
+  
+}
 
 
 
@@ -69,9 +76,11 @@ useEffect(() => {
 
   return (
     <div className="travel-list">
-      {travels.map(travel => (
-        <TravelCard key={travel.id} travel={travel} travelImages={travelImages} />
-      ))}
+      {travels.map(travel => {
+        saveToLocalStorage(travel);
+        console.log(travel)
+        return <TravelCard key={travel.id} travel={travel} travelImages={travelImages} />;
+  })}
     </div>
   );
 }

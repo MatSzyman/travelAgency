@@ -29,7 +29,7 @@ public class TravelOptionController {
     }
 
 
-    @GetMapping(value = "/{id}}")
+    @GetMapping(value = "/{id}")
     ResponseEntity<TravelOptionDTO> getAlTravelOptions(@PathVariable Integer id){
         TravelOptionDTO travelOptionDTO = travelOptionService.getTravelOptionById(id);
         return ResponseEntity.ok(travelOptionDTO);

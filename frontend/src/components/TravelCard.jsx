@@ -9,7 +9,7 @@ function TravelCard({travel, travelImages}) {
 
     const imageSrc = travelImages[travel.fileDataId]; // Use fileDataId to reference the image
 
-    console.log(imageSrc);
+    //console.log(imageSrc);
     const renderStars = (count) => {
       let stars = [];
       for (let i = 0; i < count; i++) {
