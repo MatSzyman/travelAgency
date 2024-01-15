@@ -3,6 +3,7 @@ import LazyLoad from 'react-lazyload';
 import '../styles/TravelComponent.css';
 
 import { useNavigate } from 'react-router-dom'; 
+import { Zarezerwuj } from './fun_buttons/Zarezerwuj';
 
 function TravelCard({travel, travelImages}) {
     // Format the dates using a library like date-fns or moment.js, or write your own formatter.
@@ -50,7 +51,7 @@ function TravelCard({travel, travelImages}) {
         <div className='price-button'>
           <div className='price-wrapper'>
             <p id='price'><span id='cena'>Cena:</span> <span className="price-value">${travel.basePrice}/za osobę</span></p>
-            <button id='btn-res' onClick={handleReservationClick}>Zarezerwuj</button>
+                <Zarezerwuj travel={travel}/>
           </div>
         </div>
         

@@ -63,10 +63,7 @@ useEffect(() => {
 
 
 
-// function saveToLocalStorage(travel) {
-//   const travelString = JSON.stringify(travel);
-//   localStorage.setItem(`travel-${travel.id}`, travelString);
-// }
+
 
 
   if (loading) return <div>Loading...</div>;

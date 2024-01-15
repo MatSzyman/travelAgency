@@ -36,7 +36,7 @@ function App() {
       <Routes>
         <Route path='/' element={<Home keycloak={keycloak} authenticated={authenticated}/>}/>
         <Route path='/panel' element={<CreateTravelCard keycloak={keycloak} authenticated={authenticated}/>}/>
-        <Route path='/reservation' element={<Reservation keycloak={keycloak} authenticated ={authenticated}/>}/>
+        <Route path="/reservation/:travelId" element={<Reservation keycloak={keycloak} authenticated={authenticated} />} />
       </Routes>
     </div>
   )
