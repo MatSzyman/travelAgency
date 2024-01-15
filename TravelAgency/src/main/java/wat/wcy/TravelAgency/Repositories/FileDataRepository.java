@@ -14,6 +14,7 @@ public interface FileDataRepository extends JpaRepository<FileData,Integer> {
     Optional<FileData> findByName(String fileName);
 
     @Override
+    @Query("SELECT DISTINCT f FROM FileData f")
     Optional<FileData> findById(Integer integer);
 
     @Override
