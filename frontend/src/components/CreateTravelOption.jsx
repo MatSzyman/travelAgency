@@ -14,9 +14,6 @@ function CreateTravelOption({keycloak,authenticated, travel}){
 
 
     const handleChange =  (e) => {
-        console.log(travel.startSeason)
-
-
         setReservationData({...reservationData, [e.target.name]:e.target.value})
     }
 
@@ -29,10 +26,6 @@ function CreateTravelOption({keycloak,authenticated, travel}){
             return;
         }
 
-        // //Calej wycieczki
-        // const startSeason = new Date(travel.startSeason);
-        // const endSeason = new Date(travel.startSeason);
-
 
         //Opcji wycieczki
         const startDate = new Date(reservationData.arrivalTime);
@@ -42,7 +35,7 @@ function CreateTravelOption({keycloak,authenticated, travel}){
 
         if (startDate >= endDate) {
             console.error("End date must be after the start date");
-            return; // Prevent form submission
+            return; 
         }
         
         const travelSubmission = {
@@ -53,7 +46,6 @@ function CreateTravelOption({keycloak,authenticated, travel}){
         };
 
         try{
-            console.log(travelSubmission);
             const response = await axios.post('http://localhost:8080/travelOption', travelSubmission,  {
                 headers: {
                     'Authorization': `Bearer ${keycloak.token}` // Include the JWT token in the request header
@@ -63,8 +55,6 @@ function CreateTravelOption({keycloak,authenticated, travel}){
             console.log(response);
         }
         catch(error){
-            console.log(travelSubmission)
-            
             console.error('Submission failed:', error);
         }
 
