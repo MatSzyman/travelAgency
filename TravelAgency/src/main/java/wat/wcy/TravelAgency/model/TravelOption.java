@@ -20,6 +20,7 @@ import java.util.Set;
 public class TravelOption {
     @Id
     @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "travel_id")
@@ -39,13 +40,12 @@ public class TravelOption {
     @ToString.Exclude
     private Set<Reservation> reservations;
 
-    public TravelOption(Travel travel,Instant departureTime,Instant arrivalTime, Double travelPrice){
+
+    public TravelOption(Travel travel,Instant arrivalTime,Instant departureTime){
         this.travel = travel;
         this.departureTime = departureTime;
         this.arrivalTime = arrivalTime;
-        this.travelPrice = travelPrice;
     }
-
 
 
 

@@ -1,22 +1,20 @@
 package wat.wcy.TravelAgency.Controller;
 
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 import wat.wcy.TravelAgency.DTO.CreateTravelOptionDTO;
 import wat.wcy.TravelAgency.DTO.TravelOptionDTO;
 import wat.wcy.TravelAgency.Logic.TravelOptionService;
 
 import java.util.List;
 
-@Controller(value = "/travelOption")
+@RestController
+@RequestMapping(value = "/travelOption")
 public class TravelOptionController {
 
-    TravelOptionService travelOptionService;
+    private final TravelOptionService travelOptionService;
 
     public TravelOptionController(TravelOptionService travelOptionService) {
         this.travelOptionService = travelOptionService;
@@ -35,10 +33,10 @@ public class TravelOptionController {
         return ResponseEntity.ok(travelOptionDTO);
     }
 
-    @PostMapping(value = "/add")
+    @PostMapping
     ResponseEntity<TravelOptionDTO> addTravelOption(@RequestBody @Valid CreateTravelOptionDTO option){
         TravelOptionDTO result = travelOptionService.saveTravelOption(option);
-        return ResponseEntity.ok(result);
+        return ResponseEntity.status(HttpStatus.CREATED).body(result);
     }
 }
 

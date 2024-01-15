@@ -37,6 +37,7 @@ public class SecurityConfig {
                     .requestMatchers(HttpMethod.GET, "/image/batchDownload").permitAll() //nasze
                     .requestMatchers(HttpMethod.GET, "/image/download/{id}").permitAll() //nasze
                     .requestMatchers(HttpMethod.GET, "/travel/{name}").permitAll() //nasze
+                    .requestMatchers(HttpMethod.POST, "/travelOption").permitAll() //nasze
                     //.requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
                     .anyRequest().authenticated();
         });

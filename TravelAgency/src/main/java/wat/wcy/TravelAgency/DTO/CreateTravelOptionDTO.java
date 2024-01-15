@@ -10,11 +10,10 @@ import java.time.Instant;
 public class CreateTravelOptionDTO {
 
     Travel travel;
-    Instant departureTime;
     Instant arrivalTime;
-    Double travelPrice;
+    Instant departureTime;
 
     public TravelOption toTravelOption() {
-        return new TravelOption(travel,departureTime,arrivalTime,travelPrice);
+        return new TravelOption(travel, arrivalTime,departureTime);
     }
 }

@@ -1,6 +1,8 @@
 package wat.wcy.TravelAgency.Logic;
 
 import jakarta.persistence.EntityNotFoundException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import wat.wcy.TravelAgency.DTO.CreateTravelOptionDTO;
 import wat.wcy.TravelAgency.DTO.TravelOptionDTO;
@@ -15,7 +17,8 @@ import java.util.stream.Collectors;
 @Service
 public class TravelOptionService {
 
-    TravelOptionRepository travelOptionRepository;
+    private final TravelOptionRepository travelOptionRepository;
+    private static final Logger logger = LoggerFactory.getLogger(TravelOptionService.class);
 
     public TravelOptionService(TravelOptionRepository travelOptionRepository) {
         this.travelOptionRepository = travelOptionRepository;
@@ -34,6 +37,7 @@ public class TravelOptionService {
         Instant startSeason = source.getTravel().getStartSeason();
         Instant endSeason = source.getTravel().getEndSeason();
         TravelOption result = source.toTravelOption();
+        logger.warn(""+result);
 
         if (result.getArrivalTime().isBefore(startSeason) || result.getArrivalTime().isAfter(endSeason)) {
             throw new InvalidParameterException("Arrival time must be between the start and end of the season.");
