@@ -3,7 +3,7 @@ import axios from 'axios';
 import TravelCard from './TravelCard';
 import '../styles/TravelComponent.css';
 
-function TravelList(){
+function TravelList({keycloak, authenticated}){
   const [travels, setTravels] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -73,7 +73,7 @@ useEffect(() => {
     <div className="travel-list">
       {travels.map(travel => {
         //saveToLocalStorage(travel);
-        return <TravelCard key={travel.id} travel={travel} travelImages={travelImages} />;
+        return <TravelCard key={travel.id} travel={travel} travelImages={travelImages} keycloak={keycloak} authenticated= {authenticated} />;
   })}
     </div>
   );

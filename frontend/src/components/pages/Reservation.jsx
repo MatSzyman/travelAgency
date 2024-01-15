@@ -17,6 +17,6 @@ export const Reservation = ({keycloak, authenticated}) => {
 
     return(
         <CreateTravelOption keycloak = {keycloak} authenticated ={authenticated} travel={travel}/>
-    )
+    ) 
 }
 

@@ -1,9 +1,11 @@
 import React from "react";
-import { useNavigate } from 'react-router-dom';
+import { redirect, useNavigate } from 'react-router-dom';
 
-export const Zarezerwuj = ({travel}) =>{
+
+export const Zarezerwuj = ({travel, keycloak,authenticated}) =>{
 
     const navigate = useNavigate();
+    const Uri = "http://locallhost:3000/reservation/".concat(travel.id)
 
     function saveToLocalStorage(travel) {
         const travelString = JSON.stringify(travel);
@@ -11,10 +13,12 @@ export const Zarezerwuj = ({travel}) =>{
       }
 
     const handleReservationClick = () =>{
+        if(!authenticated){
+            saveToLocalStorage(travel);
+            keycloak.login({ redirectUri: window.location.origin + `/reservation/${travel.id}` });
+        }
         saveToLocalStorage(travel);
-        console.log("saving" + travel)
-        console.log("i got from it " + travel.id)
-        navigate(`/reservation/${travel.id}`); // Use backticks here
+        navigate(`/reservation/${travel.id}`);
     };
 
     return(

@@ -5,7 +5,7 @@ import '../styles/TravelComponent.css';
 import { useNavigate } from 'react-router-dom'; 
 import { Zarezerwuj } from './fun_buttons/Zarezerwuj';
 
-function TravelCard({travel, travelImages}) {
+function TravelCard({travel, travelImages, keycloak, authenticated}) {
     // Format the dates using a library like date-fns or moment.js, or write your own formatter.
     const formattedStartSeason = new Date(travel.startSeason).toLocaleDateString();
     const formattedEndSeason = new Date(travel.endSeason).toLocaleDateString();
@@ -51,7 +51,7 @@ function TravelCard({travel, travelImages}) {
         <div className='price-button'>
           <div className='price-wrapper'>
             <p id='price'><span id='cena'>Cena:</span> <span className="price-value">${travel.basePrice}/za osobę</span></p>
-                <Zarezerwuj travel={travel}/>
+                <Zarezerwuj travel={travel} keycloak={keycloak} authenticated={authenticated}/>
           </div>
         </div>
         
