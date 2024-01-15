@@ -34,28 +34,32 @@ function TravelList(){
 
 // Use an effect to fetch images for each travel item when the component mounts
 useEffect(() => {
-  const fetchImages = async (fileDataIds) => {
-    console.log(fileDataIds)
+  // Define fetchImageById inside useEffect
+  const fetchImageById = async (fileDataId) => {
+
     try {
-      const response = await axios.get(`http://localhost:8080/image/batchDownload`, {
-        params: { ids: fileDataIds.join(',') }
+      const response = await axios.get(`http://localhost:8080/image/download/${fileDataId}`, {
+        responseType: 'blob',
       });
-      const images = response.data;
-      const newImages = {};
-      images.forEach((base64, index) => {
-        newImages[fileDataIds[index]] = `data:image/jpeg;base64,${base64}`;
-      });
-      setTravelImages(newImages);
+
+      const imageBlobUrl = URL.createObjectURL(response.data);
+      setTravelImages((prevImages) => ({
+        ...prevImages,
+        [fileDataId]: imageBlobUrl,
+      }));
     } catch (error) {
-      console.error('Error fetching images:', error);
+      console.error('Error fetching image:', error);
     }
   };
 
-  const fileDataIds = travels.map(travel => travel.fileDataId).filter(id => id != null);
-  if (fileDataIds.length > 0) {
-    fetchImages(fileDataIds);
-  }
-}, [travels]);
+  travels.forEach((travel) => {
+    if (travel.fileDataId) {
+      fetchImageById(travel.fileDataId);
+    } else {
+      console.log("Error during fetching images");
+    }
+  });
+}, [travels]); // travels is a dependency of useEffect
 
 
 
