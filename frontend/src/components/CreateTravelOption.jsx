@@ -8,12 +8,12 @@ function CreateTravelOption({keycloak,authenticated, travel}){
         travel: travel,
         arrivalTime: '',
         departureTime: '',
-
     })
 
-
+ 
 
     const handleChange =  (e) => {
+        console.log(travel)
         setReservationData({...reservationData, [e.target.name]:e.target.value})
     }
 
@@ -30,7 +30,6 @@ function CreateTravelOption({keycloak,authenticated, travel}){
         //Opcji wycieczki
         const startDate = new Date(reservationData.arrivalTime);
         const endDate = new Date(reservationData.departureTime);
-
 
 
         if (startDate >= endDate) {
@@ -55,6 +54,7 @@ function CreateTravelOption({keycloak,authenticated, travel}){
             console.log(response);
         }
         catch(error){
+            console.log(travelSubmission)
             console.error('Submission failed:', error);
         }
 

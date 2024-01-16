@@ -151,6 +151,8 @@ function CreateTravelCard({keycloak, authenticated}) {
         }
       });
   
+      console.log(travelSubmission)
+      console.log(response)
       setTravelAdded(true);
   
     } catch (error) {
@@ -232,11 +234,7 @@ function CreateTravelCard({keycloak, authenticated}) {
             </div>
           )}
   
-          <ImageUploadComponent
-            keycloak={keycloak}
-            authenticated={authenticated}
-            onImageUpload={handleImageUpload}  
-          />
+          <ImageUploadComponent keycloak={keycloak} authenticated={authenticated} onImageUpload={handleImageUpload}/>
         </>
       ) : (
         <div>

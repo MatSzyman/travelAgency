@@ -8,7 +8,7 @@ export const Zarezerwuj = ({travel, keycloak,authenticated}) =>{
     const Uri = "http://locallhost:3000/reservation/".concat(travel.id)
 
     function saveToLocalStorage(travel) {
-        const travelString = JSON.stringify(travel);
+        const travelString = JSON.stringify(travel); 
         localStorage.setItem(`travel-${travel.id}`, travelString);
       }
 

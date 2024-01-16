@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:sqlserver://travelagencydb.database.windows.net:1433;databaseName=Travel_Agency_DB;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;
+    url: jdbc:sqlserver://travelagency.database.windows.net:1433;databaseName=Travel_Agency_DB;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;
     username: sqladmin
     password: qazWSX123
   jpa:

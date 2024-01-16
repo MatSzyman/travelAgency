@@ -44,8 +44,7 @@ useEffect(() => {
 
       const imageBlobUrl = URL.createObjectURL(response.data);
       setTravelImages((prevImages) => ({
-        ...prevImages,
-        [fileDataId]: imageBlobUrl,
+        ...prevImages, [fileDataId]: imageBlobUrl
       }));
     } catch (error) {
       console.error('Error fetching image:', error);
@@ -72,7 +71,6 @@ useEffect(() => {
   return (
     <div className="travel-list">
       {travels.map(travel => {
-        //saveToLocalStorage(travel);
         return <TravelCard key={travel.id} travel={travel} travelImages={travelImages} keycloak={keycloak} authenticated= {authenticated} />;
   })}
     </div>

@@ -19,8 +19,8 @@ import java.util.Set;
 @Table(name = "travel_option")
 public class TravelOption {
     @Id
-    @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
     private Integer id;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "travel_id")

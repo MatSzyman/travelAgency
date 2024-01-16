@@ -43,7 +43,7 @@ function ImageUploadComponent({keycloak, authenticated,onImageUpload}) {
         });
 
         const uploadedImageId  = response.data; 
-        //new
+
         onImageUpload(uploadedImageId);
          
 
