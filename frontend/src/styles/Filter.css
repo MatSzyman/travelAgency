@@ -1,0 +1,16 @@
+.filter{
+    display: flex;
+    justify-content: space-between;
+    color: var(--clr-slate800);
+    padding: 0 1em;
+}
+
+.filter-container {
+    display: flex;
+    gap: 1.5em;
+    justify-content: space-around;
+}
+
+.filter-container .select{
+    min-width: 300px;
+}

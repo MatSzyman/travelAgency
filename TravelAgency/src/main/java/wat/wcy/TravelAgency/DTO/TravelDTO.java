@@ -19,6 +19,7 @@ public class TravelDTO {
     Instant endSeason;
     Integer stars_count;
     String hotel_name;
+    Double hotelPrice;
     String city_name;
     Integer fileDataId;
 
@@ -31,6 +32,7 @@ public class TravelDTO {
         this.endSeason = travel.getEndSeason();
         this.stars_count = travel.getHotel().getStarsCount();
         this.hotel_name = travel.getHotel().getName();
+        this.hotelPrice = travel.getHotel().getPrice();
         this.city_name = travel.getCity().getName();
         this.fileDataId = travel.getFileDataId();
     }

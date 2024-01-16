@@ -40,7 +40,8 @@ function TravelCard({ travel, travelImages}) {
         </div>
         <div className='price-button'>
           <div className='price-wrapper'>
-            <p id='price'><span id='cena'>Cena:</span> <span className="price-value">${travel.basePrice}/za osobę</span></p>
+            <p id='price'><span id='cena'>Cena:</span> <span className="price-value">${travel.hotelPrice}/za dzień</span></p>
+            <p id = 'prie2'>+${travel.basePrice} jednorazowo</p>
             <button id='btn-res'>Zarezerwuj</button>
           </div>
         </div>

@@ -31,7 +31,8 @@ public class SecurityConfig {
         http.csrf(t -> t.disable());
         http.authorizeHttpRequests(authorize -> {
             authorize
-                    .requestMatchers(HttpMethod.GET, "/travel/pageable/all").permitAll()
+                    .requestMatchers(HttpMethod.GET, "/travel/pageable/*").permitAll()
+                    .requestMatchers(HttpMethod.GET, "/city/all").permitAll()
                     .requestMatchers(HttpMethod.POST, "/image/fileSystem").permitAll()
                     .requestMatchers(HttpMethod.GET, "/image/fileSystem/{id}").permitAll() //nasze
                     .requestMatchers(HttpMethod.GET, "/travel/{name}").permitAll() //nasze

@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:sqlserver://travelagencydb.database.windows.net:1433;databaseName=Travel_Agency_DB;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;
+    url: jdbc:sqlserver://travelagency.database.windows.net:1433;databaseName=Travel_Agency_DB;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;
     username: sqladmin
     password: qazWSX123
   jpa:
@@ -18,11 +18,6 @@ spring:
     multipart:
       max-file-size: 4MB
       max-request-size: 4MB
-springdoc:
-  swagger-ui:
-    oauth:
-      client-id: swagger-demo
-      client-secret: KHOniqycsZ2UYPDtxU3pXIMlfFwT5QtM
 
 server:
   port: 8080

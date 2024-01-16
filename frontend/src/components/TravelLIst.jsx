@@ -3,7 +3,7 @@ import axios from 'axios';
 import TravelCard from './TravelCard';
 import '../styles/TravelComponent.css';
 
-function TravelList({keycloak}){
+function TravelList({keycloak, filters}){
   const [travels, setTravels] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -13,30 +13,88 @@ function TravelList({keycloak}){
   const [totalPages, setTotalPages] = useState(0);
   const [pageSize, setPageSize] = useState(5);
 
-  const fetchTravels = async () => {
+  const generateUriToRequest = (filters) => {
+    var requestUri = `http://localhost:8080/travel/pageable/filtered?`
+
+    if(filters.cityNames.length > 0){
+      const cityNames = createRequestFilterParam();
+      const param = "cityNames=" + encodeURIComponent(cityNames);
+      requestUri += param;
+    }
+
+    if(filters.hotelStars > 0){
+      requestUri += "&starsCount=" + filters.hotelStars;
+    }
+
+    if(filters.minPrice !== undefined && filters.minPrice !== 0){
+      requestUri += "&minPrice=" + filters.minPrice
+    }
+
+    if(filters.maxPrice !== undefined && filters.maxPrice !== 0){
+      requestUri += "&maxPrice=" + filters.maxPrice
+    }
+
+    return requestUri += `&page=${currentPage}&size=${pageSize}`
+  }
+
+  const createRequestFilterParam = () => {
+    const cityNamesList = filters.cityNames.map((city) => city.label)
+    const requestParam = cityNamesList.join(",")
+    return requestParam;
+  }
+
+  useEffect(() => { //fetch all travels once when first load
+    const fetchTravels = async () => {
       try{
         const response = await axios.get(`http://localhost:8080/travel/pageable/all?page=${currentPage}&size=${pageSize}`);
-        console.log(response.data)
+        console.log(response.data.content)
         setTravels(response.data.content);
-        setTotalPages(response.data.totalPages)
+        setTotalPages(response.data.totalPages);
       }catch (err) {
           setError('Error fetching travels');
           console.error(err);
       } finally {
           setLoading(false);
       }
-  };
+    };
+    fetchTravels();
+  },[])
+
+  useEffect(() => { //fetch filtered travels with applied filters
+    const changeTravelContent = async () => {
+      var uri;
+      if(filters.cityNames.length === 0 &&
+        filters.hotelStars === 0 &&
+        (filters.minPrice === undefined || filters.minPrice === 0) &&
+        (filters.maxPrice === undefined || filters.maxPrice === 0)){
+          uri = `http://localhost:8080/travel/pageable/all?page=${currentPage}&size=${pageSize}`
+        }else {
+          uri = generateUriToRequest(filters);
+        }
+      console.log(uri);
+      try {
+        const respone = await axios.get(uri);
+        setTravels(respone.data.content);
+        setTotalPages(respone.data.totalPages)
+        console.log(respone);
+      } catch(error) {
+        console.log(error);
+      } finally {
+        setLoading(false);
+      }
+    }
+    if(filters){
+      changeTravelContent();
+    }
+  }, [currentPage, filters, pageSize])
 
   useEffect(() => {
-    fetchTravels();
-  }, [currentPage])
-
-  useEffect(() => {
-    fetchTravels();
-    setCurrentPage(0)
+    const fetchOnSizeChange = async () => {
+      setCurrentPage(0); //najpierw ustawic page na 0
+      //await changeTravelContent(); //pozniej fetchowac nowe dane
+    }
+    fetchOnSizeChange();
   }, [pageSize])
-
-  // Function to fetch images based on their IDs
   
   const fetchImageById = async (fileDataId) => {
     try {
@@ -55,8 +113,6 @@ function TravelList({keycloak}){
     }
   };
 
-
-// Use an effect to fetch images for each travel item when the component mounts
 useEffect(() => {
   travels.forEach((travel) => {
     if (travel.fileDataId) {
@@ -93,10 +149,18 @@ useEffect(() => {
       </button>
       ))}
     </div>
-      {travels.map(travel => (
+      {travels.length === 0 ? (
+        <div className='empty'>
+          <h1>Niestety nie ma wycieczek z podanymi filtrami...</h1>
+          <h2>Spróbuj jeszcze raz</h2>
+          <img className='sad' src="./empty_travel.png" alt="sad_emoji" />
+        </div>
+      ) : (
+        travels.map(travel => (
         // name, bo nie ma ID, poznie sie cos wymysli
         <TravelCard key={travel.id} travel={travel} travelImages={travelImages} />
-      ))}
+        ))
+      )}
       <div className="pagination-controls">
         <button className='btn' id='slider' onClick={() => {
           setCurrentPage(prev => Math.max(prev - 1, 0));
@@ -115,7 +179,6 @@ useEffect(() => {
         </button>
       </div>
     </div>
-    
   );
 }
 

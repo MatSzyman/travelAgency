@@ -20,6 +20,7 @@ import wat.wcy.TravelAgency.model.Travel;
 
 import java.time.Instant;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -45,9 +46,28 @@ public class TravelService {
                 travel.getEndSeason(),
                 travel.getHotel().getStarsCount(),
                 travel.getHotel().getName(),
+                travel.getHotel().getPrice(),
                 travel.getCity().getName(),
                 travel.getFileDataId()
         ));
+    }
+
+    public Page<TravelDTO> getTravelsByCityNameIn(List<String> cityNames, Pageable pageable){
+        return travelRepository.findByCityNameIn(cityNames, pageable)
+                .map(TravelDTO::new);
+    }
+
+    public Page<TravelDTO> getFilteredTravels(
+            Optional<List<String>> cityNames,
+            Optional<Integer> starsCount,
+            Optional<Double> maxPrice,
+            Optional<Double> minPrice,
+            Pageable pageable){
+        return travelRepository
+                .findByCityNameInAndOptionalHotelStarsCountAndMinHotelPriceAndMaxHotelPrice(
+                        cityNames, starsCount, maxPrice, minPrice, pageable
+                )
+                .map(TravelDTO::new);
     }
 
     public TravelDTO saveTravel(CreateTravelDTO source){

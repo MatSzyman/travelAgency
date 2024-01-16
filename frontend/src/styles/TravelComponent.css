@@ -92,6 +92,7 @@
     align-self: flex-end;
     font-size: var(--size-2xl);
     flex-grow: 1;
+    padding: 0;
   }
 
   #cena{
@@ -187,4 +188,19 @@
     border-radius: 1em;
     min-width: 18px;
     /* Other styling as needed */
+  }
+
+  .empty{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: var(--clr-slate600);
+    font-style: italic;
+    
+  }
+
+  .sad{
+    max-width: 400px;
+    filter: brightness(0.3);
   }
