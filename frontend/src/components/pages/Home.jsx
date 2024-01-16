@@ -22,7 +22,7 @@ export const Home = ({keycloak, authenticated}) => {
         <div className="container">
             <Greet keycloak={keycloak} authenticated={authenticated}/>
             <Filter onFilterSubmit={handleFilterSubmit}/>
-            <TravelList keycloak={keycloak} filters = {filters}/> 
+            <TravelList keycloak={keycloak} filters = {filters} authenticated={authenticated}/> 
         </div>
         //zmienilem na filters ale jeszcze filtersCities zostalo jutro zmienic odtad i w TravelList
     )

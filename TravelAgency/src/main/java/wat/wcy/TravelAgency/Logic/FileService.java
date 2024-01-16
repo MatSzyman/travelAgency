@@ -10,9 +10,10 @@ import wat.wcy.TravelAgency.model.FileData;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.List;
 
 @Service
-public class StorageService {
+public class FileService {
 
 
     private final FileDataRepository fileDataRepository;
@@ -20,9 +21,9 @@ public class StorageService {
 
 
 
-    private static final Logger logger = LoggerFactory.getLogger(StorageService.class);
+    private static final Logger logger = LoggerFactory.getLogger(FileService.class);
 
-    public StorageService(FileDataRepository fileDataRepository, TravelRepository travelRepository) {
+    public FileService(FileDataRepository fileDataRepository, TravelRepository travelRepository) {
         this.fileDataRepository = fileDataRepository;
         this.travelRepository = travelRepository;
     }
@@ -45,9 +46,12 @@ public class StorageService {
         return fileDataRepository.findById(id)
                 .orElseThrow(()->new FileNotFoundException("Image not found with id: " + id));
 
-
-
     }
+
+    public List<FileData> downloadImagesFromFileSystem(List<Integer> ids) {
+        return fileDataRepository.findAllById(ids);
+    }
+
 }
 
 

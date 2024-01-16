@@ -19,6 +19,7 @@ import java.util.Set;
 @Table(name = "travel_option")
 public class TravelOption {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Integer id;
     @ManyToOne(fetch = FetchType.LAZY)
@@ -38,6 +39,14 @@ public class TravelOption {
     @OneToMany(mappedBy = "travelOption")
     @ToString.Exclude
     private Set<Reservation> reservations;
+
+
+    public TravelOption(Travel travel,Instant arrivalTime,Instant departureTime){
+        this.travel = travel;
+        this.departureTime = departureTime;
+        this.arrivalTime = arrivalTime;
+    }
+
 
 
     @Override

@@ -19,7 +19,10 @@ import wat.wcy.TravelAgency.DTO.TravelDTO;
 import wat.wcy.TravelAgency.Logic.TravelService;
 import wat.wcy.TravelAgency.Repositories.TravelRepository;
 
+import java.io.UnsupportedEncodingException;
 import java.net.URI;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -84,8 +87,10 @@ public class TravelController {
     }
 
     @PostMapping
-    ResponseEntity<TravelDTO> addTravel(@RequestBody @Valid CreateTravelDTO travelDTO){
+    ResponseEntity<TravelDTO> addTravel(@RequestBody @Valid CreateTravelDTO travelDTO) throws UnsupportedEncodingException {
         TravelDTO result = travelService.saveTravel(travelDTO);
-        return ResponseEntity.created(URI.create("/" + result.getName())).body(result);
+        String encodedName = URLEncoder.encode(result.getName(), StandardCharsets.UTF_8.toString());
+
+        return ResponseEntity.created(URI.create("/" + encodedName)).body(result);
     }
 }

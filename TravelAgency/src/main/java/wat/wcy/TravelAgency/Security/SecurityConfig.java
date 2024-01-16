@@ -33,9 +33,13 @@ public class SecurityConfig {
             authorize
                     .requestMatchers(HttpMethod.GET, "/travel/pageable/*").permitAll()
                     .requestMatchers(HttpMethod.GET, "/city/all").permitAll()
-                    .requestMatchers(HttpMethod.POST, "/image/fileSystem").permitAll()
-                    .requestMatchers(HttpMethod.GET, "/image/fileSystem/{id}").permitAll() //nasze
+                    .requestMatchers(HttpMethod.POST, "/image/upload").permitAll()
+                    .requestMatchers(HttpMethod.GET, "/image/batchDownload").permitAll() //nasze
+                    .requestMatchers(HttpMethod.GET, "/image/download/{id}").permitAll() //nasze
                     .requestMatchers(HttpMethod.GET, "/travel/{name}").permitAll() //nasze
+                    .requestMatchers(HttpMethod.POST, "/travelOption").permitAll() //nasze
+                    .requestMatchers(HttpMethod.GET, "/travelOption/all").permitAll() //nasze
+
                     .anyRequest().authenticated();
         });
         http.oauth2ResourceServer(t-> {

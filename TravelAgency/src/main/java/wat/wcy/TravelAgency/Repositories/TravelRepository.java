@@ -15,8 +15,9 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface TravelRepository extends JpaRepository<Travel, Integer> {
+public interface  TravelRepository extends JpaRepository<Travel, Integer> {
 
+    @Query("SELECT DISTINCT t FROM Travel t LEFT JOIN FETCH t.hotel h LEFT JOIN FETCH t.city c LEFT JOIN FETCH t.travelOptions")
     @Override
     List<Travel> findAll();
 

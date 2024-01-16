@@ -1,6 +1,7 @@
 package wat.wcy.TravelAgency.Repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import wat.wcy.TravelAgency.model.FileData;
 
@@ -17,5 +18,11 @@ public interface FileDataRepository extends JpaRepository<FileData,Integer> {
 
     @Override
     List<FileData> findAll();
+
+    @Override
+    @Query("SELECT DISTINCT f FROM FileData f")
+    List<FileData> findAllById(Iterable<Integer> integers);
+
+
 }
 

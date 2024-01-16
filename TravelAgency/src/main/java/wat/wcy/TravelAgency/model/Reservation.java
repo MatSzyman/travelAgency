@@ -14,6 +14,8 @@ import java.util.Objects;
 @Entity
 @Table(name = "reservation")
 public class Reservation {
+
+
     @EmbeddedId
     private ReservationId id;
     @ManyToOne(fetch = FetchType.LAZY)

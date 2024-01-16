@@ -2,10 +2,10 @@ package wat.wcy.TravelAgency.Logic;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
-
-import org.springframework.data.domain.Page; //poprawny import
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -30,6 +30,7 @@ public class TravelService {
     private final TravelRepository travelRepository;
     private final HotelRepository hotelRepository;
     private final CityRepository cityRepository;
+    private static final Logger logger = LoggerFactory.getLogger(TravelService.class);
 
     public List<TravelDTO> getTravels(){
         return travelRepository.findAll().stream().map(TravelDTO::new).collect(Collectors.toList());
@@ -76,7 +77,7 @@ public class TravelService {
         City city = cityRepository.findById(source.getCity())
                 .orElseThrow(() -> new EntityNotFoundException("City not found"));
 
-        Travel travel = new Travel(source.getName(), source.getBasePrice(), source.getDescription(), source.getStartSeason(), source.getEndSeason(), hotel, city);
+        Travel travel = new Travel(source.getName(), source.getBasePrice(), source.getDescription(), source.getStartSeason(), source.getEndSeason(), hotel, city,source.getFileDataId());
         Travel savedTravel = travelRepository.save(travel);
         
         return new TravelDTO(savedTravel);

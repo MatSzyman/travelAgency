@@ -3,7 +3,7 @@ import axios from 'axios';
 import TravelCard from './TravelCard';
 import '../styles/TravelComponent.css';
 
-function TravelList({keycloak, filters}){
+function TravelList({keycloak, filters, authenticated}){
   const [travels, setTravels] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -56,6 +56,7 @@ function TravelList({keycloak, filters}){
       } finally {
           setLoading(false);
       }
+      
     };
     fetchTravels();
   },[])
@@ -96,30 +97,29 @@ function TravelList({keycloak, filters}){
     fetchOnSizeChange();
   }, [pageSize])
   
+  // Use an effect to fetch images for each travel item when the component mounts
+  useEffect(() => {
   const fetchImageById = async (fileDataId) => {
+    
     try {
-      const response = await axios.get(`http://localhost:8080/image/fileSystem/${fileDataId}`, {
+      const response = await axios.get(`http://localhost:8080/image/download/${fileDataId}`, {
         responseType: 'blob',
       });
-      
+
       const imageBlobUrl = URL.createObjectURL(response.data);
       setTravelImages((prevImages) => ({
-        ...prevImages,
-        [fileDataId]: imageBlobUrl,
-
+        ...prevImages, [fileDataId]: imageBlobUrl
       }));
     } catch (error) {
       console.error('Error fetching image:', error);
     }
   };
 
-useEffect(() => {
   travels.forEach((travel) => {
     if (travel.fileDataId) {
       fetchImageById(travel.fileDataId);
-    }
-    else{
-      console.log("Err")
+    } else {
+      console.log("Error during fetching images");
     }
   });
 }, [travels]);
@@ -158,7 +158,7 @@ useEffect(() => {
       ) : (
         travels.map(travel => (
         // name, bo nie ma ID, poznie sie cos wymysli
-        <TravelCard key={travel.id} travel={travel} travelImages={travelImages} />
+        <TravelCard key={travel.id} travel={travel} travelImages={travelImages} keycloak={keycloak} authenticated= {authenticated}/>
         ))
       )}
       <div className="pagination-controls">

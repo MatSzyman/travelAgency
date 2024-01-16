@@ -2,12 +2,15 @@ import React from 'react';
 import LazyLoad from 'react-lazyload';
 import '../styles/TravelComponent.css';
 
-function TravelCard({ travel, travelImages}) {
+import { Zarezerwuj } from './fun_buttons/Zarezerwuj';
+
+function TravelCard({travel, travelImages, keycloak, authenticated}) {
     // Format the dates using a library like date-fns or moment.js, or write your own formatter.
     const formattedStartSeason = new Date(travel.startSeason).toLocaleDateString();
     const formattedEndSeason = new Date(travel.endSeason).toLocaleDateString();
     const imageSrc = travelImages[travel.fileDataId]; // Use fileDataId to reference the image
-    
+
+    //console.log(imageSrc);
     const renderStars = (count) => {
       let stars = [];
       for (let i = 0; i < count; i++) {
@@ -42,7 +45,7 @@ function TravelCard({ travel, travelImages}) {
           <div className='price-wrapper'>
             <p id='price'><span id='cena'>Cena:</span> <span className="price-value">${travel.hotelPrice}/za dzień</span></p>
             <p id = 'prie2'>+${travel.basePrice} jednorazowo</p>
-            <button id='btn-res'>Zarezerwuj</button>
+                <Zarezerwuj travel={travel} keycloak={keycloak} authenticated={authenticated}/>
           </div>
         </div>
         

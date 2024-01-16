@@ -12,5 +12,7 @@ public class CreateTravelDTO {
     Instant startSeason;
     Instant endSeason;
     Integer hotel;
-    Integer city;
+    Integer city ;
+    Integer fileDataId;
+
 }
