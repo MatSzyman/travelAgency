@@ -66,8 +66,8 @@ function TravelList({keycloak, filters, authenticated}){
       var uri;
       if(filters.cityNames.length === 0 &&
         filters.hotelStars === 0 &&
-        (filters.minPrice === undefined || filters.minPrice === 0) &&
-        (filters.maxPrice === undefined || filters.maxPrice === 0)){
+        (filters.minPrice === undefined || filters.minPrice === 0 || filters.minPrice === null) &&
+        (filters.maxPrice === undefined || filters.maxPrice === 0 || filters.maxPrice === null)){
           uri = `http://localhost:8080/travel/pageable/all?page=${currentPage}&size=${pageSize}`
         }else {
           uri = generateUriToRequest(filters);
@@ -166,7 +166,7 @@ useEffect(() => {
           setCurrentPage(prev => Math.max(prev - 1, 0));
         }} disabled={currentPage === 0}>
           <svg width="3rem" height="3rem" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M6 12H18M6 12L11 7M6 12L11 17" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M6 12H18M6 12L11 7M6 12L11 17" stroke="#000000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
           </svg>
         </button>
         <span className='pagination-controls__page'>Strona {currentPage + 1} z {totalPages}</span>
@@ -174,7 +174,7 @@ useEffect(() => {
           setCurrentPage(prev => Math.min(prev + 1, totalPages - 1));
         }} disabled={currentPage === totalPages - 1}>
           <svg width="3rem" height="3rem" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M6 12H18M18 12L13 7M18 12L13 17" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M6 12H18M18 12L13 7M18 12L13 17" stroke="#000000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
           </svg>
         </button>
       </div>
