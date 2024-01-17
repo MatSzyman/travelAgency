@@ -67,6 +67,7 @@ function CreateTravelCard({keycloak, authenticated}) {
             }
           }); 
         console.log('Cities:', response.data); // Log to see the data
+        console.log(keycloak.tokenParsed.roles.includes("admin"))
         setCities(response.data);
       } catch (error) {
         console.error('Error fetching cities:', error);
