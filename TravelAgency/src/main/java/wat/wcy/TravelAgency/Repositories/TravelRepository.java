@@ -10,14 +10,13 @@ import org.springframework.stereotype.Repository;
 import wat.wcy.TravelAgency.model.Travel;
 
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
 @Repository
 public interface  TravelRepository extends JpaRepository<Travel, Integer> {
 
-    @Query("SELECT DISTINCT t FROM Travel t LEFT JOIN FETCH t.hotel h LEFT JOIN FETCH t.city c LEFT JOIN FETCH t.travelOptions")
+    @Query("SELECT DISTINCT t FROM Travel t LEFT JOIN FETCH t.hotel h LEFT JOIN FETCH t.city c LEFT JOIN FETCH t.travelOptions tr ")
     @Override
     List<Travel> findAll();
 
