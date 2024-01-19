@@ -3,6 +3,8 @@ import axios from 'axios';
 import ImageUploadComponent from './ImageUpload';
 import { useNavigate } from 'react-router-dom';
 import TravelCard from './TravelCard';
+import Select from "react-select";
+
 
 function CreateTravelCard({keycloak, authenticated}) {
   const [travelData, setTravelData] = useState({
@@ -17,10 +19,14 @@ function CreateTravelCard({keycloak, authenticated}) {
 
   });
 
+
+
   const getPreviewTravelBeforeAdd = () => {
 
-    const selectedHotel = hotels.find(hotel => hotel.id.toString() === travelData.hotel);
+   
     const selectedCity = cities.find(city => city.id.toString() === travelData.city);
+    const selectedHotel = hotels.find(hotel => hotel.id.toString() === travelData.hotel);
+    
 
     return {
       name: travelData.name,
@@ -35,49 +41,79 @@ function CreateTravelCard({keycloak, authenticated}) {
     
   };
 
-  const [hotels, setHotels] = useState([]);
+  const [countries, setCountries] = useState([]);
   const [cities, setCities] = useState([]);
+  const [selectedCityId, setSelectedCityId] = useState(null)
+  const [hotels, setHotels] = useState([]);
+  const [allHotels, setAllHotels] = useState([]); // Store all hotels
+  const [selectedCountryId, setSelectedCountryId] = useState(null);
   const [isUploaded, setIsUploaded] = useState(false); 
   const [isTravelAdded, setTravelAdded] = useState(false); 
   const navigate = useNavigate();
 
-
   useEffect(() => {
-    const fetchHotels = async () => {
-      try {
-        const response = await axios.get('http://localhost:8080/hotel/all',{
-            headers: {
-              'Authorization': `Bearer ${keycloak.token}` 
-            }
-          }); 
-        console.log('Hotels:', response.data); 
-        setHotels(response.data);
-      } catch (error) {
-        console.error('Error fetching hotels:', error);
+    const fetchCountries  = async () =>{
+      try{
+        const response = await axios.get('http://localhost:8080/country',{
+          headers: {
+            'Authorization': `Bearer ${keycloak.token}` 
+          }
+        });
+        console.log('Countries:', response.data); 
+        setCountries(response.data)
+         
+        // const allCities = response.data.flatMap(country => Array.from(country.cities));
+        // setCities(allCities);
+
+        // console.log(cities)
         
-      }
-    };
-    fetchHotels();
-
-    const fetchCities = async () => {
-      try {
-        const response = await axios.get('http://localhost:8080/city/all',{
-            headers: {
-              'Authorization': `Bearer ${keycloak.token}` // Include the JWT token in the request header
-            }
-          }); 
-        console.log('Cities:', response.data); // Log to see the data
-        console.log(keycloak.tokenParsed.roles.includes("admin"))
-        setCities(response.data);
-      } catch (error) {
-        console.error('Error fetching cities:', error);
-        // Handle error
+      }catch(error){
+        console.error("Error fetching countries");
       }
     };
 
-   
-    fetchCities();
-  }, [keycloak]);
+    if(keycloak && keycloak.token){
+    fetchCountries();
+    }
+    
+  }, [keycloak])
+
+
+
+  //CITIES
+  useEffect(() => {
+    const selectedCountry = countries.find(c => {
+      return String(c.id) === String(selectedCountryId); 
+    });
+    if (selectedCountry) {
+      setCities(selectedCountry.cities || []); // Fallback to an empty array if no cities
+    } else {
+      setCities([]);
+    }
+  }, [selectedCountryId, countries]);
+
+// HOTELS
+useEffect(() => {
+  const selectedCity = cities.find(city => String(city.id) === String(travelData.city));
+
+  if (selectedCity) {
+    console.log('Selected City:', selectedCity);
+    setHotels(Array.from(selectedCity.hotels)); // Convert the Set to an array and set the hotels state
+  } else {
+    setHotels([]); // If no city is selected, clear the hotels
+  }
+}, [travelData.city, cities]);
+
+
+  const handleCountryChange = (e) => {
+    setSelectedCountryId(e.target.value);
+    setTravelData({ ...travelData, city: '', hotel: '' }); // Reset city and hotel when country changes
+  };
+
+const handleCityChange = (e) => {
+  const newCityId = e.target.value;
+  setTravelData({ ...travelData, city: newCityId, hotel: '' });
+};
 
 
   const handleChange = (e) => {
@@ -91,7 +127,6 @@ function CreateTravelCard({keycloak, authenticated}) {
         setTravelData({ ...travelData, [e.target.name]: e.target.value });
       }
   };
-
 
 
 
@@ -162,9 +197,6 @@ function CreateTravelCard({keycloak, authenticated}) {
     }
   };
 
-  // const goHome = () => {
-  //   navigate('/'); 
-  // };
 
   return (
     <div>
@@ -203,16 +235,22 @@ function CreateTravelCard({keycloak, authenticated}) {
               value={travelData.endSeason}
               onChange={handleChange}
             />
+          <select value={selectedCountryId} onChange={handleCountryChange}>
+              <option value="">Select a Country</option>
+              {countries.map(country => (
+              <option key={country.id} value={country.id}>{country.name}</option>
+              ))}
+          </select>
+              <select name="city" value={travelData.city} onChange={handleCityChange}>
+                <option value="">Select a City</option>
+                {cities.map((city) => (
+               <option key={city.id} value={city.id}>{city.name}</option>
+                ))}
+          </select>
             <select name="hotel" value={travelData.hotel} onChange={handleChange}>
               <option value="">Select a Hotel</option>
               {hotels.map(hotel => (
                 <option key={hotel.id} value={hotel.id}>{hotel.name}</option>
-              ))}
-            </select>
-            <select name="city" value={travelData.city} onChange={handleChange}>
-              <option value="">Select a City</option>
-              {cities.map(city => (
-                <option key={city.id} value={city.id}>{city.name}</option>
               ))}
             </select>
             <button type="submit" disabled={!isFormComplete()}>Add Travel</button>
