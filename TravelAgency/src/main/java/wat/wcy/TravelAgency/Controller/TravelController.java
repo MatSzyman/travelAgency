@@ -1,8 +1,8 @@
 package wat.wcy.TravelAgency.Controller;
 
+import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.mapping.Collection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,8 +10,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.relational.core.sql.In;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import wat.wcy.TravelAgency.DTO.CreateTravelDTO;
@@ -93,4 +91,13 @@ public class TravelController {
 
         return ResponseEntity.created(URI.create("/" + encodedName)).body(result);
     }
+
+
+    @Transactional
+    @DeleteMapping(value = "/delete/{id}")
+    ResponseEntity<?> deleteTravel(@PathVariable Integer id)  {
+        travelService.deleteTravel(id);
+        return ResponseEntity.ok().build();
+    }
+
 }

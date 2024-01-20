@@ -84,8 +84,14 @@ public class TravelService {
     }
 
 
+    public void deleteTravel(Integer id){
+        Travel travel = travelRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+        travelRepository.delete(travel);
+    }
+
+
     @Scheduled(cron = "0 0 0 * * ?") // odpala sie o 12 w nocy
-    public void deleteTravel(){
+    public void deleteTravelScheduled(){
         Instant today =  Instant.now();
         for(Travel travel: travelRepository.findAll()){
             if(travel.getEndSeason().equals(today)){
@@ -93,5 +99,7 @@ public class TravelService {
             }
         }
     }
+
+
 
 }

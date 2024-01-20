@@ -61,6 +61,8 @@ public interface  TravelRepository extends JpaRepository<Travel, Integer> {
     @Override
     void delete(Travel entity);
 
+
+
     Travel findByName(String name);
 
     //Optional<Travel> findAllByInCity(boolean isInCity);
