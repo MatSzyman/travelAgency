@@ -34,7 +34,11 @@
 			<artifactId>azure-storage-blob</artifactId>
 			<version>12.14.0</version> <!-- Use the latest version available -->
 		</dependency>
-
+		<dependency>
+			<groupId>com.paypal.sdk</groupId>
+			<artifactId>rest-api-sdk</artifactId>
+			<version>LATEST</version>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-validation</artifactId>

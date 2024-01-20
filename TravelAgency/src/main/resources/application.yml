@@ -19,5 +19,11 @@ spring:
       max-file-size: 4MB
       max-request-size: 4MB
 
+paypal:
+  mode: sandbox
+  client:
+    id: ATYCSLqaQaXDjt7LfgXJW6KMwLw49Ly7rfYv3Rfg30XVx9vttad4xnS4xkbk2foomkIM0vKwZHT-wXO5
+    secret: ECex0Yg2iaRigZV4jBbCAST5lSBWMwZSJw2YDPJx9UGHvfsECQ5r4PJyVrCA6GZQLKUMHnQOMUSxlpAb
+
 server:
   port: 8080
