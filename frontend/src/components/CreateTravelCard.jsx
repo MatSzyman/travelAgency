@@ -43,9 +43,7 @@ function CreateTravelCard({keycloak, authenticated}) {
 
   const [countries, setCountries] = useState([]);
   const [cities, setCities] = useState([]);
-  const [selectedCityId, setSelectedCityId] = useState(null)
   const [hotels, setHotels] = useState([]);
-  const [allHotels, setAllHotels] = useState([]); // Store all hotels
   const [selectedCountryId, setSelectedCountryId] = useState(null);
   const [isUploaded, setIsUploaded] = useState(false); 
   const [isTravelAdded, setTravelAdded] = useState(false); 
@@ -82,9 +80,7 @@ function CreateTravelCard({keycloak, authenticated}) {
 
   //CITIES
   useEffect(() => {
-    const selectedCountry = countries.find(c => {
-      return String(c.id) === String(selectedCountryId); 
-    });
+    const selectedCountry = countries.find(c => { return String(c.id) === String(selectedCountryId);});
     if (selectedCountry) {
       setCities(selectedCountry.cities || []); // Fallback to an empty array if no cities
     } else {
@@ -98,23 +94,22 @@ useEffect(() => {
 
   if (selectedCity) {
     console.log('Selected City:', selectedCity);
-    setHotels(Array.from(selectedCity.hotels)); // Convert the Set to an array and set the hotels state
+    setHotels(Array.from(selectedCity.hotels)); 
   } else {
-    setHotels([]); // If no city is selected, clear the hotels
+    setHotels([]); 
   }
 }, [travelData.city, cities]);
 
 
   const handleCountryChange = (e) => {
     setSelectedCountryId(e.target.value);
-    setTravelData({ ...travelData, city: '', hotel: '' }); // Reset city and hotel when country changes
+    setTravelData({ ...travelData, city: '', hotel: '' }); // Resetuj te wartości gdy zmienia sie Country
   };
 
 const handleCityChange = (e) => {
   const newCityId = e.target.value;
   setTravelData({ ...travelData, city: newCityId, hotel: '' });
 };
-
 
   const handleChange = (e) => {
 
