@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import "../styles/CreateTravelOption.css"
+import { renderStars } from './TravelCard'
 
 
 function CreateTravelOption({keycloak,authenticated, travel}){
@@ -84,19 +86,18 @@ function CreateTravelOption({keycloak,authenticated, travel}){
     }
 
     return (
-        <div>
-            <h1>{travel.name}</h1>
-            {travelImageUrl && <img src={travelImageUrl} alt="Travel" />} 
-            <p>Description: {travel.description}</p> 
-            <p>Start Date: {new Date(travel.startSeason).toLocaleDateString()}</p> 
-            <p>End Date: {new Date(travel.endSeason).toLocaleDateString()}</p> 
-
-
-            <p>Hotel: {travel.hotel_name}</p> 
-            <p>Hotel PRice: {travel.hotel_price}</p> 
-            <p>Stars: {travel.stars_count}</p> 
-            <p>Base Price: {travel.basePrice}</p>     
-            <p>City: {travel.city_name}</p> 
+        <div className='container section' id='main'>
+            <h1 className='travel-name'><span>{travel.name}</span>{renderStars(travel.stars_count, '35px')}</h1>
+            {travelImageUrl && <img src={travelImageUrl} alt="Travel" className='travel-image'/>} 
+            <h2>Opis:</h2>
+            <p>{travel.description}</p>
+            <h2>Daty obowiązywania Wycieczki {travel.name}</h2> 
+            <p>Od: <span id='date'>{new Date(travel.startSeason).toLocaleDateString()}</span> Do: <span id='date'>{new Date(travel.endSeason).toLocaleDateString()}</span></p> 
+            <h2>Hotel: {travel.hotel_name}</h2> 
+            <p id='opis-hotel'>Opis hotelu: {travel.hotelDescription}</p> 
+            <p id='opis-hotel'>Liczba gwiazdek: {travel.stars_count}</p> 
+            <p id='opis-hotel'><span id='date'>Cena:</span> {travel.hotelPrice}$/za noc + jednorazowo {travel.basePrice}$</p>     
+            <h2 className='h2-date'>Wybierz daty, aby zobaczyć proponowaną cenę</h2>
           <form onSubmit={handleSubmit}>
             <input
               type="date"
@@ -116,6 +117,7 @@ function CreateTravelOption({keycloak,authenticated, travel}){
               max={new Date(travel.endSeason).toISOString().split("T")[0]}
               placeholder="Ends here"
             />
+            <h1>Proponowana cena:</h1>
             <button type="submit">Zapisz</button>
           </form>
         </div>

@@ -3,6 +3,7 @@ import { Filter } from "../Filter";
 import TravelList from "../TravelLIst";
 
 export const ManageTravel = ({keycloak, authenticated}) => {
+    const manageTravel = true;
     const [filters, setFilters] = useState({
         cityNames: [],
         hotelStars: 0,
@@ -18,7 +19,7 @@ export const ManageTravel = ({keycloak, authenticated}) => {
     return(
         <div>
             <Filter onFilterSubmit={handleFilterSubmit}/>
-            <TravelList keycloak={keycloak} filters = {filters} authenticated={authenticated}/>
+            <TravelList keycloak={keycloak} filters = {filters} authenticated={authenticated} manage={manageTravel}/>
         </div>
     )
 }

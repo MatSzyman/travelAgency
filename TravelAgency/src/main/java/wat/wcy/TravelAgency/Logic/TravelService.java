@@ -48,6 +48,7 @@ public class TravelService {
                 travel.getHotel().getStarsCount(),
                 travel.getHotel().getName(),
                 travel.getHotel().getPrice(),
+                travel.getHotel().getDescription(),
                 travel.getCity().getName(),
                 travel.getFileDataId()
         ));

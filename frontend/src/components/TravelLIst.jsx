@@ -3,7 +3,7 @@ import axios from 'axios';
 import TravelCard from './TravelCard';
 import '../styles/TravelComponent.css';
 
-function TravelList({keycloak, filters, authenticated}){
+function TravelList({keycloak, filters, authenticated, manage}){
   const [travels, setTravels] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -158,7 +158,7 @@ useEffect(() => {
       ) : (
         travels.map(travel => (
         // name, bo nie ma ID, poznie sie cos wymysli
-        <TravelCard key={travel.id} travel={travel} travelImages={travelImages} keycloak={keycloak} authenticated= {authenticated}/>
+        <TravelCard key={travel.id} travel={travel} travelImages={travelImages} keycloak={keycloak} authenticated= {authenticated} admin={manage}/>
         ))
       )}
       <div className="pagination-controls">

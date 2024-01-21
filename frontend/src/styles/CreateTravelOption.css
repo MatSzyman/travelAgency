@@ -1,0 +1,43 @@
+#main{
+    border: 2px solid var(--clr-indigo600);
+    border-radius: 2em;
+    padding: 1em 5em;
+    background-color: rgba(255, 255, 255, 0);
+    box-shadow: 0px 0px 10px 1px rgb(53, 44, 215),
+        0px 0px 100px rgba(53, 44, 215);
+}
+
+#main .travel-name{
+    margin-bottom: 2em;
+}
+
+#main .travel-image{
+    border: 2px solid var(--clr-light);
+    border-radius: 1em;
+    max-width: 550px;
+    margin-bottom: 1em;
+}
+
+.travel-name span{
+    margin-right: 0.5em;
+}
+
+.container .travel-name{
+    font-family: 'Dela Gothic One', sans-serif;
+    font-weight: 400;
+    font-size: var(--size-4xl);
+}
+
+.container #date{
+    font-weight: 600;
+    color: var(--clr-rose600);
+
+}
+
+.container #opis-hotel{
+    padding: 0.3em;
+}
+
+.container .h2-date{
+    margin: 1em;
+}

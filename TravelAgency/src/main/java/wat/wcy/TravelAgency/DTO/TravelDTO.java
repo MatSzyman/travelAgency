@@ -20,6 +20,7 @@ public class TravelDTO {
     Integer stars_count;
     String hotel_name;
     Double hotelPrice;
+    String hotelDescription;
     String city_name;
     Integer fileDataId;
 
@@ -33,6 +34,7 @@ public class TravelDTO {
         this.stars_count = travel.getHotel().getStarsCount();
         this.hotel_name = travel.getHotel().getName();
         this.hotelPrice = travel.getHotel().getPrice();
+        this.hotelDescription = travel.getHotel().getDescription();
         this.city_name = travel.getCity().getName();
         this.fileDataId = travel.getFileDataId();
     }
