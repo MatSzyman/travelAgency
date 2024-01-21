@@ -27,4 +27,7 @@ public class ClientController {
         return ResponseEntity.ok(clientService.getClients());
     }
 
+    @GetMapping(path = "/roles")
+    ResponseEntity<String> getClientsRoles() {return ResponseEntity.ok(clientService.getClientRolesFromJWT());}
+
 }

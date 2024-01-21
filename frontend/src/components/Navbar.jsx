@@ -4,6 +4,7 @@ import {LogoutButton} from './fun_buttons/LogoutButton';
 import {LoginButton} from './fun_buttons/LoginButton';
 import {RegisterButton} from "./fun_buttons/RegisterButton";
 import '../styles/Navbar.css'
+import ClientButton from "./fun_buttons/clientButton";
 
 export const Navbar = ({keycloak, authenticated}) => {
     return <div className="container">
@@ -13,7 +14,7 @@ export const Navbar = ({keycloak, authenticated}) => {
         </div>
         <ul>
             <li>
-                <Link to = '/' className="link">Strona główna</Link>
+                <Link to = '/home' className="link">Strona główna</Link>
             </li>
             {authenticated && keycloak.tokenParsed.roles.includes("admin") &&(
                 <li>
@@ -25,8 +26,8 @@ export const Navbar = ({keycloak, authenticated}) => {
             </li>
             {authenticated ? (
                 <li>
-                <LogoutButton keycloak={keycloak}/>
-                </li>
+                    <LogoutButton keycloak={keycloak}/>
+                </li>   
             ) : (
                 <>
                     <li>

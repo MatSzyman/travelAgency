@@ -18,5 +18,4 @@ public interface ClientRepository extends JpaRepository<Client,Integer> {
     @Override
     Client save(Client entity);
 
-
 }

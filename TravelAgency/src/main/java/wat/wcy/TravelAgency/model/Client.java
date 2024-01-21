@@ -31,15 +31,19 @@ public class Client {
     @Column(name = "email", nullable = false, length = 100)
     private String email;
 
+    @Column(name = "roles")
+    private String roles;
+
     @OneToMany(mappedBy = "client")
     @ToString.Exclude
     private Set<Reservation> reservations;
 
-    public Client(String userId, String userName, String userLastName, String userEmail) {
+    public Client(String userId, String userName, String userLastName, String userEmail, String roles) {
         this.id = userId;
         this.name=userName;
         this.lastName=userLastName;
         this.email=userEmail;
+        this.roles = roles;
     }
 
     @Override

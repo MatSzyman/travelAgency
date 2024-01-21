@@ -1,0 +1,12 @@
+.auth{
+    position: relative;
+    top: 40vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#zaloguj{
+    padding-top: 1em;
+}
