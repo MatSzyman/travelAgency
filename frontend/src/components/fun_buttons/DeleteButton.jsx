@@ -1,7 +1,8 @@
 import React from "react";
 import axios from "axios";
+import '../../styles/TravelComponent.css';
 
-export const UsunWycieczke = ({keycloak,travel}) =>{
+export const DeleteButton = ({keycloak,travel}) =>{
     const handleDelete = async () =>{
          try{
             const response  = axios.delete(`http://localhost:8080/travel/${travel.id}`)
@@ -17,6 +18,6 @@ export const UsunWycieczke = ({keycloak,travel}) =>{
     }
 
     return(
-        <button> onClick={handleDelete} Delete Travel</button>
+        <button onClick={handleDelete} id='btn-res'>  Delete Travel</button>
     )
 }

@@ -11,6 +11,7 @@ import { withRoleAccess } from './components/withRoleAccess';
 import { Unauthorized } from './components/pages/Unauthorized';
 import CircularIndeterminate from './components/Loading';
 import { Panel } from './components/pages/Panel';
+import { ManageTravel } from './components/pages/ManageTravel';
 
 function App() {
   const [keycloak, setKeycloak] = useState(null);
@@ -86,6 +87,7 @@ function App() {
             <Route path='/home' element={<Home keycloak={keycloak} authenticated={authenticated}/>}/>
             <Route path='/panel' element={<ProtectedAdminPanel />}>
               <Route path='addTravel' element={<CreateTravelCard keycloak={keycloak} authenticated={authenticated}/>} />
+              <Route path='manageTravel' element={<ManageTravel keycloak={keycloak} authenticated={authenticated}/>} />
             </Route>
             <Route path="/reservation/:travelId" element={<Reservation keycloak={keycloak} authenticated={authenticated} />} />
             <Route path='/not-authenticated' element={<NotAuthenticated />}/>

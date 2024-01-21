@@ -3,6 +3,7 @@ import LazyLoad from 'react-lazyload';
 import '../styles/TravelComponent.css';
 
 import { Zarezerwuj } from './fun_buttons/Zarezerwuj';
+import { DeleteButton } from './fun_buttons/DeleteButton';
 
 function TravelCard({travel, travelImages, keycloak, authenticated,preview}) {
     // Format the dates using a library like date-fns or moment.js, or write your own formatter.
@@ -39,7 +40,7 @@ function TravelCard({travel, travelImages, keycloak, authenticated,preview}) {
           <p>{travel.description}</p>
           <p>You can sign-up from {formattedStartSeason} to {formattedEndSeason}</p>
           <div className='wrapper3'>
-            <img src='hotel.svg' alt='hotel' className='hotel'/>
+            <img src='/hotel.svg' alt='hotel' className='hotel'/>
             <p>{travel.hotel_name}, {travel.city_name}</p>
           </div>
         </div>
@@ -47,7 +48,12 @@ function TravelCard({travel, travelImages, keycloak, authenticated,preview}) {
           <div className='price-wrapper'>
             <p id='price'><span id='cena'>Cena:</span> <span className="price-value">${travel.hotelPrice}/za dzień</span></p>
             <p id = 'prie2'>+${travel.basePrice} jednorazowo</p>
-                <Zarezerwuj travel={travel} keycloak={keycloak} authenticated={authenticated} preview={preview}/>
+                {authenticated && keycloak.tokenParsed.roles.includes("admin") ? (
+                  <DeleteButton />
+                ) : (
+                  <Zarezerwuj travel={travel} keycloak={keycloak} authenticated={authenticated} preview={preview}/>
+                )}
+                
           </div>
         </div>
         

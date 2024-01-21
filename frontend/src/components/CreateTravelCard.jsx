@@ -269,7 +269,7 @@ const handleCityChange = (e) => {
           {/* Preview Section */}
           {
             <div className="travel-preview">
-              <h3>Podgląd:</h3>
+              <h3 className='prev'>Podgląd:</h3>
               <TravelCard travel={getPreviewTravelBeforeAdd()} preview={preview}/>
             </div>
           }
