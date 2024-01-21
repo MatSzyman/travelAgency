@@ -10,6 +10,7 @@ import axios from 'axios';
 import { withRoleAccess } from './components/withRoleAccess';
 import { Unauthorized } from './components/pages/Unauthorized';
 import CircularIndeterminate from './components/Loading';
+import { Panel } from './components/pages/Panel';
 
 function App() {
   const [keycloak, setKeycloak] = useState(null);
@@ -72,7 +73,7 @@ function App() {
     }
   }, [keycloak, authenticated])
 
-  const ProtectedAdminPanel = withRoleAccess(CreateTravelCard, keycloak, ['admin']);
+  const ProtectedAdminPanel = withRoleAccess(Panel, keycloak, ['admin']);
 
   
   return (
@@ -81,13 +82,15 @@ function App() {
       {!isLoading && (
         <>
           <Navbar keycloak={keycloak} authenticated={authenticated}/>
-      <Routes>
-        <Route path='/home' element={<Home keycloak={keycloak} authenticated={authenticated}/>}/>
-        <Route path='/panel' element={<ProtectedAdminPanel />}/>
-        <Route path="/reservation/:travelId" element={<Reservation keycloak={keycloak} authenticated={authenticated} />} />
-        <Route path='/not-authenticated' element={<NotAuthenticated />}/>
-        <Route path='/unauthorized' element={<Unauthorized />}/>
-      </Routes>
+          <Routes>
+            <Route path='/home' element={<Home keycloak={keycloak} authenticated={authenticated}/>}/>
+            <Route path='/panel' element={<ProtectedAdminPanel />}>
+              <Route path='addTravel' element={<CreateTravelCard keycloak={keycloak} authenticated={authenticated}/>} />
+            </Route>
+            <Route path="/reservation/:travelId" element={<Reservation keycloak={keycloak} authenticated={authenticated} />} />
+            <Route path='/not-authenticated' element={<NotAuthenticated />}/>
+            <Route path='/unauthorized' element={<Unauthorized />}/>
+          </Routes>
         </>
       )}
     </div>

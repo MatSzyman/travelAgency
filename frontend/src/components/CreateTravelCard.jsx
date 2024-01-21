@@ -4,11 +4,12 @@ import ImageUploadComponent from './ImageUpload';
 import { useNavigate } from 'react-router-dom';
 import TravelCard from './TravelCard';
 import Select from "react-select";
+import "../styles/CreateTravelCard.css"
 
 
 function CreateTravelCard({keycloak, authenticated}) {
   const [travelData, setTravelData] = useState({
-    name: '',
+    name: 'Name not selected',
     basePrice: 0,
     description: '',
     startSeason: '',
@@ -19,26 +20,23 @@ function CreateTravelCard({keycloak, authenticated}) {
 
   });
 
-
+  const [url, setUrl] = useState("");
+  const preview = true;
 
   const getPreviewTravelBeforeAdd = () => {
-
-   
     const selectedCity = cities.find(city => city.id.toString() === travelData.city);
     const selectedHotel = hotels.find(hotel => hotel.id.toString() === travelData.hotel);
-    
-
+  
     return {
       name: travelData.name,
       basePrice: travelData.basePrice,
+      hotelPrice: selectedHotel ? selectedHotel.price : 0,
       description: travelData.description,
       startSeason: travelData.startSeason,
       endSeason: travelData.endSeason,
       hotel_name: selectedHotel ? selectedHotel.name : 'Hotel not selected', // Use the name property from the found hotel object
       city_name: selectedCity ? selectedCity.name : 'City not selected', // Use the name property from the found city o
-
     };
-    
   };
 
   const [countries, setCountries] = useState([]);
@@ -75,6 +73,12 @@ function CreateTravelCard({keycloak, authenticated}) {
     }
     
   }, [keycloak])
+
+  // useEffect(() => {
+  //   const updateImage = async () => {
+  //     pathToImage = travelData.fileDataId
+  //   }
+  // }, [pathToImage])
 
 
 
@@ -127,9 +131,8 @@ const handleCityChange = (e) => {
 
  // This function will be passed to ImageUploadComponent and called after successful upload
   const handleImageUpload = (uploadedImageId) => {
-  setTravelData({ ...travelData, fileDataId: uploadedImageId });
-  setIsUploaded(true);    
-  
+    setTravelData({ ...travelData, fileDataId: uploadedImageId });
+    setIsUploaded(true);    
   };
 
   const isFormComplete = () => {
@@ -194,10 +197,10 @@ const handleCityChange = (e) => {
 
 
   return (
-    <div>
+    <div className='main'>
       {!isTravelAdded ? (
         <>
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit} className='form'>
             <input
               type="text"
               name="name"
@@ -212,12 +215,6 @@ const handleCityChange = (e) => {
               onChange={handleChange}
               placeholder="Base Price"
             />
-            <textarea
-              name="description"
-              value={travelData.description}
-              onChange={handleChange}
-              placeholder="Description"
-            />
             <input
               type="date"
               name="startSeason"
@@ -229,26 +226,35 @@ const handleCityChange = (e) => {
               name="endSeason"
               value={travelData.endSeason}
               onChange={handleChange}
+              className='date'
             />
-          <select value={selectedCountryId} onChange={handleCountryChange}>
+            <textarea
+              name="description"
+              value={travelData.description}
+              onChange={handleChange}
+              placeholder="Description"
+              id='desc'
+            />
+            <div className='break'></div>
+            <select value={selectedCountryId} onChange={handleCountryChange}>
               <option value="">Select a Country</option>
               {countries.map(country => (
               <option key={country.id} value={country.id}>{country.name}</option>
               ))}
-          </select>
+            </select>
               <select name="city" value={travelData.city} onChange={handleCityChange}>
                 <option value="">Select a City</option>
                 {cities.map((city) => (
                <option key={city.id} value={city.id}>{city.name}</option>
                 ))}
-          </select>
+            </select>
             <select name="hotel" value={travelData.hotel} onChange={handleChange}>
               <option value="">Select a Hotel</option>
               {hotels.map(hotel => (
                 <option key={hotel.id} value={hotel.id}>{hotel.name}</option>
               ))}
             </select>
-            <button type="submit" disabled={!isFormComplete()}>Add Travel</button>
+            <button type="submit" className= "btn">Add Travel</button>
           </form>
 
           {/* Image Preview Section */}
@@ -261,13 +267,13 @@ const handleCityChange = (e) => {
   
   
           {/* Preview Section */}
-          {(travelData.name || travelData.basePrice || travelData.description) && (
+          {
             <div className="travel-preview">
-              <h3>Preview:</h3>
-              <TravelCard travel={getPreviewTravelBeforeAdd()} travelImages={travelData.fileDataId}/>
+              <h3>Podgląd:</h3>
+              <TravelCard travel={getPreviewTravelBeforeAdd()} preview={preview}/>
             </div>
-          )}
-  
+          }
+          
           <ImageUploadComponent keycloak={keycloak} authenticated={authenticated} onImageUpload={handleImageUpload}/>
         </>
       ) : (

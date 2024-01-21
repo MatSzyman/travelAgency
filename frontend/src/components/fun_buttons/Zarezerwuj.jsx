@@ -2,8 +2,7 @@ import React from "react";
 import { redirect, useNavigate } from 'react-router-dom';
 
 
-export const Zarezerwuj = ({travel, keycloak,authenticated}) =>{
-
+export const Zarezerwuj = ({travel, keycloak,authenticated,preview}) =>{
     const navigate = useNavigate();
     const Uri = "http://locallhost:3000/reservation/".concat(travel.id)
 
@@ -22,7 +21,8 @@ export const Zarezerwuj = ({travel, keycloak,authenticated}) =>{
     };
 
     return(
-        <button id='btn-res' onClick={handleReservationClick}>Zarezerwuj</button>
+        <button id='btn-res' disabled={preview}
+        onClick={handleReservationClick}>Zarezerwuj</button>
     );
 
 };

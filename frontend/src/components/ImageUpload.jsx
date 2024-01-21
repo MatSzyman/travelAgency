@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-function ImageUploadComponent({keycloak, authenticated,onImageUpload}) {
+function ImageUploadComponent({keycloak, authenticated, onImageUpload}) {
     const [selectedFile, setSelectedFile] = useState(null);
     const [preview, setPreview] = useState('');
 
@@ -45,8 +45,6 @@ function ImageUploadComponent({keycloak, authenticated,onImageUpload}) {
         const uploadedImageId  = response.data; 
 
         onImageUpload(uploadedImageId);
-         
-
     }
     catch(error){
         console.error('Upload failed', error); 

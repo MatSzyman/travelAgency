@@ -84,6 +84,7 @@ export const Filter = ({onFilterSubmit}) => {
                     isClearable={true}
                 />
                 <NumberInput
+                    className="number"
                     placeholder="Cena minimalna"
                     value={selectedMin}
                     onChange={(event, val) => 
@@ -95,6 +96,7 @@ export const Filter = ({onFilterSubmit}) => {
                     max={localFilters.maxPrice}
                 />
                 <NumberInput
+                    className="number"
                     placeholder="Cena maksymalna"
                     value={selectedMax}
                     onChange={(event, val) => 

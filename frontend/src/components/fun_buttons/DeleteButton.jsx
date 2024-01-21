@@ -8,11 +8,11 @@ export const UsunWycieczke = ({keycloak,travel}) =>{
             console.log("Succesfully deleted travel: " + response);
          }
          catch(error){
-            console.log
+            console.error("cipa")
          }
     }
 
-    if(authorized && keycloak.token){
+    if(keycloak && keycloak.token){
         handleDelete();
     }
 

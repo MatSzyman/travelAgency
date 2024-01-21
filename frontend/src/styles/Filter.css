@@ -14,3 +14,7 @@
 .filter-container .select{
     min-width: 300px;
 }
+
+.filter-container .MuiNumberInput-root{
+    min-height: 50px;
+}

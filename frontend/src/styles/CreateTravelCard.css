@@ -1,0 +1,31 @@
+.form{
+    margin-top: 1em;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: left;
+    align-items: center;
+    gap: 1.5em;
+    padding: 1em;
+    border: 2px solid var(--clr-indigo600);
+    border-radius: 0.7em;
+}
+
+.form input, textarea{
+    border-radius: 0.2em;
+    padding: 0.3em;
+}
+
+#desc{
+    min-width: 300px;
+    max-width: 500px;
+    flex-grow: 1;
+}
+
+.break{
+    flex-basis: 100%;
+    height: 0;
+}
+
+.prev{
+    margin: 1em 0;
+}
