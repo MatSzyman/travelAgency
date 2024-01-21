@@ -38,7 +38,6 @@ export const withRoleAccess = (WrappedComponent, keycloak, requiredRole) => {
 
         
         if(loading) return <NotAuthenticated />
-        if(!keycloak.authenticated) return <Navigate to="/not-authenticated" replace />
         if(!hasAccess) return <Navigate to="/unauthorized" replace />;
 
         return <WrappedComponent {...props} />;
