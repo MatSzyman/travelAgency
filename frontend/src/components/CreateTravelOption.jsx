@@ -10,7 +10,30 @@ function CreateTravelOption({keycloak,authenticated, travel}){
         departureTime: '',
     })
 
+    const [travelImageUrl, setTravelImageUrl] = useState(null); // State to store the image URL
+
+    useEffect(() => {
+        const fetchImageById = async () => {
+          
+          try {
+            const response = await axios.get(`http://localhost:8080/image/download/${travel.fileDataId}`, {
+              responseType: 'blob',
+            });
+      
+            const imageBlobUrl = URL.createObjectURL(response.data);
+            setTravelImageUrl(imageBlobUrl);
+
+          } catch (error) {
+            console.error('Error fetching image:', error);
+          }
+        };
  
+        if(keycloak && keycloak.token){
+            fetchImageById();
+        }
+
+    },[keycloak, travel.fileDataId]);
+
 
     const handleChange =  (e) => {
         console.log(travel)
@@ -62,6 +85,18 @@ function CreateTravelOption({keycloak,authenticated, travel}){
 
     return (
         <div>
+            <h1>{travel.name}</h1>
+            {travelImageUrl && <img src={travelImageUrl} alt="Travel" />} 
+            <p>Description: {travel.description}</p> 
+            <p>Start Date: {new Date(travel.startSeason).toLocaleDateString()}</p> 
+            <p>End Date: {new Date(travel.endSeason).toLocaleDateString()}</p> 
+
+
+            <p>Hotel: {travel.hotel_name}</p> 
+            <p>Hotel PRice: {travel.hotel_price}</p> 
+            <p>Stars: {travel.stars_count}</p> 
+            <p>Base Price: {travel.basePrice}</p>     
+            <p>City: {travel.city_name}</p> 
           <form onSubmit={handleSubmit}>
             <input
               type="date"

@@ -2,18 +2,20 @@ import React, {useEffect, useState, useRef, useContext} from 'react';
 import Keycloak from 'keycloak-js';
 import { Navbar } from './components/Navbar';
 import { Home } from './components/pages/Home';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes,useLocation  } from 'react-router-dom';
 import CreateTravelCard from './components/CreateTravelCard'
 import { Reservation } from './components/pages/Reservation';
 import { NotAuthenticated } from './components/pages/NotAuthenticated';
 import axios from 'axios';
 import { withRoleAccess } from './components/withRoleAccess';
 import { Unauthorized } from './components/pages/Unauthorized';
+import CircularIndeterminate from './components/Loading';
 
 function App() {
   const [keycloak, setKeycloak] = useState(null);
   const [authenticated, setAuthenticated] = useState(false);
-
+  const location = useLocation(); // To detect route changes
+  const [isLoading, setIsLoading] = useState(true); // New loading state
   const isRun = useRef(false);
 
   useEffect(() => {
@@ -41,6 +43,17 @@ function App() {
   }, []);
 
   useEffect(() => {
+    // Set loading to true when route changes
+    setIsLoading(true);
+    // Simulate loading (can be replaced with actual loading logic)
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 700);
+
+    return () => clearTimeout(timer);
+  }, [location]);
+
+  useEffect(() => {
     const addClientToDataBase = async () => {
       try {
         const response = await axios.post('http://localhost:8080/Client', {}, {
@@ -61,9 +74,13 @@ function App() {
 
   const ProtectedAdminPanel = withRoleAccess(CreateTravelCard, keycloak, ['admin']);
 
+  
   return (
     <div>
-      <Navbar keycloak={keycloak} authenticated={authenticated}/>
+      {isLoading && <CircularIndeterminate />} {/* Show loader when loading */}
+      {!isLoading && (
+        <>
+          <Navbar keycloak={keycloak} authenticated={authenticated}/>
       <Routes>
         <Route path='/home' element={<Home keycloak={keycloak} authenticated={authenticated}/>}/>
         <Route path='/panel' element={<ProtectedAdminPanel />}/>
@@ -71,6 +88,8 @@ function App() {
         <Route path='/not-authenticated' element={<NotAuthenticated />}/>
         <Route path='/unauthorized' element={<Unauthorized />}/>
       </Routes>
+        </>
+      )}
     </div>
   )
 }

@@ -11,8 +11,10 @@ import java.util.List;
 public interface CityRepository extends JpaRepository<City,Integer> {
 
     @Override
+
     List<City> findAll(Sort sort);
 
+    //@Query("SELECT c FROM City c LEFT JOIN FETCH c.hotels WHERE c.name = :name")
     List<City> findAllByCountry_Name(String name);
 
     City findByName(String name);

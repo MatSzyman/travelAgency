@@ -25,4 +25,6 @@ public class CityController {
     ResponseEntity<List<CityDTO>> getCities(){
         return ResponseEntity.ok(cityService.getCities());
     }
+
+
 }

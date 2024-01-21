@@ -1,6 +1,7 @@
 package wat.wcy.TravelAgency.Repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import wat.wcy.TravelAgency.model.Hotel;
 
@@ -11,6 +12,7 @@ import java.util.Optional;
 public interface HotelRepository extends JpaRepository<Hotel,Integer> {
 
     @Override
+    @Query("SELECT DISTINCT h FROM Hotel h LEFT JOIN FETCH h.airlineCompany a LEFT JOIN FETCH h.city c ")
     List<Hotel> findAll();
 
     @Override
