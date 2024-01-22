@@ -33,15 +33,7 @@ function App() {
     keycloakInstance.init({ onLoad: 'check-sso'}).then(auth => {
       setKeycloak(keycloakInstance);
       setAuthenticated(auth);
-      // if(keycloak !== null && keycloak.token){
-      //   addClientToDataBase();
-      // }else{
-      //   console.log("Keycloak: ", keycloak);
-      // }
     });
-
-    
-
   }, []);
 
   useEffect(() => {

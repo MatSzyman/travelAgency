@@ -1,10 +1,16 @@
 #main{
+    display: flex;
+    justify-content: space-between;
     border: 2px solid var(--clr-indigo600);
     border-radius: 2em;
     padding: 1em 5em;
     background-color: rgba(255, 255, 255, 0);
     box-shadow: 0px 0px 10px 1px rgb(53, 44, 215),
         0px 0px 100px rgba(53, 44, 215);
+}
+
+#main h2{
+    margin-top: 1.5em;
 }
 
 #main .travel-name{
@@ -39,5 +45,84 @@
 }
 
 .container .h2-date{
-    margin: 1em;
+    margin: 1em 0;
+}
+
+.callendar-date{
+    display: flex;
+    gap: 1em;
+}
+
+input[type="date"]{
+    background-color: var(--clr-light);
+    padding: 5px 10px; 
+    font-family: "Roboto Mono", monospace;
+    color: var(--clr-indigo600);
+    border: none;
+    outline: none;
+    border-radius: 5px;
+}
+
+::-webkit-calendar-picker-indicator{
+    color: var(--clr-indigo600);
+    cursor: pointer;
+}
+
+.gpt{
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    font-family: monospace;
+    align-items: flex-end;
+    justify-content: center;
+}
+
+.gpt__prompt{
+    display: flex;
+    align-items: baseline;
+    gap: 1em;
+    font-size: var(--size-base);
+}
+
+#rainbow-outside{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    padding: 0.2em;
+    border-radius: 0.5em;
+}
+
+#rainbow-inside{
+    padding: 0.5em;
+    z-index: 100;
+    text-align: center;
+    background-color: var(--clr-dark);
+    transform: none;
+}
+
+#rainbow-outside:before{
+    z-index: -1;
+    content: "";
+    height: 200%;
+    width: 200%;
+    position: absolute;
+    background: conic-gradient(
+        #fd004c,
+        #fe9000,
+        #fff020,
+        #3edf4b,
+        #3363ff,
+        #b102b7,
+        #fd004c
+    );
+    animation: spin 3s infinite linear;
+}
+
+@keyframes spin{
+    100%{
+        transform: rotate(-360deg);
+    }
 }

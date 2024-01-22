@@ -13,6 +13,26 @@ function CreateTravelOption({keycloak,authenticated, travel}){
     })
 
     const [travelImageUrl, setTravelImageUrl] = useState(null); // State to store the image URL
+    const [proposalPrice, setProporsalPrice] = useState(0);
+
+    useEffect(() => {
+      const calculatePrice = async () => {
+        const arrivalTime = new Date(reservationData.arrivalTime)
+        const departureTime = new Date(reservationData.departureTime)
+
+        console.log(arrivalTime, departureTime);
+        const differenceInMiliseconds = Math.abs(arrivalTime - departureTime);
+
+        const differenceInDays = differenceInMiliseconds / (1000*60*60*24)
+
+        setProporsalPrice(differenceInDays * travel.hotelPrice + travel.basePrice);
+      }
+      if(reservationData.arrivalTime !== '' && reservationData.departureTime !== ''){
+        calculatePrice();
+      }else{
+        setProporsalPrice(0);
+      }
+    },[reservationData.arrivalTime, reservationData.departureTime])
 
     useEffect(() => {
         const fetchImageById = async () => {
@@ -86,41 +106,53 @@ function CreateTravelOption({keycloak,authenticated, travel}){
     }
 
     return (
-        <div className='container section' id='main'>
-            <h1 className='travel-name'><span>{travel.name}</span>{renderStars(travel.stars_count, '35px')}</h1>
-            {travelImageUrl && <img src={travelImageUrl} alt="Travel" className='travel-image'/>} 
-            <h2>Opis:</h2>
-            <p>{travel.description}</p>
-            <h2>Daty obowiązywania Wycieczki {travel.name}</h2> 
-            <p>Od: <span id='date'>{new Date(travel.startSeason).toLocaleDateString()}</span> Do: <span id='date'>{new Date(travel.endSeason).toLocaleDateString()}</span></p> 
-            <h2>Hotel: {travel.hotel_name}</h2> 
-            <p id='opis-hotel'>Opis hotelu: {travel.hotelDescription}</p> 
-            <p id='opis-hotel'>Liczba gwiazdek: {travel.stars_count}</p> 
-            <p id='opis-hotel'><span id='date'>Cena:</span> {travel.hotelPrice}$/za noc + jednorazowo {travel.basePrice}$</p>     
-            <h2 className='h2-date'>Wybierz daty, aby zobaczyć proponowaną cenę</h2>
+      <div className='container section' id='main'>
+        <div>
+          <h1 className='travel-name'><span>{travel.name}</span>{renderStars(travel.stars_count, '35px')}</h1>
+          {travelImageUrl && <img src={travelImageUrl} alt="Travel" className='travel-image'/>} 
+          <h2>Opis:</h2>
+          <p>{travel.description}</p>
+          <h2>Daty obowiązywania Wycieczki {travel.name}</h2> 
+          <p>Od: <span id='date'>{new Date(travel.startSeason).toLocaleDateString()}</span> Do: <span id='date'>{new Date(travel.endSeason).toLocaleDateString()}</span></p> 
+          <h2>Hotel: {travel.hotel_name}</h2> 
+          <p id='opis-hotel'>Opis hotelu: {travel.hotelDescription}</p> 
+          <p id='opis-hotel'>Liczba gwiazdek: {travel.stars_count}</p> 
+          <p id='opis-hotel'><span id='date'>Cena:</span> {travel.hotelPrice}$/za noc + jednorazowo {travel.basePrice}$</p>     
+          <h2 className='h2-date'>Wybierz daty, aby zobaczyć proponowaną cenę</h2>
           <form onSubmit={handleSubmit}>
-            <input
-              type="date"
-              name="arrivalTime"
-              value={reservationData.arrivalTime}
-              onChange={handleChange}
-              min={new Date(travel.startSeason).toISOString().split("T")[0]} 
-              max={new Date(travel.endSeason).toISOString().split("T")[0]}
-              placeholder="Starts here"
-            /> 
-            <input
-              type="date"
-              name="departureTime"
-              value={reservationData.departureTime}
-              onChange={handleChange}
-              min={new Date(travel.startSeason).toISOString().split("T")[0]}
-              max={new Date(travel.endSeason).toISOString().split("T")[0]}
-              placeholder="Ends here"
-            />
-            <h1>Proponowana cena:</h1>
+            <div className='callendar-date'>
+              <input
+                type="date"
+                name="arrivalTime"
+                value={reservationData.arrivalTime}
+                onChange={handleChange}
+                min={new Date(travel.startSeason).toISOString().split("T")[0]} 
+                max={new Date(travel.endSeason).toISOString().split("T")[0]}
+                placeholder="Starts here"
+              /> 
+              <input
+                type="date"
+                name="departureTime"
+                value={reservationData.departureTime}
+                onChange={handleChange}
+                min={new Date(travel.startSeason).toISOString().split("T")[0]}
+                max={new Date(travel.endSeason).toISOString().split("T")[0]}
+                placeholder="Ends here"
+              />
+            </div>
+            <h1>Proponowana cena: <span id='date'>{proposalPrice}$</span></h1>
             <button type="submit">Zapisz</button>
           </form>
         </div>
+        <div className='gpt'>
+          <h2>Nie jesteś zdecydowany na {travel.city_name}?</h2>
+          <div className='gpt__prompt'>
+            <div id='rainbow-outside'><button id='rainbow-inside' className='btn'>Zapytaj</button></div>
+            <h3>ChatGPT 3.5 o ciekawe miejsca w tym mieście</h3> 
+          </div>
+          
+        </div>    
+      </div>
     );
     
 
