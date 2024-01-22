@@ -1,7 +1,10 @@
 package wat.wcy.TravelAgency.model;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.Hibernate;
 
 import java.util.Objects;
@@ -15,21 +18,24 @@ import java.util.Objects;
 @Table(name = "reservation")
 public class Reservation {
 
+    @Id
+    @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
-    @EmbeddedId
-    private ReservationId id;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "insurance_id")
     @ToString.Exclude
+
     private Insurance insurance;
 
-    @MapsId("clientId")
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "client_id")
     @ToString.Exclude
     private Client client;
 
-    @MapsId("travelOptionId")
+
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "travel_option_id", nullable = false)
     @ToString.Exclude
@@ -38,12 +44,24 @@ public class Reservation {
     @Column(name = "reservation_number", nullable = false, length = 100)
     private String reservationNumber;
 
-    @Column(name = "isCanceled", nullable = false)
+    @Column(name = "is_canceled",nullable = false)
     private Boolean isCanceled = false;
 
-    @Column(name = "isAllFood", nullable = false)
+    @Column(name = "is_all_food", nullable = false)
     private Boolean isAllFood = false;
 
+    private String currency;
+    private String intent;
+    private String method;
+
+    public Reservation(Client client,TravelOption travelOption, Insurance insurance,String reservationNumber,boolean isCanceled, boolean isAllFood) {
+        this.client = client;
+        this.travelOption = travelOption;
+        this.insurance = insurance;
+        this.reservationNumber = reservationNumber;
+        this.isCanceled = isCanceled;
+        this.isAllFood = isAllFood;
+    }
 
     @Override
     public boolean equals(Object o) {

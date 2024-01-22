@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-
+import CreateReservation from './CreateReservation';
 
 function CreateTravelOption({keycloak,authenticated, travel}){
 
@@ -11,6 +11,9 @@ function CreateTravelOption({keycloak,authenticated, travel}){
     })
 
     const [travelImageUrl, setTravelImageUrl] = useState(null); // State to store the image URL
+    const [responseData, setResponseData] = useState(null);
+    const[trackSucces,setTrackSucces] = useState(false);
+
 
     useEffect(() => {
         const fetchImageById = async () => {
@@ -40,6 +43,12 @@ function CreateTravelOption({keycloak,authenticated, travel}){
         setReservationData({...reservationData, [e.target.name]:e.target.value})
     }
 
+    // useEffect(() => {
+    //   // This will be called after `responseData` is updated
+    //   console.log(responseData);
+    //   setResponseData(responseData)
+    // }, [responseData]); // The effect depends on `responseData` and will run when it changes
+    
 
     const handleSubmit = async (e) =>{
         e.preventDefault()
@@ -67,6 +76,8 @@ function CreateTravelOption({keycloak,authenticated, travel}){
         
         };
 
+    
+
         try{
             const response = await axios.post('http://localhost:8080/travelOption', travelSubmission,  {
                 headers: {
@@ -74,7 +85,9 @@ function CreateTravelOption({keycloak,authenticated, travel}){
                   }
                 });
 
-            console.log(response);
+                setTrackSucces(true);
+            setResponseData(response.data)
+            console.log("tu chyba null" +responseData)
         }
         catch(error){
             console.log(travelSubmission)
@@ -117,7 +130,11 @@ function CreateTravelOption({keycloak,authenticated, travel}){
               placeholder="Ends here"
             />
             <button type="submit">Zapisz</button>
+           {trackSucces} 
           </form>
+          {trackSucces && (
+            <CreateReservation travelOption={responseData} keycloak={keycloak} authenticated={authenticated} />
+            )}
         </div>
     );
     
