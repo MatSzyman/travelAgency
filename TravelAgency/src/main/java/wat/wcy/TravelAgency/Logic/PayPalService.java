@@ -53,6 +53,7 @@ public class PayPalService {
         return payment.create(apiContext);
     }
 
+
     //Wykonanie platnosci
     public Payment executePayment(String paymentId, String payerId) throws PayPalRESTException {
         Payment payment = new Payment();

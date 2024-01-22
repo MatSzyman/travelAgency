@@ -24,9 +24,7 @@ export default  function CreateReservation({keycloak,authenticated, travelOption
         return (
 
             createReserv.insurance &&
-            createReserv.reservationNumber &&
-            createReserv.isAllFood 
-
+            createReserv.reservationNumber
         );
       };
 
