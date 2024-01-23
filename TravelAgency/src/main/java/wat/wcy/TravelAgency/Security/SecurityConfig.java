@@ -40,6 +40,9 @@ public class SecurityConfig {
                     .requestMatchers(HttpMethod.POST, "/travelOption").permitAll() //nasze
                     .requestMatchers(HttpMethod.GET, "/travelOption/all").permitAll() //nasze
                     .requestMatchers(HttpMethod.POST, "/reservation/add").permitAll() //nasze
+                    .requestMatchers(HttpMethod.POST, "/pay").permitAll() //nasze
+                    .requestMatchers(HttpMethod.GET, "/success").permitAll() //nasze
+                    .requestMatchers(HttpMethod.GET, "/cancel").permitAll() //nasze
                     .anyRequest().authenticated();
         });
         http.oauth2ResourceServer(t-> {

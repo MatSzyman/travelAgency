@@ -12,9 +12,7 @@ export default  function CreateReservation({keycloak,authenticated, travelOption
         reservationNumber: '',
         isAllFood: false,
         isCanceled:false,
-     //   currency:'', 
-   //     intent:'',
- //       method:''
+
     })
 
 
@@ -52,8 +50,8 @@ export default  function CreateReservation({keycloak,authenticated, travelOption
             return;
         }
 
-        //console.log(objecti.id);
         console.log("TRAVEL RESERVATION LOG: " + travelOption.id);
+
 
         const reservationSubmission = {
             ...createReserv,
@@ -65,8 +63,9 @@ export default  function CreateReservation({keycloak,authenticated, travelOption
             alert('Please complete all form fields befora Signing up');
             return; 
           }
+
           setIsSubmitted(true);
-          
+        
 
         try{
             const response = await axios.post('http://localhost:8080/reservation/add', reservationSubmission,  {
@@ -75,34 +74,36 @@ export default  function CreateReservation({keycloak,authenticated, travelOption
                   }
                 });
                 
-                console.log(response);
+            console.log(response);
 
-        // Assuming the reservation response includes the necessary data for payment
-        // const reservationData = reservationResponse.data;
+                  // Step 1: Initiate Payment
+            const paymentDetails = {
+                price: 2500.00, // Assuming this is how you get the price
+                currency: 'USD',
+                method: 'paypal',
+                intent: 'sale'
+            };
+         
+            try {
+                const paymentResponse = await axios.post('http://localhost:8080/pay', paymentDetails, {
+                    headers: {
+                        'Authorization': `Bearer ${keycloak.token}`
+                    }
+                });
+                    // Redirect to PayPal approval URL
+                    const approvalUrl = paymentResponse.data.url; // Adjust this based on your actual response structure
+                    console.log(approvalUrl)
+                    window.location.href = approvalUrl;
+            }catch(error) {
+                console.error("Error initiating payment", error);
+            }
 
-        // // Initiate Payment
-        // const paymentResponse = await axios.post('http://localhost:8080/pay', {
-        //     travelOption: reservationData.travelOption,
-        //     currency: 'USD', // Assuming currency is USD
-        //     method: 'paypal', // Assuming method is paypal
-        //     intent: 'sale', // Assuming intent is sale
-        //     // ... other necessary data
-        // }, {
-        //     headers: {
-        //         'Authorization': `Bearer ${keycloak.token}`
-        //     }
-        // });
-
-        // // Redirect to PayPal approval URL
-        // const approvalUrl = paymentResponse.data; // Assuming the approval URL is returned in response
-        // window.location.href = approvalUrl;
-
-    } catch (error) {
-        console.log(reservationSubmission);
-        setIsSubmitted("false");
-        console.error("Error in reservation ", error);
-    }
-    };
+        } catch (error) {
+            console.log(reservationSubmission);
+            setIsSubmitted("false");
+            console.error("Error in reservation ", error);
+        }
+        };
 
     
     return (

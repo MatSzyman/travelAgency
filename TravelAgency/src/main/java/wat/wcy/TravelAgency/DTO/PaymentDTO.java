@@ -5,7 +5,7 @@ import lombok.Value;
 @Value
 public class PaymentDTO {
 
-    Integer travelOption;
+    Double price;
     String currency;
     String intent;
     String method;

@@ -3,33 +3,27 @@ package wat.wcy.TravelAgency.Controller;
 import com.paypal.api.payments.Links;
 import com.paypal.api.payments.Payment;
 import com.paypal.base.rest.PayPalRESTException;
-import jakarta.persistence.EntityNotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 import wat.wcy.TravelAgency.DTO.PaymentDTO;
 import wat.wcy.TravelAgency.Logic.PayPalService;
-import wat.wcy.TravelAgency.Repositories.TravelOptionRepository;
-import wat.wcy.TravelAgency.model.TravelOption;
 
 @RestController
 public class PayPalController {
 
-    @Autowired
-    private PayPalService service;
-    TravelOptionRepository travelOptionRepository;
+    private final PayPalService service;
 
+    public PayPalController(PayPalService service) {
+        this.service = service;
+    }
 
     @PostMapping(value = "/pay")
     public ResponseEntity<?> payment(@RequestBody PaymentDTO paymentDTO) {
         try {
-            TravelOption travelOption = travelOptionRepository.findById(paymentDTO.getTravelOption())
-                    .orElseThrow(()->new EntityNotFoundException("No such Travel Option"));
-
-            Payment payment = service.createPayment(travelOption.getTravelPrice(),paymentDTO.getCurrency(),paymentDTO.getMethod()
-                    , paymentDTO.getIntent(),"http://localhost:9000/cancel","http://localhost:9000/success");
+            Payment payment = service.createPayment(paymentDTO.getPrice(),paymentDTO.getCurrency(),paymentDTO.getMethod()
+                    , paymentDTO.getIntent(),"http://localhost:8080/cancel","http://localhost:8080/success");
 
 
             for(Links link:payment.getLinks()) {

@@ -3,21 +3,24 @@ package wat.wcy.TravelAgency.Logic;
 import com.paypal.api.payments.*;
 import com.paypal.base.rest.APIContext;
 import com.paypal.base.rest.PayPalRESTException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 @Service
 public class PayPalService {
 
 
-    @Autowired
-    private APIContext apiContext;
 
+    private  final APIContext apiContext;
+
+    public PayPalService(APIContext apiContext) {
+        this.apiContext = apiContext;
+    }
 
     //Tworzenie platnosci
     public Payment createPayment(
@@ -29,8 +32,9 @@ public class PayPalService {
             String successURL) throws PayPalRESTException {
         Amount amount = new Amount();
         amount.setCurrency(currency);
-        total = new BigDecimal(total).setScale(2, RoundingMode.HALF_UP).doubleValue();
-        amount.setTotal(String.format("%.2f", total));// PayPal akcpetuje tylko double z 2 po przecinku
+        BigDecimal totalBigDecimal = new BigDecimal(total).setScale(2, RoundingMode.HALF_UP);
+        amount.setTotal(totalBigDecimal.toString());
+        amount.setTotal(String.format(Locale.US,"%.2f", total));// PayPal akcpetuje tylko double z 2 po przecinku
 
         Transaction transaction = new Transaction();
         transaction.setAmount(amount);
