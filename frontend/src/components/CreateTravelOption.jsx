@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import "../styles/CreateTravelOption.css"
 import { renderStars } from './TravelCard'
+import CreateReservation from './CreateReservation'
 
 
 function CreateTravelOption({keycloak,authenticated, travel}){

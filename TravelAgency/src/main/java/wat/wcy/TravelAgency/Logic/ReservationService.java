@@ -1,8 +1,10 @@
 package wat.wcy.TravelAgency.Logic;
 
 import jakarta.persistence.EntityNotFoundException;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.dao.InvalidDataAccessResourceUsageException;
 import org.springframework.stereotype.Service;
 import wat.wcy.TravelAgency.DTO.CreateReservationDTO;
 import wat.wcy.TravelAgency.DTO.ReservationDTO;
@@ -19,10 +21,10 @@ import wat.wcy.TravelAgency.model.TravelOption;
 @RequiredArgsConstructor
 public class ReservationService {
 
-    ReservationRepository final reservationRepository;
-    ClientRepository final clientRepository;
-    TravelOptionRepository final travelOptionRepository;
-    InsuranceRepository final insuranceRepository;
+    private final ReservationRepository reservationRepository;
+    private final ClientRepository clientRepository;
+    private final TravelOptionRepository travelOptionRepository;
+    private final InsuranceRepository insuranceRepository;
     private static final Logger logger = LoggerFactory.getLogger(ReservationService.class);
 
     public Integer getCountOnGoingReservationsByTravelId(Integer travelId){

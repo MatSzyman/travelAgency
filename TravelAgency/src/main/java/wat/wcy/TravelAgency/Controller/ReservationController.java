@@ -1,10 +1,15 @@
 package wat.wcy.TravelAgency.Controller;
 
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import wat.wcy.TravelAgency.DTO.CreateReservationDTO;
+import wat.wcy.TravelAgency.DTO.ReservationDTO;
 import wat.wcy.TravelAgency.Logic.ReservationService;
 
 @RequestMapping(value = "/reservation")
