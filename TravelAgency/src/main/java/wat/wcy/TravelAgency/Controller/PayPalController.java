@@ -23,7 +23,7 @@ public class PayPalController {
     public ResponseEntity<?> payment(@RequestBody PaymentDTO paymentDTO) {
         try {
             Payment payment = service.createPayment(paymentDTO.getPrice(),paymentDTO.getCurrency(),paymentDTO.getMethod()
-                    , paymentDTO.getIntent(),"http://localhost:8080/cancel","http://localhost:8080/success");
+                    , paymentDTO.getIntent(),"http://localhost:3000/cancel","http://localhost:3000/success");
 
 
             for(Links link:payment.getLinks()) {
@@ -57,8 +57,6 @@ public class PayPalController {
         }
         return ResponseEntity.badRequest().body("Payment not successful");
     }
-
-
 
 
 }

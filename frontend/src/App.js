@@ -6,6 +6,8 @@ import { Route, Routes,useLocation  } from 'react-router-dom';
 import CreateTravelCard from './components/CreateTravelCard'
 import { Reservation } from './components/pages/Reservation';
 import CircularIndeterminate from './components/Loading';
+import {PaymentSucces} from './components/pages/Succes';
+import {PaymentCancell} from './components/pages/Cancell';
 
 function App() {
   const [keycloak, setKeycloak] = useState(null);
@@ -52,6 +54,8 @@ function App() {
             <Route path='/' element={<Home keycloak={keycloak} authenticated={authenticated}/>}/>
             <Route path='/panel' element={<CreateTravelCard keycloak={keycloak} authenticated={authenticated}/>}/>
             <Route path="/reservation/:travelId" element={<Reservation keycloak={keycloak} authenticated={authenticated} />} />
+            <Route path="/success" element={<PaymentSucces />} />
+            <Route path="/cancel" element={<PaymentCancell />} />
           </Routes>
         </>
       )}
