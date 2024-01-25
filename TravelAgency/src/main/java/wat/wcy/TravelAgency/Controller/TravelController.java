@@ -1,5 +1,4 @@
 package wat.wcy.TravelAgency.Controller;
-
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -10,17 +9,20 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import wat.wcy.TravelAgency.DTO.CreateTravelDTO;
 import wat.wcy.TravelAgency.DTO.TravelDTO;
 import wat.wcy.TravelAgency.Logic.TravelService;
-import wat.wcy.TravelAgency.Repositories.TravelRepository;
+import wat.wcy.TravelAgency.model.Travel;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.rmi.NoSuchObjectException;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -32,10 +34,6 @@ public class TravelController {
 
     @Autowired
     TravelService travelService;
-
-    @Autowired
-    TravelRepository travelRepository;
-
     private static final Logger logger = LoggerFactory.getLogger(TravelController.class);
 
     @GetMapping(value = "/all")
@@ -94,10 +92,16 @@ public class TravelController {
 
 
     @Transactional
-    @DeleteMapping(value = "/delete/{id}")
-    ResponseEntity<?> deleteTravel(@PathVariable Integer id)  {
-        travelService.deleteTravel(id);
-        return ResponseEntity.ok().build();
+    @DeleteMapping(value = "delete/{id}")
+    public ResponseEntity<?> deleteById(@PathVariable Integer id) {
+        try {
+            travelService.deleteById(id);
+            return ResponseEntity.ok("Travel with ID " + id + " has been deleted successfully.");
+        } catch (NoSuchObjectException e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Error: " + e.getMessage());
+        } catch (RuntimeException e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Internal server error");
+        }
     }
 
 }

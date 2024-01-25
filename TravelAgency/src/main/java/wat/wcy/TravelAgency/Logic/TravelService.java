@@ -18,6 +18,7 @@ import wat.wcy.TravelAgency.model.City;
 import wat.wcy.TravelAgency.model.Hotel;
 import wat.wcy.TravelAgency.model.Travel;
 
+import java.rmi.NoSuchObjectException;
 import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
@@ -85,9 +86,14 @@ public class TravelService {
     }
 
 
-    public void deleteTravel(Integer id){
-        Travel travel = travelRepository.findById(id).orElseThrow(EntityNotFoundException::new);
-        travelRepository.delete(travel);
+    public void deleteById(Integer id) throws NoSuchObjectException {
+        Optional<Travel> travelToDelete = travelRepository.findById(id);
+        if (travelToDelete.isPresent()){
+            travelRepository.deleteById(id);
+        }else {
+            throw new NoSuchObjectException("There is no travel with id: " + id);
+        }
+
     }
 
 

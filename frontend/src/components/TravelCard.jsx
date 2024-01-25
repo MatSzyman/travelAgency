@@ -52,7 +52,7 @@ function TravelCard({travel, travelImages, keycloak, authenticated, preview, adm
             <p id='price'><span id='cena'>Cena:</span> <span className="price-value">${travel.hotelPrice}/za dzień</span></p>
             <p id = 'prie2'>+${travel.basePrice} jednorazowo</p>
                 {authenticated && keycloak.tokenParsed.roles.includes("admin") && admin ? (
-                  <DeleteButton />
+                  <DeleteButton keycloak={keycloak} travel={travel}/>
                 ) : (
                   <Zarezerwuj travel={travel} keycloak={keycloak} authenticated={authenticated} preview={preview}/>
                 )}

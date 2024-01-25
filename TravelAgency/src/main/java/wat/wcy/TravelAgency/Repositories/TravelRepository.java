@@ -1,6 +1,7 @@
 package wat.wcy.TravelAgency.Repositories;
 
 import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -26,6 +27,7 @@ public interface  TravelRepository extends JpaRepository<Travel, Integer> {
 
     Page<Travel>findByCityNameIn(Collection<String> cityNames, Pageable pageable);
 
+    //@Nonnull
     @Query("SELECT t FROM Travel t WHERE" +
             " (:cityNames IS NULL OR t.city.name IN :cityNames)" +
             " AND (:starsCount IS NULL OR t.hotel.starsCount = :starsCount)" +
@@ -40,30 +42,21 @@ public interface  TravelRepository extends JpaRepository<Travel, Integer> {
             Pageable pageable
     );
 
-//    public interface TravelRepository extends JpaRepository<Travel, Integer> {
-//        @Query("SELECT t FROM Travel t WHERE t.city.name IN :cityNames AND (:starsCount IS NULL OR t.hotel.starsCount = :starsCount) AND (:basePrice IS NULL OR t.hotel.basePrice <= :basePrice)")
-//        Page<Travel> findByCityNamesAndOptionalHotelStarsCountAndMaxBasePrice(@Param("cityNames") Collection<String> cityNames,
-//                                                                              @Param("starsCount") Optional<Integer> starsCount,
-//                                                                              @Param("basePrice") Optional<Double> basePrice,
-//                                                                              Pageable pageable);
-//    }
-
-
     @Override
     boolean existsById(Integer integer);
 
+    @Nonnull
     @Override
-    Optional<Travel> findById(Integer integer);
+    Optional<Travel> findById(@Nonnull Integer integer);
 
     @Override
     Travel save(Travel entity);
 
     @Override
-    void delete(Travel entity);
+    void deleteById(@Nonnull Integer integer);
 
 
 
     Travel findByName(String name);
 
-    //Optional<Travel> findAllByInCity(boolean isInCity);
 }
