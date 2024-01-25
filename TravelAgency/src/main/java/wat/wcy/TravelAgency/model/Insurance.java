@@ -22,9 +22,6 @@ public class Insurance {
     @Column(name = "id", nullable = false)
     private Integer id;
 
-    @Column(name = "\"option\"", nullable = false, length = 100)
-    private String option;
-
     @Column(name = "price", nullable = false)
     private Double price;
 
@@ -34,6 +31,7 @@ public class Insurance {
     @OneToMany(mappedBy = "insurance")
     @ToString.Exclude
     private Set<Reservation> reservations;
+
 
 
     @Override

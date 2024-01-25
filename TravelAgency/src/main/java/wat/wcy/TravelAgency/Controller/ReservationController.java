@@ -9,12 +9,14 @@ import wat.wcy.TravelAgency.Logic.ReservationService;
 
 @RequestMapping(value = "/reservation")
 @RestController
-@RequiredArgsConstructor
 @SecurityRequirement(name = "Keycloak")
 public class ReservationController {
 
-    @Autowired
     ReservationService reservationService;
+
+    public ReservationController(ReservationService reservationService) {
+        this.reservationService = reservationService;
+    }
 
     @GetMapping(value = "/count")
     @PreAuthorize("hasRole('admin')")
@@ -22,6 +24,12 @@ public class ReservationController {
             @RequestParam Integer travelId
     ){
         return reservationService.getCountOnGoingReservationsByTravelId(travelId);
+    }
+
+    @PostMapping(value = "/add")
+    ResponseEntity<ReservationDTO> saveReservation(@RequestBody @Valid CreateReservationDTO source){
+        ReservationDTO reservationDTO = reservationService.addReservation(source);
+        return ResponseEntity.status(HttpStatus.CREATED).body(reservationDTO);
     }
 
 }

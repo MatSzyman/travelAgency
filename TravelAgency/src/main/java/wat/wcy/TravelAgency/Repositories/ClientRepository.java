@@ -7,13 +7,14 @@ import wat.wcy.TravelAgency.model.Client;
 import java.util.Optional;
 
 @Repository
-public interface ClientRepository extends JpaRepository<Client,Integer> {
+public interface ClientRepository extends JpaRepository<Client,String> {
 
     @Override
-    boolean existsById(Integer integer);
+    boolean existsById(String id);
+
 
     @Override
-    Optional<Client> findById(Integer integer);
+    Optional<Client> findById(String id);
 
     @Override
     Client save(Client entity);

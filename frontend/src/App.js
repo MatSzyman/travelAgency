@@ -10,6 +10,8 @@ import axios from 'axios';
 import { withRoleAccess } from './components/withRoleAccess';
 import { Unauthorized } from './components/pages/Unauthorized';
 import CircularIndeterminate from './components/Loading';
+import {PaymentSucces} from './components/pages/Succes';
+import {PaymentCancell} from './components/pages/Cancell';
 import { Panel } from './components/pages/Panel';
 import { ManageTravel } from './components/pages/ManageTravel';
 
@@ -82,6 +84,8 @@ function App() {
               <Route path='manageTravel' element={<ManageTravel keycloak={keycloak} authenticated={authenticated}/>} />
             </Route>
             <Route path="/reservation/:travelId" element={<Reservation keycloak={keycloak} authenticated={authenticated} />} />
+            <Route path="/success" element={<PaymentSucces />} />
+            <Route path="/cancel" element={<PaymentCancell />} />
             <Route path='/not-authenticated' element={<NotAuthenticated />}/>
             <Route path='/unauthorized' element={<Unauthorized />}/>
           </Routes>
