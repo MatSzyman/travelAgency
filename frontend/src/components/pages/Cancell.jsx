@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
     const navigate = useNavigate();
 
     const redirectToHome = () =>{
-        navigate('/');
+        navigate('/home');
     }
 
     return (

@@ -4,7 +4,7 @@ import {LogoutButton} from './fun_buttons/LogoutButton';
 import {LoginButton} from './fun_buttons/LoginButton';
 import {RegisterButton} from "./fun_buttons/RegisterButton";
 import '../styles/Navbar.css'
-import ClientButton from "./fun_buttons/clientButton";
+
 
 export const Navbar = ({keycloak, authenticated}) => {
     return <div className="container">

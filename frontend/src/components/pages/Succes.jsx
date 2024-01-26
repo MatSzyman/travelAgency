@@ -5,7 +5,7 @@ export const PaymentSucces = () => {
     const navigate = useNavigate();
 
     const redirectToHome = () =>{
-        navigate('/');
+        navigate('/home');
     }
 
 
