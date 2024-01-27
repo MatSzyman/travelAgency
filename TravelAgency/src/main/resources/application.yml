@@ -18,6 +18,9 @@ spring:
     multipart:
       max-file-size: 4MB
       max-request-size: 4MB
+  ai:
+    openai:
+      api-key: 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
 
 paypal:
   mode: sandbox

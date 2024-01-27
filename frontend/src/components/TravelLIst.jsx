@@ -34,7 +34,7 @@ function TravelList({keycloak, filters, authenticated, manage}){
       requestUri += "&maxPrice=" + filters.maxPrice
     }
 
-    return requestUri += `&page=${currentPage}&size=${pageSize}`
+    return requestUri += `&page=0&size=${pageSize}`
   }
 
   const createRequestFilterParam = () => {
