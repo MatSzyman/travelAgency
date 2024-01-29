@@ -3,6 +3,8 @@ import axios from 'axios';
 import "../styles/CreateTravelOption.css"
 import { renderStars } from './TravelCard'
 import CreateReservation from './CreateReservation'
+import CircularProgress from '@mui/material/CircularProgress';
+import { TypeAnimation } from 'react-type-animation';
 
 
 function CreateTravelOption({keycloak,authenticated, travel}){
@@ -17,6 +19,9 @@ function CreateTravelOption({keycloak,authenticated, travel}){
     const [responseData, setResponseData] = useState(null);
     const[trackSucces,setTrackSucces] = useState(false);
     const [proposalPrice, setProporsalPrice] = useState(0);
+
+    const [chatResponse, setChatResponse] = useState(" ");
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
       const calculatePrice = async () => {
@@ -118,9 +123,27 @@ function CreateTravelOption({keycloak,authenticated, travel}){
 
     }
 
+    const handleChatPrompt = async () => {
+      try {
+        setIsLoading(true);
+        const respone = await axios.get(`http://localhost:8080/prompt/entertainment?cityName=${travel.city_name}&travelName=${travel.name}`, {
+          headers: {
+            'Authorization': `Bearer ${keycloak.token}`
+          }
+        });
+        console.log(respone.data);
+        setChatResponse(respone.data);
+      } catch(error) {
+        console.error(error);
+        setChatResponse("Coś poszło nie tak");
+      } finally {
+        setIsLoading(false);
+      }
+    }
+
     return (
       <div className='container section' id='main'>
-        <div>
+        <div id='describe'>
           <h1 className='travel-name'><span>{travel.name}</span>{renderStars(travel.stars_count, '35px')}</h1>
           {travelImageUrl && <img src={travelImageUrl} alt="Travel" className='travel-image'/>} 
           <h2>Opis:</h2>
@@ -164,10 +187,24 @@ function CreateTravelOption({keycloak,authenticated, travel}){
         <div className='gpt'>
           <h2>Nie jesteś zdecydowany na {travel.city_name}?</h2>
           <div className='gpt__prompt'>
-            <div id='rainbow-outside'><button id='rainbow-inside' className='btn'>Zapytaj</button></div>
+            <div id='rainbow-outside'><button id='rainbow-inside' className='btn' onClick={handleChatPrompt}>Zapytaj</button></div>
             <h3>ChatGPT 3.5 o ciekawe miejsca w tym mieście</h3> 
           </div>
-          
+            {isLoading ? (
+              <CircularProgress
+              color="primary"
+              fourColor
+              variant="indeterminate"
+              className='loading-circle'
+              />
+            ) : (
+              <TypeAnimation 
+                sequence={[chatResponse]}
+                className='response'
+                speed={60}
+                cursor={false}
+              />
+            )}
         </div>    
       </div>
     );

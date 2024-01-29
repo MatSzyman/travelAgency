@@ -1,6 +1,7 @@
 package wat.wcy.TravelAgency.Controller;
 
 import org.springframework.ai.chat.ChatClient;
+import org.springframework.ai.chat.prompt.PromptTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,10 +17,18 @@ public class AIPromptController {
         this.chatClient = chatClient;
     }
 
-    @GetMapping
+    @GetMapping(value = "/entertainment")
     public String testAiPrompt(
-            @RequestParam String message
+            @RequestParam String cityName,
+            @RequestParam String travelName
     ){
-        return chatClient.call(message);
+        PromptTemplate promptTemplate = new PromptTemplate("""
+                Napisz w imieniu Biura Podróży Preku Travel
+                co można zwiedzić na wycieczce {travelName}
+                w {cityName}. Użyj maksymalnie 80 słów.""");
+        promptTemplate.add("cityName", cityName);
+        promptTemplate.add("travelName", travelName);
+
+        return chatClient.call(promptTemplate.create()).getResult().getOutput().getContent();
     }
 }
