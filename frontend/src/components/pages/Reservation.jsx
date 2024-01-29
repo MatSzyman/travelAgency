@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import CreateTravelOption from "../CreateTravelOption";
-import { useParams  } from 'react-router-dom';
+import { Navigate, useNavigate, useParams  } from 'react-router-dom';
 
 export const Reservation = ({keycloak, authenticated}) => {
-
+    const navigate = useNavigate();
     const { travelId } = useParams(); // Extract travelId from URL
     
     function getTravelFromLocalStorage(travelId) {
@@ -12,6 +12,10 @@ export const Reservation = ({keycloak, authenticated}) => {
     }
 
     const travel = getTravelFromLocalStorage(travelId);
+
+    useEffect(() => {
+        if(!authenticated) navigate('/home');
+    }, [authenticated])
 
     return(
         <CreateTravelOption keycloak = {keycloak} authenticated ={authenticated} travel={travel}/>
