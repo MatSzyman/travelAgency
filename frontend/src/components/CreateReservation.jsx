@@ -69,7 +69,7 @@ export default  function CreateReservation({keycloak,authenticated, travelOption
         const reservationSubmission = {
             ...createReserv,
             travelOption:travelOption.id,
-            finalPrice
+            reservationPrice:finalPrice
         }
 
         if (!isFormComplete()) {
@@ -94,7 +94,7 @@ export default  function CreateReservation({keycloak,authenticated, travelOption
 
       
             const paymentDetails = {
-                price: {finalPrice}, // Assuming this is how you get the price
+                price: 2500, // Assuming this is how you get the price
                 currency: 'USD',
                 method: 'paypal',
                 intent: 'sale',
