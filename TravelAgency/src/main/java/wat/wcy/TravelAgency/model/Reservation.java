@@ -50,13 +50,16 @@ public class Reservation {
     @Column(name = "is_all_food", nullable = false)
     private Boolean isAllFood = false;
 
-    public Reservation(Client client,TravelOption travelOption, Insurance insurance,String reservationNumber,boolean isCanceled, boolean isAllFood) {
+    private Double reservationPrice;
+
+    public Reservation(Client client,TravelOption travelOption, Insurance insurance,String reservationNumber,boolean isCanceled, boolean isAllFood, Double reservationPrice) {
         this.client = client;
         this.travelOption = travelOption;
         this.insurance = insurance;
         this.reservationNumber = reservationNumber;
         this.isCanceled = isCanceled;
         this.isAllFood = isAllFood;
+        this.reservationPrice = reservationPrice;
     }
 
     @Override

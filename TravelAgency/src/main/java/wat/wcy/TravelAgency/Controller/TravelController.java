@@ -12,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import wat.wcy.TravelAgency.DTO.CreateTravelDTO;
 import wat.wcy.TravelAgency.DTO.TravelDTO;
@@ -83,6 +84,7 @@ public class TravelController {
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('admin')")
     ResponseEntity<TravelDTO> addTravel(@RequestBody @Valid CreateTravelDTO travelDTO) throws UnsupportedEncodingException {
         TravelDTO result = travelService.saveTravel(travelDTO);
         String encodedName = URLEncoder.encode(result.getName(), StandardCharsets.UTF_8.toString());
@@ -93,6 +95,7 @@ public class TravelController {
 
     @Transactional
     @DeleteMapping(value = "delete/{id}")
+    @PreAuthorize("hasRole('admin')")
     public ResponseEntity<?> deleteById(@PathVariable Integer id) {
         try {
             travelService.deleteById(id);

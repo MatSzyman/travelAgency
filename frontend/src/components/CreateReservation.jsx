@@ -3,13 +3,12 @@ import axios from 'axios';
 
 
 
-export default  function CreateReservation({keycloak,authenticated, travelOption}) {
+export default  function CreateReservation({keycloak,authenticated, travelOption, finalPrice}) {
 
     const[createReserv, setCreateReserv] = useState({
         client: keycloak.subject,
         travelOption: '',
         insurance:'',
-        reservationNumber: '',
         isAllFood: false,
         isCanceled:false,
 
@@ -21,8 +20,7 @@ export default  function CreateReservation({keycloak,authenticated, travelOption
     const isFormComplete = () => {
         return (
 
-            createReserv.insurance &&
-            createReserv.reservationNumber
+            createReserv.insurance
         );
       };
 
@@ -52,15 +50,30 @@ export default  function CreateReservation({keycloak,authenticated, travelOption
 
         console.log("TRAVEL RESERVATION LOG: " + travelOption.id);
 
+        console.log("Proposal price: ", finalPrice);
+
+        if(createReserv.isAllFood){
+          finalPrice = finalPrice + finalPrice * 0.2;
+        }
+        console.log("Final price: ", finalPrice);
+
+        if(createReserv.insurance === '1'){
+          finalPrice = finalPrice + 300;
+        }else if(createReserv.insurance === '2'){
+          finalPrice = finalPrice + 200;
+        }else {finalPrice = finalPrice + 100;}
+
+        console.log("Final price: ", finalPrice);
 
         const reservationSubmission = {
             ...createReserv,
-            travelOption:travelOption.id
+            travelOption:travelOption.id,
+            finalPrice
         }
 
         if (!isFormComplete()) {
             console.log('Form is not complete.');
-            alert('Please complete all form fields befora Signing up');
+            alert('Uzupełnij wszystkie pola przed Rezerwacją');
             return; 
           }
 
@@ -78,7 +91,7 @@ export default  function CreateReservation({keycloak,authenticated, travelOption
 
                   // Step 1: Initiate Payment
             const paymentDetails = {
-                price: 2500.00, // Assuming this is how you get the price
+                price: {finalPrice}, // Assuming this is how you get the price
                 currency: 'USD',
                 method: 'paypal',
                 intent: 'sale'
@@ -107,22 +120,10 @@ export default  function CreateReservation({keycloak,authenticated, travelOption
 
     
     return (
-        <div>
-          <form onSubmit={handleSubmit} style={{ maxWidth: '300px', margin: 'auto' }}>  
-            <div style={{ marginBottom: '10px' }}>
-              <input
-                type="text"
-                name="reservationNumber"
-                placeholder="Reservation Number"
-                value={createReserv.reservationNumber}
-                onChange={handleChange}
-                style={{ width: '100%', padding: '5px' }}
-              />
-            </div>
-      
-            <div style={{ marginBottom: '10px' }}>
+          <form onSubmit={handleSubmit} style={{ maxWidth: '300px', marginTop: '40px', fontSize: 'var(--size-lg)', justifySelf: 'flex-start'}}>       
+            <div style={{ marginBottom: '20px'}}>
               <label>
-                All Food Included:
+                All Inclusive (+{finalPrice*0.2}$)
                 <input
                   type="checkbox"
                   name="isAllFood"
@@ -134,17 +135,18 @@ export default  function CreateReservation({keycloak,authenticated, travelOption
             
             <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '10px' }}>
               <label>
-                Insurance Option 1:
+                Ubezpieczenie: Travel+ 
                 <input
                   type="radio"
                   name="insurance"
                   value="Option1"
                   checked={createReserv.insurance === "1"}
                   onChange={handleChange}
+                  style={{marginRight: '10px'}}
                 />
               </label>
               <label>
-                Insurance Option 2:
+                Ubezpieczenie: Lot + Pobyt 
                 <input
                   type="radio"
                   name="insurance"
@@ -154,7 +156,7 @@ export default  function CreateReservation({keycloak,authenticated, travelOption
                 />
               </label>
               <label>
-                Insurance Option 3:
+                Ubezpieczenie podstawowe
                 <input
                   type="radio"
                   name="insurance"
@@ -165,11 +167,10 @@ export default  function CreateReservation({keycloak,authenticated, travelOption
               </label>
             </div>
         
-            <button type="submit" disabled={isSubmitted} style={{ width: '100%', padding: '10px', backgroundColor: '#4CAF50', color: 'white', border: 'none', cursor: 'pointer' }}>
-              ZAREZERWUJ WYCIECZKE
+            <button type="submit" disabled={isSubmitted} style={{padding: '0.5em 1em', backgroundColor: '#4CAF50', color: 'white', border: 'none', cursor: 'pointer', borderRadius: '0.5em', marginTop: '40px' }}>
+              ZAREZERWUJ
             </button>
           </form>
-        </div>
       );
 
 }

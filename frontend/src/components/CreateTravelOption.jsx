@@ -22,6 +22,8 @@ function CreateTravelOption({keycloak,authenticated, travel}){
 
     const [chatResponse, setChatResponse] = useState(" ");
     const [isLoading, setIsLoading] = useState(false);
+    const [submission, setSubmission] = useState(false);
+    const [isDisabled, setIsDisabled] = useState(false);
 
     useEffect(() => {
       const calculatePrice = async () => {
@@ -112,12 +114,13 @@ function CreateTravelOption({keycloak,authenticated, travel}){
                   }
                 });
 
+                setSubmission(true);
                 setTrackSucces(true);
             setResponseData(response.data)
-            console.log("tu chyba null" +responseData)
+
         }
         catch(error){
-            console.log(travelSubmission)
+          setSubmission(false);
             console.error('Submission failed:', error);
         }
 
@@ -141,6 +144,10 @@ function CreateTravelOption({keycloak,authenticated, travel}){
       }
     }
 
+    const disableCallendarInput = () => {
+      setIsDisabled(true)
+    }
+
     return (
       <div className='container section' id='main'>
         <div id='describe'>
@@ -155,7 +162,7 @@ function CreateTravelOption({keycloak,authenticated, travel}){
           <p id='opis-hotel'>Liczba gwiazdek: {travel.stars_count}</p> 
           <p id='opis-hotel'><span id='date'>Cena:</span> {travel.hotelPrice}$/za noc + jednorazowo {travel.basePrice}$</p>     
           <h2 className='h2-date'>Wybierz daty, aby zobaczyć proponowaną cenę</h2>
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit} className='describe-callendar'>
             <div className='callendar-date'>
               <input
                 type="date"
@@ -165,6 +172,7 @@ function CreateTravelOption({keycloak,authenticated, travel}){
                 min={new Date(travel.startSeason).toISOString().split("T")[0]} 
                 max={new Date(travel.endSeason).toISOString().split("T")[0]}
                 placeholder="Starts here"
+                disabled={isDisabled}
               /> 
               <input
                 type="date"
@@ -174,15 +182,17 @@ function CreateTravelOption({keycloak,authenticated, travel}){
                 min={new Date(travel.startSeason).toISOString().split("T")[0]}
                 max={new Date(travel.endSeason).toISOString().split("T")[0]}
                 placeholder="Ends here"
+                disabled={isDisabled}
               />
             </div>
             <h1>Proponowana cena: <span id='date'>{proposalPrice}$</span></h1>
-            <button type="submit">Zapisz</button>
-           {trackSucces} 
+            <button type="submit" disabled={submission} className='btn' id='save' onClick={disableCallendarInput}>Zapisz</button>
+           {/* {trackSucces}  */}
+           
           </form>
           {trackSucces && (
-            <CreateReservation travelOption={responseData} keycloak={keycloak} authenticated={authenticated} />
-            )}
+            <CreateReservation travelOption={responseData} keycloak={keycloak} authenticated={authenticated} finalPrice = {proposalPrice}/>
+          )}
         </div>
         <div className='gpt'>
           <h2>Nie jesteś zdecydowany na {travel.city_name}?</h2>

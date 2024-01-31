@@ -17,6 +17,8 @@ import wat.wcy.TravelAgency.model.Insurance;
 import wat.wcy.TravelAgency.model.Reservation;
 import wat.wcy.TravelAgency.model.TravelOption;
 
+import java.util.UUID;
+
 @Service
 @RequiredArgsConstructor
 public class ReservationService {
@@ -53,8 +55,13 @@ public class ReservationService {
                 .orElseThrow(()->new EntityNotFoundException("No such insurance"));
         logger.warn("FOUND:" + insurance);
 
-        Reservation reservation = new Reservation(client,travelOption,insurance,source.getReservationNumber(),source.getIsCanceled(),source.getIsAllFood());
+        Reservation reservation = new Reservation(client,travelOption,insurance,generateReservationNumber(),source.getIsCanceled(),source.getIsAllFood(), source.getReservationPrice());
         return new ReservationDTO(reservationRepository.save(reservation));
+    }
+
+    private String generateReservationNumber() {
+        // Generate a random UUID and convert it to a string
+        return UUID.randomUUID().toString();
     }
 
 
