@@ -116,6 +116,7 @@ function CreateTravelOption({keycloak,authenticated, travel}){
 
                 setSubmission(true);
                 setTrackSucces(true);
+                setSubmissonSucces(true);
             setResponseData(response.data)
 
         }

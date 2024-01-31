@@ -22,7 +22,7 @@ public class CityService {
     }
 
     public List<CityDTO> getCities(){
-        return repository.findAll().stream().map(CityDTO::new).collect(Collectors.toList());
+        return repository.findAllWithHotels().stream().map(CityDTO::new).collect(Collectors.toList());
     }
 
 

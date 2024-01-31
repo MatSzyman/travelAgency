@@ -21,7 +21,7 @@ public class CountryService {
 
     public List<CountryDTO> getCountries(){
         logger.warn("I GOT: " + repository.findAll().stream().map(CountryDTO::new).collect(Collectors.toList()));
-       return repository.findAll().stream().map(CountryDTO::new).collect(Collectors.toList());
+       return repository.findAllWithCities().stream().map(CountryDTO::new).collect(Collectors.toList());
     }
 
     public boolean isCountry(String name){

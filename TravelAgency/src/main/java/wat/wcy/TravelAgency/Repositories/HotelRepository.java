@@ -12,7 +12,7 @@ import java.util.Optional;
 public interface HotelRepository extends JpaRepository<Hotel,Integer> {
 
     @Override
-    @Query("SELECT DISTINCT h FROM Hotel h LEFT JOIN FETCH h.airlineCompany a LEFT JOIN FETCH h.city c ")
+    @Query("SELECT h FROM Hotel h JOIN FETCH h.city WHERE h.city.id = :cityId")
     List<Hotel> findAll();
 
     @Override
