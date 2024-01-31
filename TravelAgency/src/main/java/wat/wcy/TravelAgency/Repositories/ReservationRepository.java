@@ -5,6 +5,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import wat.wcy.TravelAgency.model.Reservation;
 
+import java.util.Optional;
+
 public interface ReservationRepository extends JpaRepository<Reservation,Integer> {
     @Query(value = "SELECT COUNT(r.id) FROM reservation r" +
             " INNER JOIN travel_option trO ON r.travel_option_id = trO.id" +
@@ -12,4 +14,6 @@ public interface ReservationRepository extends JpaRepository<Reservation,Integer
             " WHERE tr.id = :travelId AND r.is_canceled = 0", nativeQuery = true)
     Integer getCountOnGoingReservationsByTravelId(
             @Param("travelId") Integer travelId);
+
+    Optional<Reservation> findByPaymentId(String paymentId);
 }

@@ -33,6 +33,8 @@ public class SecurityConfig {
             authorize
                     .requestMatchers(HttpMethod.GET, "/travel/pageable/*").permitAll()
                     .requestMatchers(HttpMethod.GET, "/city/all").permitAll()
+                    .requestMatchers(HttpMethod.GET, "/country").permitAll()
+                    .requestMatchers(HttpMethod.GET, "/country/cities/{name}").permitAll()
                     .requestMatchers(HttpMethod.POST, "/image/upload").permitAll()
                     .requestMatchers(HttpMethod.GET, "/image/batchDownload").permitAll() //nasze
                     .requestMatchers(HttpMethod.GET, "/image/download/{id}").permitAll() //nasze

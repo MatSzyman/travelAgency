@@ -9,5 +9,5 @@ public class PaymentDTO {
     String currency;
     String intent;
     String method;
-
+    Integer reservationId;
 }

@@ -50,6 +50,13 @@ public class Reservation {
     @Column(name = "is_all_food", nullable = false)
     private Boolean isAllFood = false;
 
+    @Column()
+    private String paymentId;
+
+    @Column()
+    private Boolean isPaid = false;
+
+
     public Reservation(Client client,TravelOption travelOption, Insurance insurance,String reservationNumber,boolean isCanceled, boolean isAllFood) {
         this.client = client;
         this.travelOption = travelOption;

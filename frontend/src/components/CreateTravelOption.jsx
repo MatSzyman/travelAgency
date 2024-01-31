@@ -17,6 +17,7 @@ function CreateTravelOption({keycloak,authenticated, travel}){
     const [responseData, setResponseData] = useState(null);
     const[trackSucces,setTrackSucces] = useState(false);
     const [proposalPrice, setProporsalPrice] = useState(0);
+    const[submissionSucces,setSubmissonSucces] = useState(false);
 
     useEffect(() => {
       const calculatePrice = async () => {
@@ -108,11 +109,11 @@ function CreateTravelOption({keycloak,authenticated, travel}){
                 });
 
                 setTrackSucces(true);
+                setSubmissonSucces(true);
             setResponseData(response.data)
-            console.log("tu chyba null" +responseData)
         }
         catch(error){
-            console.log(travelSubmission)
+            setSubmissonSucces(false);
             console.error('Submission failed:', error);
         }
 
@@ -154,7 +155,7 @@ function CreateTravelOption({keycloak,authenticated, travel}){
               />
             </div>
             <h1>Proponowana cena: <span id='date'>{proposalPrice}$</span></h1>
-            <button type="submit">Zapisz</button>
+            <button type="submit" disabled={submissionSucces}>Zapisz</button>
            {trackSucces} 
           </form>
           {trackSucces && (

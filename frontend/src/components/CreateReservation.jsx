@@ -9,7 +9,6 @@ export default  function CreateReservation({keycloak,authenticated, travelOption
         client: keycloak.subject,
         travelOption: '',
         insurance:'',
-        reservationNumber: '',
         isAllFood: false,
         isCanceled:false,
 
@@ -17,12 +16,11 @@ export default  function CreateReservation({keycloak,authenticated, travelOption
 
 
     const [isSubmitted, setIsSubmitted] = useState(false);
+    const [responser,setResponser] = useState(null);
 
     const isFormComplete = () => {
         return (
-
-            createReserv.insurance &&
-            createReserv.reservationNumber
+            createReserv.insurance
         );
       };
 
@@ -73,17 +71,20 @@ export default  function CreateReservation({keycloak,authenticated, travelOption
                     'Authorization': `Bearer ${keycloak.token}` // Include the JWT token in the request header
                   }
                 });
+
+                setResponser(response);
                 
             console.log(response);
 
-                  // Step 1: Initiate Payment
+      
             const paymentDetails = {
-                price: 2500.00, // Assuming this is how you get the price
+                price: 2500.00, 
                 currency: 'USD',
                 method: 'paypal',
-                intent: 'sale'
+                intent: 'sale',
+                reservationId: response.data.id
             };
-         
+            console.log(response.data.id);
             try {
                 const paymentResponse = await axios.post('http://localhost:8080/pay', paymentDetails, {
                     headers: {
@@ -91,7 +92,7 @@ export default  function CreateReservation({keycloak,authenticated, travelOption
                     }
                 });
                     // Redirect to PayPal approval URL
-                    const approvalUrl = paymentResponse.data.url; // Adjust this based on your actual response structure
+                    const approvalUrl = paymentResponse.data.url; 
                     console.log(approvalUrl)
                     window.location.href = approvalUrl;
             }catch(error) {
@@ -108,18 +109,7 @@ export default  function CreateReservation({keycloak,authenticated, travelOption
     
     return (
         <div>
-          <form onSubmit={handleSubmit} style={{ maxWidth: '300px', margin: 'auto' }}>  
-            <div style={{ marginBottom: '10px' }}>
-              <input
-                type="text"
-                name="reservationNumber"
-                placeholder="Reservation Number"
-                value={createReserv.reservationNumber}
-                onChange={handleChange}
-                style={{ width: '100%', padding: '5px' }}
-              />
-            </div>
-      
+          <form onSubmit={handleSubmit} style={{ maxWidth: '300px', margin: 'auto' }}>        
             <div style={{ marginBottom: '10px' }}>
               <label>
                 All Food Included:
