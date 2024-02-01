@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: jdbc:sqlserver://travelagency.database.windows.net:1433;databaseName=Travel_Agency_DB;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;
-    username: sqladmin
-    password: qazWSX123
+    url: change_me
+    username: change_me
+    password: change_me
   jpa:
     show-sql: true
     hibernate:
@@ -12,7 +12,7 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: http://127.0.0.1:8081/realms/Travel-Agency
+          issuer-uri: change_me
 
   servlet:
     multipart:
@@ -20,13 +20,13 @@ spring:
       max-request-size: 4MB
   ai:
     openai:
-      api-key: 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
+      api-key: change_me
 
 paypal:
   mode: sandbox
   client:
-    id: ATYCSLqaQaXDjt7LfgXJW6KMwLw49Ly7rfYv3Rfg30XVx9vttad4xnS4xkbk2foomkIM0vKwZHT-wXO5
-    secret: ECex0Yg2iaRigZV4jBbCAST5lSBWMwZSJw2YDPJx9UGHvfsECQ5r4PJyVrCA6GZQLKUMHnQOMUSxlpAb
+    id: change_me
+    secret: change_me
 
 server:
   port: 8080

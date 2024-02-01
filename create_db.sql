@@ -104,19 +104,23 @@ CREATE TABLE client
      file_data_id INT DEFAULT 2,
      constraint FK_client_file_data foreign key (file_data_id) references file_data(id),
     )
+
+ALTER TABLE client
+ADD roles NVARCHAR(100) NOT NULL default 'client';
+
 GO
 CREATE TABLE reservation
 (
-    id INT IDENTITY(1,1),
+    id INT IDENTITY(1,1) PRIMARY KEY ,
     reservation_number NVARCHAR(100) NOT NULL,
     isCanceled BIT NOT NULL,
     isAllFood BIT NOT NULL,
     client_id NVARCHAR(100) NOT NULL,
     travel_option_id INT NOT NULL,
     insurance_id INT NOT NULL,
-    CONSTRAINT PK_reservation PRIMARY KEY (id, client_id, travel_option_id),
     CONSTRAINT FK_reservation_client FOREIGN KEY (client_id) REFERENCES client(id),
-    CONSTRAINT FK_reservation_travel_option FOREIGN KEY (travel_option_id) REFERENCES travel_option(id)
+    CONSTRAINT FK_reservation_travel_option FOREIGN KEY (travel_option_id) REFERENCES travel_option(id),
+    CONSTRAINT FK_reservation_insurance FOREIGN KEY (insurance_id) REFERENCES insurance(id)
 )
 
 CREATE OR ALTER TRIGGER CalculateTravelPrice
@@ -126,16 +130,16 @@ AS
 BEGIN
     SET NOCOUNT ON;
 
-    DECLARE @DepartureTime DATETIME, @ArrivalTime DATETIME, @TravelID INT, @HotelID INT, @StarsCount INT, @BasePrice FLOAT, @NumOfDays INT, @Price FLOAT;
+    DECLARE @DepartureTime DATETIME, @ArrivalTime DATETIME, @TravelID INT, @HotelID INT, @StarsCount INT, @HotelPrice FLOAT, @BasePrice FLOAT, @NumOfDays INT, @Price FLOAT;
 
     SELECT @DepartureTime = i.departure_time, @ArrivalTime = i.arrival_time, @TravelID = i.travel_id
     FROM inserted i;
 
-    SELECT @HotelID = t.hotel_id FROM travel t WHERE t.id = @TravelID;
-    SELECT @StarsCount = h.stars_count, @BasePrice = h.price FROM hotel h WHERE h.id = @HotelID;
+    SELECT @HotelID = t.hotel_id, @BasePrice = t.base_price FROM travel t WHERE t.id = @TravelID;
+    SELECT @StarsCount = h.stars_count, @HotelPrice = h.price FROM hotel h WHERE h.id = @HotelID;
 
-    SET @NumOfDays = DATEDIFF(DAY, @DepartureTime, @ArrivalTime);
-    SET @Price = (@NumOfDays * @BasePrice) + (@StarsCount * 100);
+    SET @NumOfDays = DATEDIFF(DAY, @ArrivalTime, @DepartureTime);
+    SET @Price = (@NumOfDays * @HotelPrice) + @BasePrice;
 
     UPDATE travel_option
     SET travel_price = @Price
@@ -202,3 +206,7 @@ INSERT INTO travel (name, base_price, description, start_season, end_season, hot
 INSERT INTO travel (name, base_price, description, start_season, end_season, hotel_id, city_id, file_data_id) VALUES ('Historic Monuments Tour', 430.00, 'Dive into history with a stay at Heritage Grand Hotel', '2024-04-01', '2024-06-30', 4, 4, 14);
 INSERT INTO travel (name, base_price, description, start_season, end_season, hotel_id, city_id, file_data_id) VALUES ('City Lights and Business Nights', 520.00, 'Mix work with some urban nightlife at Skyline Business Hotel', '2024-10-01', '2024-12-31', 5, 5, 15);
 INSERT INTO travel (name, base_price, description, start_season, end_season, hotel_id, city_id, file_data_id) VALUES (N'Nature Lover’s Retreat', 280.00, 'Stay at Garden Boutique Hotel and enjoy the natural surroundings', '2024-03-01', '2024-05-31', 6, 6, 1);
+
+INSERT INTO insurance (type, price, description) VALUES ('Luxury', 300, 'full insurance')
+INSERT INTO insurance (type, price, description) VALUES ('Extended', 200, 'partial insurance')
+INSERT INTO insurance (type, price, description) VALUES ('Basic', 100, 'basic insurance')

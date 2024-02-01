@@ -181,7 +181,7 @@ PayPal sandbox acoount
 
 ## Database script and scheme
 
-In my repo there is a file called createDB.sql but this file have specific mssql syntax so be carefull and travel insert have id of photos which were added to db before travels insert also keep this in mind
+In my repo there is a file called create_db.sql but this file have specific mssql syntax so be carefull and travel insert have id of photos which were added to db before travels insert also keep this in mind
 
 ### Database scheme looks like this
 
